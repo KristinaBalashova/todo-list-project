@@ -8,7 +8,7 @@ export default {
     Filters,
   },
   computed: {
-    ...mapGetters('todos', ['todos']),
+    ...mapGetters('todos', ['activeTodos']),
   },
 };
 </script>
@@ -16,7 +16,7 @@ export default {
 <template>
   <div class="container">
     <div class="actions">
-      <button class="button">Активные: {{ todos.length }}</button>
+      <button class="button">Активные: {{ activeTodos.length + 1}}</button>
       <button class="button">Удалить завершенные</button>
     </div>
 

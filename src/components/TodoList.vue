@@ -8,7 +8,13 @@ export default {
     TodoItem,
   },
   computed: {
-    ...mapGetters('todos', ['todos']),
+    ...mapGetters('todos', ['todos', 'filter', 'activeTodos', 'completedTodos']),
+    
+    filteredTodos() {
+      if (this.filter === 'active') return this.activeTodos;
+      if (this.filter === 'completed') return this.completedTodos;
+      return this.todos;
+    },
   },
   methods: {
     ...mapActions('todos', ['fetchTodos']),
@@ -26,7 +32,7 @@ export default {
     <div v-if="error" class="error">{{ error }}</div>
 
     <ul>
-      <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" />
+      <TodoItem v-for="(todo, index) in filteredTodos" :key="index" :todo="todo" />
     </ul>
   </div>
 </template>
