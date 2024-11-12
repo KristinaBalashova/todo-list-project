@@ -36,6 +36,9 @@ const actions = {
   setFilter({ commit }, filter) {
     commit('setFilter', filter);
   },
+  setTodos({ commit }, newTodo) {
+    commit('setTodos', newTodo);
+  },
 };
 
 const getters = {

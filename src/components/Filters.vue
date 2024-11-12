@@ -4,10 +4,10 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Filters',
   computed: {
-    ...mapGetters('filter', ['filter']),
+    ...mapGetters('todos', ['filter']),
   },
   methods: {
-    ...mapActions('filter', ['setFilter']),
+    ...mapActions('todos', ['setFilter']),
   },
 };
 </script>
