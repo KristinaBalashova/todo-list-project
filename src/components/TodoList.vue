@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .container {
-  margin: 20px;
+ 
 }
 ul {
   list-style-type: none;

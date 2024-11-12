@@ -17,7 +17,7 @@ export default {
       this.isEditing = !this.isEditing;
     },
     toggleComplete() {
-      this.todo.isComplete = !this.todo.isComplete; // Toggle the complete state
+      this.todo.isComplete = !this.todo.isComplete;
     },
   },
 };
@@ -51,7 +51,14 @@ export default {
   color: black;
   background-color: #e9ecf5;
   border-radius: 4px;
-  padding-left: 20px;
+  padding: 20px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .container input[type='text'] {
@@ -84,6 +91,4 @@ export default {
   gap: 10px;
 }
 
-.title {
-}
 </style>
