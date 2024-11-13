@@ -1,8 +1,17 @@
 import axios from 'axios';
 
 const state = () => ({
-  todos: [],
-  filter: 'all', //options: active, completed, all (probably bette use typescript)
+  todos: [
+    {
+      title: 'titt',
+      completed: true,
+    },
+    {
+      title: 'titt',
+      completed: true,
+    },
+  ],
+  filter: 'all', //options: active, completed, all (probably better to use typescript)
 });
 
 const mutations = {

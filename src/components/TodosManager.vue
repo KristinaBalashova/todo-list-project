@@ -16,8 +16,7 @@ export default {
 <template>
   <div class="container">
     <div class="actions">
-      <button class="button">Активные: {{ activeTodos.length + 1}}</button>
-      <button class="button">Удалить завершенные</button>
+      <p class="active">Активные: {{ activeTodos.length + 1 }}</p>
     </div>
 
     <Filters />
@@ -29,9 +28,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin: 20px;
+  align-items: start;
+  margin: 20px 0;
 }
 
 .actions {
@@ -39,21 +37,18 @@ export default {
   gap: 10px;
 }
 
-.button {
+.active {
   padding: 8px 16px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #ccd6eb;
-  border: 2px solid #ccd6eb;
+  background-color: #e4e67a;
+  border: 2px solid #e6d27a;
   border-radius: 4px;
   cursor: pointer;
   color: black;
+  margin: 0;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-}
-
-.button:hover {
-  background-color: #a3c3d9;
 }
 </style>

@@ -7,7 +7,7 @@ export default {
     ...mapGetters('todos', ['filter']),
   },
   methods: {
-    ...mapActions('todos', ['setFilter']),
+    ...mapActions('todos', ['setFilte', 'clearCompleted']),
   },
 };
 </script>
@@ -21,6 +21,7 @@ export default {
     <p class="option" :class="{ active: filter === 'completed' }" @click="setFilter('completed')">
       Завершенные
     </p>
+    <button class="buttonDelete" type="button" @click="clearCompleted">Удалить завершенные</button>
   </div>
 </template>
 
@@ -37,14 +38,27 @@ export default {
   font-weight: bold;
   border-radius: 4px;
   transition: background-color 0.3s;
+  margin: 0;
 }
 
 .option.active {
-  background-color: #007bff;
-  color: white;
+  background-color: #ae76a6;
 }
 
 .option:hover {
-  background-color: #a3c3d9;
+  background-color: #e9ecf5;
+}
+
+.buttonDelete {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #ba1b1d;
+  color: white;
+  border-radius: 4px;
+  border-color: #ba1b1d;
+}
+
+.buttonDelete:hover {
+  background-color: #a0171a;
 }
 </style>
