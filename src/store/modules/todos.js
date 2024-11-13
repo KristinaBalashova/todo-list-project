@@ -3,14 +3,15 @@ import axios from 'axios';
 const state = () => ({
   todos: [],
   filter: 'all', // options: active, completed, all
+  todosState: 'success', // idle, loading, error, success
 });
 
 const mutations = {
-  setTodos(state, todo) {
-    if (Array.isArray(todo)) {
-      state.todos = [...todo, ...state.todos];
+  setTodos(state, todos) {
+    if (Array.isArray(todos)) {
+      state.todos = [...todos, ...state.todos];
     } else {
-      state.todos = [todo, ...state.todos];
+      state.todos = [todos, ...state.todos];
     }
   },
   setFilter(state, filter) {
@@ -31,14 +32,20 @@ const mutations = {
       todo.completed = !todo.completed;
     }
   },
+  setTodosState(state, newState) {
+    state.todosState = newState;
+  },
 };
 
 const actions = {
   async fetchTodos({ commit }) {
+    commit('setTodosState', 'loading');
     try {
       const response = await axios('https://jsonplaceholder.typicode.com/users/1/todos?_limit=5');
       commit('setTodos', response.data);
+      commit('setTodosState', 'success');
     } catch (error) {
+      commit('setTodosState', 'error');
       console.error('Error fetching todos:', error);
     }
   },
@@ -51,6 +58,9 @@ const actions = {
   setTodos({ commit }, newTodo) {
     commit('setTodos', newTodo);
   },
+  setTodosState({ commit }, newState) {
+    commit('setTodosState', newState);
+  },
   updateTodoTitle({ commit }, { id, newTitle }) {
     commit('updateTodoTitle', { id, newTitle });
   },
@@ -61,9 +71,10 @@ const actions = {
 
 const getters = {
   todos: (state) => state.todos,
+  filter: (state) => state.filter,
+  todosState: (state) => state.todosState,
   activeTodos: (state) => state.todos.filter((todo) => !todo.completed),
   completedTodos: (state) => state.todos.filter((todo) => todo.completed),
-  filter: (state) => state.filter,
 };
 
 export default {
