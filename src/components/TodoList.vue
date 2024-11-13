@@ -9,7 +9,7 @@ export default {
   },
   computed: {
     ...mapGetters('todos', ['todos', 'filter', 'activeTodos', 'completedTodos']),
-    
+
     filteredTodos() {
       if (this.filter === 'active') return this.activeTodos;
       if (this.filter === 'completed') return this.completedTodos;
@@ -39,7 +39,6 @@ export default {
 
 <style scoped>
 .container {
- 
 }
 ul {
   list-style-type: none;

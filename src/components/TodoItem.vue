@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'TodoItem',
 
@@ -9,39 +11,47 @@ export default {
   data() {
     return {
       isEditing: false,
+      editedTitle: this.todo.title, // Store the edited title
     };
   },
 
   methods: {
+    ...mapActions('todos', ['updateTodoStatus', 'updateTodoTitle']),
+
     toggleEditMode() {
-      this.isEditing = !this.isEditing;
+      if (!this.todo.completed) {
+        this.isEditing = !this.isEditing;
+        if (!this.isEditing) {
+          this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
+        }
+      }
     },
-    toggleComplete() {
-      this.todo.isComplete = !this.todo.isComplete;
+
+    toggleStatus() {
+      const updatedStatus = !this.todo.completed;
+      this.updateTodoStatus({ id: this.todo.id, completed: updatedStatus });
     },
   },
 };
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
-      <input type="text" v-model="todo.name" />
-      <button @click="toggleEditMode">Save</button>
+      <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
+      <button @click="toggleEditMode" :disabled="todo.completed">Save</button>
     </div>
     <div v-else class="item">
       <div class="title">
-        <input
-          type="checkbox"
-          v-model="todo.isComplete"
-          @change="toggleComplete"
-          :checked="todo.isComplete"
-        />
-        <p :style="{ textDecoration: todo.isComplete ? 'line-through' : 'none' }">
+        <div class="task-status">
+          <span v-if="todo.completed" class="icon completed" @click="toggleStatus"> ✅ </span>
+          <span v-else class="icon active" @click="toggleStatus"> ⭕ </span>
+        </div>
+        <p class="title" :style="{ textDecoration: todo.completed ? 'line-through' : 'none' }">
           {{ todo.title }}
         </p>
       </div>
-      <button @click="toggleEditMode">Edit</button>
+      <button @click="toggleEditMode" :disabled="todo.completed">Edit</button>
     </div>
   </div>
 </template>
@@ -52,6 +62,11 @@ export default {
   background-color: #e9ecf5;
   border-radius: 4px;
   padding: 20px;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
 }
 
 .title {
@@ -91,4 +106,15 @@ export default {
   gap: 10px;
 }
 
+.title {
+  margin: 0;
+}
+
+.container.disabled {
+  opacity: 0.5;
+}
+
+.icon {
+  cursor: pointer;
+}
 </style>

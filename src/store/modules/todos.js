@@ -1,17 +1,8 @@
 import axios from 'axios';
 
 const state = () => ({
-  todos: [
-    {
-      title: 'titt',
-      completed: true,
-    },
-    {
-      title: 'titt',
-      completed: true,
-    },
-  ],
-  filter: 'all', //options: active, completed, all (probably better to use typescript)
+  todos: [],
+  filter: 'all', // options: active, completed, all
 });
 
 const mutations = {
@@ -27,6 +18,18 @@ const mutations = {
   },
   removeCompletedTodos(state) {
     state.todos = state.todos.filter((todo) => !todo.completed);
+  },
+  updateTodoTitle(state, { id, newTitle }) {
+    const todo = state.todos.find((todo) => todo.id === id);
+    if (todo) {
+      todo.title = newTitle;
+    }
+  },
+  updateTodoStatus(state, { id }) {
+    const todo = state.todos.find((todo) => todo.id === id);
+    if (todo) {
+      todo.completed = !todo.completed;
+    }
   },
 };
 
@@ -47,6 +50,12 @@ const actions = {
   },
   setTodos({ commit }, newTodo) {
     commit('setTodos', newTodo);
+  },
+  updateTodoTitle({ commit }, { id, newTitle }) {
+    commit('updateTodoTitle', { id, newTitle });
+  },
+  updateTodoStatus({ commit }, { id }) {
+    commit('updateTodoStatus', { id });
   },
 };
 
