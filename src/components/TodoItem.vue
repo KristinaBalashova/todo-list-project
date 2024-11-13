@@ -31,6 +31,10 @@ export default {
       }
     },
     saveTodo() {
+      if (!this.editedTitle.trim()) {
+        this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
+        return;
+      }
       this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
       this.todo.title = this.editedTitle 
       this.isEditing = !this.isEditing;
