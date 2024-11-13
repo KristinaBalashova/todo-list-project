@@ -3,7 +3,7 @@ import axios from 'axios';
 const state = () => ({
   todos: [],
   filter: 'all', // options: active, completed, all
-  todosState: 'success', // idle, loading, error, success
+  todosState: 'idle', // idle, loading, error, success
 });
 
 const mutations = {
@@ -38,14 +38,25 @@ const mutations = {
 };
 
 const actions = {
-  async fetchTodos({ commit }) {
+  async fetchTodos({ commit }, { showToast }) {
     commit('setTodosState', 'loading');
     try {
+      // эксперименты с отображением ошибок сервера
+
+      //await new Promise((resolve, reject) => {
+      //  setTimeout(() => {
+      //    reject(new Error('Simulated error fetching todos'));
+      //  }, 2000);
+      //});
+
       const response = await axios('https://jsonplaceholder.typicode.com/users/1/todos?_limit=5');
       commit('setTodos', response.data);
       commit('setTodosState', 'success');
     } catch (error) {
       commit('setTodosState', 'error');
+      if (showToast) {
+        showToast.error(error.message);
+      }
       console.error('Error fetching todos:', error);
     }
   },

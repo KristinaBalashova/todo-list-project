@@ -9,7 +9,7 @@ export default {
   components: {
     TodoItem,
     NothingFound,
-    Loader
+    Loader,
   },
   computed: {
     ...mapGetters('todos', ['todos', 'filter', 'todosState', 'activeTodos', 'completedTodos']),
@@ -38,16 +38,16 @@ export default {
 
     isSuccess() {
       return this.todosState === 'success';
-    }
+    },
   },
   methods: {
     ...mapActions('todos', ['fetchTodos']),
+    async loadTodos() {
+      await this.fetchTodos({ showToast: this.$toast });
+    },
   },
   mounted() {
-    this.fetchTodos().catch((error) => {
-      this.$toast.error(error.message);
-      this.showError(error.message || 'Failed to fetch todos');
-    });
+    this.loadTodos();
   },
 };
 </script>
@@ -57,7 +57,7 @@ export default {
     <Loader v-if="isLoading" />
 
     <div v-if="isError" class="error">
-      <p>An error occurred. Please try again.</p>
+      <NothingFound />
     </div>
 
     <div v-if="isIdle">
@@ -76,7 +76,6 @@ export default {
 
 <style scoped>
 .container {
-  
 }
 
 ul {
