@@ -1,5 +1,6 @@
 <script>
 import { mapActions } from 'vuex';
+import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'TodoItem',
@@ -13,6 +14,12 @@ export default {
       isEditing: false,
       editedTitle: this.todo.title,
     };
+  },
+
+  computed: {
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
   },
 
   methods: {
@@ -51,7 +58,7 @@ export default {
           {{ todo.title }}
         </p>
       </div>
-      <button @click="toggleEditMode" :disabled="todo.completed">Edit</button>
+      <button @click="toggleEditMode" :disabled="todo.completed">{{ TEXT_CONTENT.EDIT }}</button>
     </div>
   </div>
 </template>

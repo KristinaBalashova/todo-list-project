@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { FILTER_OPTIONS } from './../constants/contants';
+import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'Filters',
@@ -8,6 +9,9 @@ export default {
     ...mapGetters('todos', ['filter']),
     FILTER_OPTIONS() {
       return FILTER_OPTIONS;
+    },
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
     },
   },
   methods: {
@@ -23,23 +27,25 @@ export default {
       :class="{ active: filter === FILTER_OPTIONS.ALL }"
       @click="setFilter(FILTER_OPTIONS.ALL)"
     >
-      Все
+      {{ TEXT_CONTENT.ALL }}
     </p>
     <p
       class="option"
       :class="{ active: filter === FILTER_OPTIONS.ACTIVE }"
       @click="setFilter(FILTER_OPTIONS.ACTIVE)"
     >
-      Активные
+      {{ TEXT_CONTENT.ACTIVE }}
     </p>
     <p
       class="option"
       :class="{ active: filter === FILTER_OPTIONS.COMPLETED }"
       @click="setFilter(FILTER_OPTIONS.COMPLETED)"
     >
-      Завершенные
+      {{ TEXT_CONTENT.COMPLETED }}
     </p>
-    <button class="buttonDelete" type="button" @click="clearCompleted">Удалить завершенные</button>
+    <button class="buttonDelete" type="button" @click="clearCompleted">
+      {{ TEXT_CONTENT.DELETE_COMPLETED }}
+    </button>
   </div>
 </template>
 

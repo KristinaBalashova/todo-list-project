@@ -1,7 +1,13 @@
 <script>
+import { TEXT_CONTENT } from '../constants/textContent';
+
 export default {
   name: 'HeaderContainer',
-
+  computed: {
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
+  },
   methods: {},
 
   mounted() {},
@@ -10,7 +16,7 @@ export default {
 
 <template>
   <div class="header">
-    <h1>Todo List</h1>
+    <h1>{{ TEXT_CONTENT.TITLE }}</h1>
   </div>
 </template>
 

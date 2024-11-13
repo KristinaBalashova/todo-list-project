@@ -4,6 +4,7 @@ import TodoItem from './TodoItem.vue';
 import NothingFound from './NothingFound.vue';
 import Loader from './Loader.vue';
 import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
+import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'TodoList',
@@ -14,6 +15,10 @@ export default {
   },
   computed: {
     ...mapGetters('todos', ['todos', 'filter', 'todosState', 'activeTodos', 'completedTodos']),
+
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
 
     filteredTodos() {
       if (this.filter === FILTER_OPTIONS.ACTIVE) {
@@ -62,7 +67,7 @@ export default {
     </div>
 
     <div v-if="isIdle">
-      <p>Waiting for data...</p>
+      <p>{{ TEXT_CONTENT.IDL }}</p>
     </div>
 
     <div v-if="filteredTodos.length === 0 && isSuccess">

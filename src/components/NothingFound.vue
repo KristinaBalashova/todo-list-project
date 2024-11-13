@@ -1,8 +1,19 @@
-<script setup></script>
+<script>
+import { TEXT_CONTENT } from '../constants/textContent';
+
+export default {
+  name: 'NothingFound',
+  computed: {
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
+  },
+};
+</script>
 
 <template>
   <div class="container">
-    <p>Задач нет</p>
+    <p>{{ TEXT_CONTENT.NOTHING_FOUND }}</p>
   </div>
 </template>
 

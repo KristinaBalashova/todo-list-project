@@ -1,6 +1,6 @@
 <script>
 import { mapActions } from 'vuex';
-
+import { TEXT_CONTENT } from '../constants/textContent';
 export default {
   name: 'AddTodo',
 
@@ -9,11 +9,17 @@ export default {
       newTask: '',
     };
   },
+
+  computed: {
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
+  },
   methods: {
     ...mapActions('todos', ['setTodos']),
     addNewTodo() {
       if (!this.newTask.trim()) {
-        this.$toast.error('⚠️ Please enter a task!');
+        this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
         return;
       }
 
@@ -25,7 +31,7 @@ export default {
       };
 
       this.setTodos(newTodo);
-      this.$toast.success('Task added successfully!');
+      this.$toast.success(TEXT_CONTENT.TASK_ADDED);
       this.newTask = '';
     },
   },
@@ -35,7 +41,7 @@ export default {
 <template>
   <form class="form" @submit.prevent="addNewTodo">
     <input v-model="newTask" class="input" type="text" placeholder="Enter a new task" />
-    <button type="submit" class="button">Add</button>
+    <button type="submit" class="button">{{ TEXT_CONTENT.ADD }}</button>
   </form>
 </template>
 
@@ -71,18 +77,5 @@ export default {
 
 .button:hover {
   background-color: #752d41;
-}
-
-.task-status {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.completed {
-  color: green;
-}
-
-.active {
-  color: red;
 }
 </style>

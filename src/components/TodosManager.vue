@@ -1,6 +1,7 @@
 <script>
 import Filters from './Filters.vue';
 import { mapGetters } from 'vuex';
+import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'TodosManager',
@@ -9,13 +10,16 @@ export default {
   },
   computed: {
     ...mapGetters('todos', ['activeTodos']),
+    TEXT_CONTENT() {
+      return TEXT_CONTENT;
+    },
   },
 };
 </script>
 
 <template>
   <div class="container">
-    <p class="active">Активные: {{ activeTodos.length }}</p>
+    <p class="active">{{ TEXT_CONTENT.ACTIVE }} {{ activeTodos.length }}</p>
 
     <Filters />
   </div>
