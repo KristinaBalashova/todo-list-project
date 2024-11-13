@@ -1,5 +1,5 @@
 export const TEXT_CONTENT = {
-  TITLE: 'Todo List',
+  TITLE: 'ТУДУШКИ',
   ADD: 'Добавить',
   ALL: 'Все',
   ACTIVE: 'Активные',
@@ -10,4 +10,5 @@ export const TEXT_CONTENT = {
   IDL: 'Ждем загрузку данных',
   EMPTY_TASK: '⚠️ Вы ничего не ввели',
   TASK_ADDED: 'Задача добавлена',
+  SAVE: 'Сохранить'
 };

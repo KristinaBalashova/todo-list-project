@@ -53,7 +53,7 @@ export default {
   <div class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
       <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
-      <button @click="saveTodo" :disabled="todo.completed">Save</button>
+      <button @click="saveTodo" :disabled="todo.completed">{{ TEXT_CONTENT.SAVE }}</button>
     </div>
     <div v-else class="item">
       <div class="title">
