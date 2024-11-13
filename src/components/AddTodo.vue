@@ -2,6 +2,8 @@
 import { mapActions } from 'vuex';
 
 export default {
+  name: 'AddTodo',
+
   data() {
     return {
       newTask: '',
@@ -10,14 +12,21 @@ export default {
   methods: {
     ...mapActions('todos', ['setTodos']),
     addNewTodo() {
+      if (!this.newTask.trim()) {
+        this.$toast.error('⚠️ Please enter a task!');
+        return;
+      }
+
       const newTodo = {
         title: this.newTask,
         id: Date.now(),
         isComplete: false,
         userId: 1,
       };
-      this.setTodos(newTodo); // Call the action to add the new task
-      this.newTask = ''; // Clear the input field
+
+      this.setTodos(newTodo);
+      this.$toast.success('Task added successfully!');
+      this.newTask = '';
     },
   },
 };
@@ -30,7 +39,7 @@ export default {
   </form>
 </template>
 
-<style>
+<style scoped>
 .form {
   display: flex;
   flex-direction: row;
@@ -62,5 +71,18 @@ export default {
 
 .button:hover {
   background-color: #752d41;
+}
+
+.task-status {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.completed {
+  color: green;
+}
+
+.active {
+  color: red;
 }
 </style>
