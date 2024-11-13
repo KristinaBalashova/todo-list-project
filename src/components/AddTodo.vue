@@ -18,9 +18,9 @@ export default {
       }
 
       const newTodo = {
-        title: this.newTask,
+        completed: false, 
         id: Date.now(),
-        isComplete: false,
+        title: this.newTask,
         userId: 1,
       };
 

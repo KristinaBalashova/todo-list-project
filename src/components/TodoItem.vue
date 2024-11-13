@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       isEditing: false,
-      editedTitle: this.todo.title, // Store the edited title
+      editedTitle: this.todo.title,
     };
   },
 
