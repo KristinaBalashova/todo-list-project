@@ -1,9 +1,8 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div class="container">
-    <p>Таких задач нет</p>
+    <p>Задач нет</p>
   </div>
 </template>
 

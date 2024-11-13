@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { TODOS_ENDPOINT } from '../../constants/apiUrls';
+import { FILTER_OPTIONS, TODOS_STATE } from '../../constants/contants';
 
 const state = () => ({
   todos: [],
-  filter: 'all', // options: active, completed, all
-  todosState: 'idle', // idle, loading, error, success
+  filter: FILTER_OPTIONS.ALL,
+  todosState: TODOS_STATE.IDLE,
 });
 
 const mutations = {
@@ -39,7 +41,7 @@ const mutations = {
 
 const actions = {
   async fetchTodos({ commit }, { showToast }) {
-    commit('setTodosState', 'loading');
+    commit('setTodosState', TODOS_STATE.LOADING);
     try {
       // эксперименты с отображением ошибок сервера
 
@@ -49,15 +51,14 @@ const actions = {
       //  }, 2000);
       //});
 
-      const response = await axios('https://jsonplaceholder.typicode.com/users/1/todos?_limit=5');
+      const response = await axios(TODOS_ENDPOINT);
       commit('setTodos', response.data);
-      commit('setTodosState', 'success');
+      commit('setTodosState', TODOS_STATE.SUCCESS);
     } catch (error) {
-      commit('setTodosState', 'error');
+      commit('setTodosState', TODOS_STATE.ERROR);
       if (showToast) {
         showToast.error(error.message);
       }
-      console.error('Error fetching todos:', error);
     }
   },
   clearCompleted({ commit }) {

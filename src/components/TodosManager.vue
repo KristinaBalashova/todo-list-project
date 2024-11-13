@@ -15,7 +15,7 @@ export default {
 
 <template>
   <div class="container">
-    <p class="active">Активные: {{ activeTodos.length}}</p>
+    <p class="active">Активные: {{ activeTodos.length }}</p>
 
     <Filters />
   </div>

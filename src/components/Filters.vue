@@ -1,10 +1,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { FILTER_OPTIONS } from './../constants/contants';
 
 export default {
   name: 'Filters',
   computed: {
     ...mapGetters('todos', ['filter']),
+    FILTER_OPTIONS() {
+      return FILTER_OPTIONS;
+    },
   },
   methods: {
     ...mapActions('todos', ['setFilter', 'clearCompleted']),
@@ -14,11 +18,25 @@ export default {
 
 <template>
   <div class="filters">
-    <p class="option" :class="{ active: filter === 'all' }" @click="setFilter('all')">Все</p>
-    <p class="option" :class="{ active: filter === 'active' }" @click="setFilter('active')">
+    <p
+      class="option"
+      :class="{ active: filter === FILTER_OPTIONS.ALL }"
+      @click="setFilter(FILTER_OPTIONS.ALL)"
+    >
+      Все
+    </p>
+    <p
+      class="option"
+      :class="{ active: filter === FILTER_OPTIONS.ACTIVE }"
+      @click="setFilter(FILTER_OPTIONS.ACTIVE)"
+    >
       Активные
     </p>
-    <p class="option" :class="{ active: filter === 'completed' }" @click="setFilter('completed')">
+    <p
+      class="option"
+      :class="{ active: filter === FILTER_OPTIONS.COMPLETED }"
+      @click="setFilter(FILTER_OPTIONS.COMPLETED)"
+    >
       Завершенные
     </p>
     <button class="buttonDelete" type="button" @click="clearCompleted">Удалить завершенные</button>

@@ -3,6 +3,7 @@ import { mapActions, mapGetters } from 'vuex';
 import TodoItem from './TodoItem.vue';
 import NothingFound from './NothingFound.vue';
 import Loader from './Loader.vue';
+import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
 
 export default {
   name: 'TodoList',
@@ -15,29 +16,29 @@ export default {
     ...mapGetters('todos', ['todos', 'filter', 'todosState', 'activeTodos', 'completedTodos']),
 
     filteredTodos() {
-      if (this.filter === 'active') {
+      if (this.filter === FILTER_OPTIONS.ACTIVE) {
         return this.activeTodos.length > 0 ? this.activeTodos : [];
       }
-      if (this.filter === 'completed') {
+      if (this.filter === FILTER_OPTIONS.COMPLETED) {
         return this.completedTodos.length > 0 ? this.completedTodos : [];
       }
       return this.todos;
     },
 
     isLoading() {
-      return this.todosState === 'loading';
+      return this.todosState === TODOS_STATE.LOADING;
     },
 
     isIdle() {
-      return this.todosState === 'idle';
+      return this.todosState === TODOS_STATE.IDLE;
     },
 
     isError() {
-      return this.todosState === 'error';
+      return this.todosState === TODOS_STATE.ERROR;
     },
 
     isSuccess() {
-      return this.todosState === 'success';
+      return this.todosState === TODOS_STATE.SUCCESS;
     },
   },
   methods: {
