@@ -28,11 +28,14 @@ export default {
     toggleEditMode() {
       if (!this.todo.completed) {
         this.isEditing = !this.isEditing;
-        if (!this.isEditing) {
-          this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
-        }
       }
     },
+    saveTodo() {
+      this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
+      this.todo.title = this.editedTitle 
+      this.isEditing = !this.isEditing;
+    },
+
 
     toggleStatus() {
       const updatedStatus = !this.todo.completed;
@@ -46,7 +49,7 @@ export default {
   <div class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
       <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
-      <button @click="toggleEditMode" :disabled="todo.completed">Save</button>
+      <button @click="saveTodo" :disabled="todo.completed">Save</button>
     </div>
     <div v-else class="item">
       <div class="title">
