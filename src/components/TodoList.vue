@@ -1,18 +1,26 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import TodoItem from './TodoItem.vue';
+import NothingFound from './NothingFound.vue';
 
 export default {
   name: 'TodoList',
   components: {
     TodoItem,
+    NothingFound
   },
   computed: {
     ...mapGetters('todos', ['todos', 'filter', 'activeTodos', 'completedTodos']),
-
+    
     filteredTodos() {
-      if (this.filter === 'active') return this.activeTodos;
-      if (this.filter === 'completed') return this.completedTodos;
+      
+      if (this.filter === 'active') {
+        console.log(this.filter, 'filter');
+        return this.activeTodos.length > 0 ? this.activeTodos : [];
+      }
+      if (this.filter === 'completed') {
+        return this.completedTodos.length > 0 ? this.completedTodos : [];
+      }
       return this.todos;
     },
   },
@@ -31,7 +39,10 @@ export default {
 
     <div v-if="error" class="error">{{ error }}</div>
 
-    <ul>
+    <div v-if="filteredTodos.length === 0">
+      <NothingFound />
+    </div>
+    <ul v-else>
       <TodoItem v-for="(todo, index) in filteredTodos" :key="index" :todo="todo" />
     </ul>
   </div>

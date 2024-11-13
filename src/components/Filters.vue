@@ -7,7 +7,7 @@ export default {
     ...mapGetters('todos', ['filter']),
   },
   methods: {
-    ...mapActions('todos', ['setFilte', 'clearCompleted']),
+    ...mapActions('todos', ['setFilter', 'clearCompleted']),
   },
 };
 </script>
