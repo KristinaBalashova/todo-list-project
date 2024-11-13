@@ -5,11 +5,15 @@ import TodosManager from './TodosManager.vue';
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <AddTodo />
     <TodosManager />
     <TodoList />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  width: 100%;
+}
+</style>
