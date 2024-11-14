@@ -15,7 +15,8 @@ https://todo-list-project-psi.vercel.app/
 
 - **Initial Data Loading**: At the start the application fetches the first 5 tasks from [jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com/users/1/todos).
 - **Adding Tasks**: Users can add new tasks to the list.
-- **Editing and Sorting**: Tasks can be edited and sorted by status (completed/active/all).
+- **Editing**: Tasks can be edited (not really working, still in development) 
+- **Sorting**: Tasks can be sorted by status (completed/active/all).
 - **Status Update**: User can toggle todo status (active/completed).
 - **Delete Completed**: User can delete all completed todos.
 - **Active Task Counter**: The current count of active tasks is displayed.

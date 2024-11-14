@@ -5,6 +5,8 @@ import store from './store';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 
+Vue.config.devtools = true;
+
 Vue.use(Toast);
 
 new Vue({
