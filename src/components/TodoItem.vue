@@ -1,7 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
-
+//a bug to fix: если открыт решим редактирования и пользователь меняет фильтр на 'Заверешнные', он видит только открытую редактируемую таску. Но редактировать ее не может.
 export default {
   name: 'TodoItem',
 
@@ -12,13 +12,13 @@ export default {
   data() {
     return {
       isEditing: false,
-      editedTitle: this.todo.title,
+      editedTitle: this.todo.title, //bug to fix: названия задач перемещаются, если мы меняем несколько названий подряд
       TEXT_CONTENT,
     };
   },
 
   methods: {
-    ...mapActions('todos', ['updateTodoStatus', 'updateTodoTitle']),
+    ...mapActions('todos', ['editTodo']),
 
     toggleEditMode() {
       if (!this.todo.completed) {
@@ -30,14 +30,13 @@ export default {
         this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
         return;
       }
-      this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
-      this.todo.title = this.editedTitle;
-      this.isEditing = !this.isEditing;
+      this.editTodo({ id: 1, updates: { title: this.editedTitle } });
+      this.isEditing = false;
     },
-
+    //обработать кейс закрытия редактирования, если юзер в течение какого-то времени ничего не пишет или переключился на другой элемент?
     toggleStatus() {
       const updatedStatus = !this.todo.completed;
-      this.updateTodoStatus({ id: this.todo.id, completed: updatedStatus });
+      this.editTodo({ id: this.todo.id, updates: { completed: updatedStatus } });
     },
   },
 };

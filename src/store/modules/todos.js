@@ -22,16 +22,10 @@ const mutations = {
   removeCompletedTodos(state) {
     state.todos = state.todos.filter((todo) => !todo.completed);
   },
-  updateTodoTitle(state, { id, newTitle }) {
-    const todo = state.todos.find((todo) => todo.id === id);
-    if (todo) {
-      todo.title = newTitle;
-    }
-  },
-  updateTodoStatus(state, { id }) {
-    const todo = state.todos.find((todo) => todo.id === id);
-    if (todo) {
-      todo.completed = !todo.completed;
+  editTodo(state, { id, updates }) {
+    const index = state.todos.findIndex((todo) => todo.id === id);
+    if (index !== -1) {
+      Object.assign(state.todos[index], updates);
     }
   },
   setTodosState(state, newState) {
@@ -73,11 +67,8 @@ const actions = {
   setTodosState({ commit }, newState) {
     commit('setTodosState', newState);
   },
-  updateTodoTitle({ commit }, { id, newTitle }) {
-    commit('updateTodoTitle', { id, newTitle });
-  },
-  updateTodoStatus({ commit }, { id }) {
-    commit('updateTodoStatus', { id });
+  editTodo({ commit }, { id, updates }) {
+    commit('editTodo', { id, updates });
   },
 };
 
