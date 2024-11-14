@@ -8,11 +8,13 @@ export default {
   components: {
     Filters,
   },
+  data() {
+    return {
+      TEXT_CONTENT,
+    };
+  },
   computed: {
     ...mapGetters('todos', ['activeTodos']),
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
   },
 };
 </script>

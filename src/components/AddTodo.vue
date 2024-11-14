@@ -8,14 +8,10 @@ export default {
   data() {
     return {
       newTask: '',
+      TEXT_CONTENT, //храню тексты в состоянии, чтобы они были доступны на момент рендеринга?
     };
   },
 
-  computed: {
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
-  },
   methods: {
     ...mapActions('todos', ['setTodos']),
     addNewTodo() {

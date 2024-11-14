@@ -13,13 +13,8 @@ export default {
     return {
       isEditing: false,
       editedTitle: this.todo.title,
+      TEXT_CONTENT,
     };
-  },
-
-  computed: {
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
   },
 
   methods: {

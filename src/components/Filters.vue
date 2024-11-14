@@ -5,15 +5,15 @@ import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'Filters',
-  computed: {
-    ...mapGetters('todos', ['filter']),
-    FILTER_OPTIONS() {
-      return FILTER_OPTIONS;
-    },
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
+
+  data() {
+    return {
+      newTask: '',
+      TEXT_CONTENT,
+      FILTER_OPTIONS,
+    };
   },
+
   methods: {
     ...mapActions('todos', ['setFilter', 'clearCompleted']),
   },

@@ -8,6 +8,11 @@ import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'TodoList',
+  data() {
+    return {
+      TEXT_CONTENT,
+    };
+  },
   components: {
     TodoItem,
     NothingFound,
@@ -15,10 +20,6 @@ export default {
   },
   computed: {
     ...mapGetters('todos', ['todos', 'filter', 'todosState', 'activeTodos', 'completedTodos']),
-
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
 
     filteredTodos() {
       if (this.filter === FILTER_OPTIONS.ACTIVE) {

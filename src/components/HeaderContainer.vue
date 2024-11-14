@@ -3,14 +3,11 @@ import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
   name: 'HeaderContainer',
-  computed: {
-    TEXT_CONTENT() {
-      return TEXT_CONTENT;
-    },
+  data() {
+    return {
+      TEXT_CONTENT,
+    };
   },
-  methods: {},
-
-  mounted() {},
 };
 </script>
 
