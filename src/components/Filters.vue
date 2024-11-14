@@ -14,6 +14,10 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters('todos', ['currentFilter', 'completedTodosCount']),
+  },
+
   methods: {
     ...mapActions('todos', ['setFilter', 'clearCompleted']),
   },
@@ -24,26 +28,31 @@ export default {
   <div class="filters">
     <p
       class="option"
-      :class="{ active: filter === FILTER_OPTIONS.ALL }"
+      :class="{ active: currentFilter === FILTER_OPTIONS.ALL }"
       @click="setFilter(FILTER_OPTIONS.ALL)"
     >
       {{ TEXT_CONTENT.ALL }}
     </p>
     <p
       class="option"
-      :class="{ active: filter === FILTER_OPTIONS.ACTIVE }"
+      :class="{ active: currentFilter === FILTER_OPTIONS.ACTIVE }"
       @click="setFilter(FILTER_OPTIONS.ACTIVE)"
     >
       {{ TEXT_CONTENT.ACTIVE }}
     </p>
     <p
       class="option"
-      :class="{ active: filter === FILTER_OPTIONS.COMPLETED }"
+      :class="{ active: currentFilter === FILTER_OPTIONS.COMPLETED }"
       @click="setFilter(FILTER_OPTIONS.COMPLETED)"
     >
       {{ TEXT_CONTENT.COMPLETED }}
     </p>
-    <button class="buttonDelete" type="button" @click="clearCompleted">
+    <button
+      class="buttonDelete"
+      type="button"
+      @click="clearCompleted"
+      :disabled="completedTodosCount === 0"
+    >
       {{ TEXT_CONTENT.DELETE_COMPLETED }}
     </button>
   </div>
@@ -84,5 +93,10 @@ export default {
 
 .buttonDelete:hover {
   background-color: #a0171a;
+}
+
+.buttonDelete:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 </style>
