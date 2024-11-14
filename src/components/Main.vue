@@ -1,7 +1,16 @@
-<script setup>
+<script>
 import TodoList from './TodoList.vue';
 import AddTodo from './AddTodo.vue';
 import TodosManager from './TodosManager.vue';
+
+export default {
+  name: 'Main',
+  components: {
+    TodoList,
+    AddTodo,
+    TodosManager,
+  },
+};
 </script>
 
 <template>

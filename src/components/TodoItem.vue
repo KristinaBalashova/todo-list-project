@@ -36,10 +36,9 @@ export default {
         return;
       }
       this.updateTodoTitle({ id: this.todo.id, title: this.editedTitle });
-      this.todo.title = this.editedTitle 
+      this.todo.title = this.editedTitle;
       this.isEditing = !this.isEditing;
     },
-
 
     toggleStatus() {
       const updatedStatus = !this.todo.completed;

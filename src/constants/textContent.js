@@ -10,5 +10,5 @@ export const TEXT_CONTENT = {
   IDL: 'Ждем загрузку данных',
   EMPTY_TASK: '⚠️ Вы ничего не ввели',
   TASK_ADDED: 'Задача добавлена',
-  SAVE: 'Сохранить'
+  SAVE: 'Сохранить',
 };

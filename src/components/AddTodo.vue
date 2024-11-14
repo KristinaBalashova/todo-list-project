@@ -1,6 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
+
 export default {
   name: 'AddTodo',
 

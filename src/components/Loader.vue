@@ -1,14 +1,14 @@
-<template>
-  <div class="loader-wrapper">
-    <div class="loader"></div>
-  </div>
-</template>
-
 <script>
 export default {
   name: 'Loader',
 };
 </script>
+
+<template>
+  <div class="loader-wrapper">
+    <div class="loader"></div>
+  </div>
+</template>
 
 <style scoped>
 .loader-wrapper {

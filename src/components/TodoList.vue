@@ -46,6 +46,7 @@ export default {
       return this.todosState === TODOS_STATE.SUCCESS;
     },
   },
+
   methods: {
     ...mapActions('todos', ['fetchTodos']),
     async loadTodos() {
