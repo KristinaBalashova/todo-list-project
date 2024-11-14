@@ -2,14 +2,6 @@
 import { mapActions } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
 
-// попыталась добавить функция редактирования, но пока что она работает неуспешно
-// A bugs to fix:
-// В режиме редактирования, если пользователь меняет фильтр на 'Заверешнные', он видит открытую редактируемую таску в состоянии disabled
-// Как починить (возможно): обработать кейс закрытия редактирования, если юзер в течение какого-то времени ничего не пишет или переключился на другой элемент?
-// Названия задач перемещаются между первой задачей и редактируемой(?), если мы меняем несколько названий
-// Как починить (возможно):  понять, какое значение корректно хранить в this.todo.title. Также возможно нужно как-то сбрасывать компонент после сохранения задачи. 
-
-
 export default {
   name: 'TodoItem',
 
@@ -38,10 +30,10 @@ export default {
         this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
         return;
       }
-      this.editTodo({ id: 1, updates: { title: this.editedTitle } });
+      this.editTodo({ id: this.todo.id, updates: { title: this.editedTitle } });
       this.isEditing = false;
     },
-    
+
     toggleStatus() {
       const updatedStatus = !this.todo.completed;
       this.editTodo({ id: this.todo.id, updates: { completed: updatedStatus } });

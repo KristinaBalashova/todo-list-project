@@ -23,10 +23,10 @@ export default {
 
     filteredTodos() {
       if (this.filter === FILTER_OPTIONS.ACTIVE) {
-        return this.activeTodos.length > 0 ? this.activeTodos : [];
+        return this.activeTodos;
       }
       if (this.filter === FILTER_OPTIONS.COMPLETED) {
-        return this.completedTodos.length > 0 ? this.completedTodos : [];
+        return this.completedTodos;
       }
       return this.todos;
     },
@@ -77,7 +77,7 @@ export default {
     </div>
 
     <ul v-else-if="isSuccess">
-      <TodoItem v-for="(todo, index) in filteredTodos" :key="index" :todo="todo" />
+      <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
     </ul>
   </div>
 </template>
