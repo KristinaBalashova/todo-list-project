@@ -20,3 +20,10 @@ https://todo-list-project-psi.vercel.app/
 - **Status Update**: User can toggle todo status (active/completed).
 - **Delete Completed**: User can delete all completed todos.
 - **Active Task Counter**: The current count of active tasks is displayed.
+
+## Planned Features 
+
+- Pagination or List Virtualization in case we have too many todos
+- Routing
+- Drag&Drop for displaying active and inactive todos
+- Search
