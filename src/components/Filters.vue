@@ -15,7 +15,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['currentFilter', 'completedTodosCount']),
+    ...mapGetters('todos', ['filter', 'completedTodos']),
   },
 
   methods: {
@@ -28,21 +28,21 @@ export default {
   <div class="filters">
     <p
       class="option"
-      :class="{ active: currentFilter === FILTER_OPTIONS.ALL }"
+      :class="{ active: filter === FILTER_OPTIONS.ALL }"
       @click="setFilter(FILTER_OPTIONS.ALL)"
     >
       {{ TEXT_CONTENT.ALL }}
     </p>
     <p
       class="option"
-      :class="{ active: currentFilter === FILTER_OPTIONS.ACTIVE }"
+      :class="{ active: filter === FILTER_OPTIONS.ACTIVE }"
       @click="setFilter(FILTER_OPTIONS.ACTIVE)"
     >
       {{ TEXT_CONTENT.ACTIVE }}
     </p>
     <p
       class="option"
-      :class="{ active: currentFilter === FILTER_OPTIONS.COMPLETED }"
+      :class="{ active: filter === FILTER_OPTIONS.COMPLETED }"
       @click="setFilter(FILTER_OPTIONS.COMPLETED)"
     >
       {{ TEXT_CONTENT.COMPLETED }}
@@ -51,7 +51,7 @@ export default {
       class="buttonDelete"
       type="button"
       @click="clearCompleted"
-      :disabled="completedTodosCount === 0"
+      :disabled="completedTodos.legth === 0"
     >
       {{ TEXT_CONTENT.DELETE_COMPLETED }}
     </button>
