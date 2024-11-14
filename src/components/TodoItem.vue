@@ -1,7 +1,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
-
+//a bug to fix: если открыт решим редактирования и пользователь меняет фильтр на 'Заверешнные', он видит только открытую редактируемую таску. Но редактировать ее не может.
 export default {
   name: 'TodoItem',
 
