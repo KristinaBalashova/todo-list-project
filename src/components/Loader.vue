@@ -5,13 +5,13 @@ export default {
 </script>
 
 <template>
-  <div class="loader-wrapper">
+  <div class="loaderWrapper">
     <div class="loader"></div>
   </div>
 </template>
 
 <style scoped>
-.loader-wrapper {
+.loaderWrapper {
   display: flex;
   justify-content: center;
 }

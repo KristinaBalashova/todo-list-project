@@ -95,8 +95,4 @@ export default {
   background-color: #a0171a;
 }
 
-.buttonDelete:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
 </style>

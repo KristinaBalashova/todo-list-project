@@ -46,19 +46,19 @@ export default {
   <div class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
       <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
-      <button @click="saveTodo" :disabled="todo.completed">{{ TEXT_CONTENT.SAVE }}</button>
+      <button class="button" @click="saveTodo" :disabled="todo.completed">{{ TEXT_CONTENT.SAVE }}</button>
     </div>
     <div v-else class="item">
       <div class="title">
         <div class="task-status">
-          <span v-if="todo.completed" class="icon completed" @click="toggleStatus"> ✅ </span>
-          <span v-else class="icon active" @click="toggleStatus"> ⭕ </span>
+          <span v-if="todo.completed" class="icon" @click="toggleStatus"> ✅ </span>
+          <span v-else class="icon" @click="toggleStatus"> ⭕ </span>
         </div>
         <p class="title" :style="{ textDecoration: todo.completed ? 'line-through' : 'none' }">
           {{ todo.title }}
         </p>
       </div>
-      <button @click="toggleEditMode" :disabled="todo.completed">{{ TEXT_CONTENT.EDIT }}</button>
+      <button class="button" @click="toggleEditMode" :disabled="todo.completed">{{ TEXT_CONTENT.EDIT }}</button>
     </div>
   </div>
 </template>
@@ -74,6 +74,10 @@ export default {
 .input {
   background-color: transparent;
   border: none;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .title {
@@ -83,14 +87,7 @@ export default {
   gap: 10px;
 }
 
-.container input[type='text'] {
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.container button {
+.button {
   margin-left: 10px;
   padding: 5px 10px;
   font-size: 14px;
@@ -99,10 +96,6 @@ export default {
   color: white;
   border: none;
   border-radius: 4px;
-}
-
-.container input[type='checkbox'] {
-  margin-right: 10px;
 }
 
 .item {
@@ -124,4 +117,5 @@ export default {
 .icon {
   cursor: pointer;
 }
+
 </style>

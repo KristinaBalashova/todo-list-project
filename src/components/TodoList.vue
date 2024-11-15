@@ -76,8 +76,8 @@ export default {
       <NothingFound />
     </div>
 
-    <ul v-else-if="isSuccess">
-      <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
+    <ul class="list" v-else-if="isSuccess">
+      <TodoItem class="item" v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
     </ul>
   </div>
 </template>
@@ -86,7 +86,7 @@ export default {
 .container {
 }
 
-ul {
+.list {
   list-style-type: none;
   padding: 0;
   display: flex;
@@ -94,15 +94,10 @@ ul {
   gap: 10px;
 }
 
-li {
+.item {
   padding: 8px;
   background-color: #f0f0f0;
   margin-bottom: 4px;
   border-radius: 4px;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
 }
 </style>
