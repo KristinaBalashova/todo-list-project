@@ -43,7 +43,7 @@ export default {
 </script>
 
 <template>
-  <div class="container" :class="{ disabled: todo.completed }">
+  <li class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
       <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
       <button class="button" @click="saveTodo" :disabled="todo.completed">{{ TEXT_CONTENT.SAVE }}</button>
@@ -60,7 +60,7 @@ export default {
       </div>
       <button class="button" @click="toggleEditMode" :disabled="todo.completed">{{ TEXT_CONTENT.EDIT }}</button>
     </div>
-  </div>
+  </li>
 </template>
 
 <style scoped>
@@ -69,6 +69,14 @@ export default {
   background-color: #e9ecf5;
   border-radius: 4px;
   padding: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .input {
@@ -96,14 +104,6 @@ export default {
   color: white;
   border: none;
   border-radius: 4px;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
 }
 
 .title {

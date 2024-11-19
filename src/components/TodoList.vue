@@ -77,7 +77,7 @@ export default {
     </div>
 
     <ul class="list" v-else-if="isSuccess">
-      <TodoItem class="item" v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
+      <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
     </ul>
   </div>
 </template>
@@ -94,10 +94,4 @@ export default {
   gap: 10px;
 }
 
-.item {
-  padding: 8px;
-  background-color: #f0f0f0;
-  margin-bottom: 4px;
-  border-radius: 4px;
-}
 </style>
