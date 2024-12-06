@@ -94,5 +94,4 @@ export default {
 .buttonDelete:hover {
   background-color: #a0171a;
 }
-
 </style>

@@ -93,5 +93,4 @@ export default {
   flex-direction: column;
   gap: 10px;
 }
-
 </style>

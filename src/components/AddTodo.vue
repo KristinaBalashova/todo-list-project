@@ -1,5 +1,4 @@
 <script>
-import { mapActions } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
 
 export default {
@@ -8,12 +7,10 @@ export default {
   data() {
     return {
       newTask: '',
-      TEXT_CONTENT, //храню тексты в состоянии, чтобы они были доступны на момент рендеринга?
+      TEXT_CONTENT,
     };
   },
-
   methods: {
-    ...mapActions('todos', ['setTodos']),
     addNewTodo() {
       if (!this.newTask.trim()) {
         this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
@@ -27,8 +24,7 @@ export default {
         userId: 1,
       };
 
-      this.setTodos(newTodo);
-      this.$toast.success(TEXT_CONTENT.TASK_ADDED);
+      this.$emit('addTodo', newTodo);
       this.newTask = '';
     },
   },

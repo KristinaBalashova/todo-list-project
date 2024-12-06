@@ -46,7 +46,9 @@ export default {
   <li class="container" :class="{ disabled: todo.completed }">
     <div v-if="isEditing" class="item">
       <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
-      <button class="button" @click="saveTodo" :disabled="todo.completed">{{ TEXT_CONTENT.SAVE }}</button>
+      <button class="button" @click="saveTodo" :disabled="todo.completed">
+        {{ TEXT_CONTENT.SAVE }}
+      </button>
     </div>
     <div v-else class="item">
       <div class="title">
@@ -58,7 +60,9 @@ export default {
           {{ todo.title }}
         </p>
       </div>
-      <button class="button" @click="toggleEditMode" :disabled="todo.completed">{{ TEXT_CONTENT.EDIT }}</button>
+      <button class="button" @click="toggleEditMode" :disabled="todo.completed">
+        {{ TEXT_CONTENT.EDIT }}
+      </button>
     </div>
   </li>
 </template>
@@ -117,5 +121,4 @@ export default {
 .icon {
   cursor: pointer;
 }
-
 </style>
