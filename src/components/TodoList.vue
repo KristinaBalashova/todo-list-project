@@ -1,63 +1,43 @@
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
 import TodoItem from './TodoItem.vue';
 import NothingFound from './NothingFound.vue';
 import Loader from './Loader.vue';
 import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
+import { computed, onMounted } from 'vue';
+import { useTodos } from '../store/todos';
 
-export default {
-  name: 'TodoList',
-  data() {
-    return {
-      TEXT_CONTENT,
-    };
-  },
-  components: {
-    TodoItem,
-    NothingFound,
-    Loader,
-  },
-  computed: {
-    ...mapGetters('todos', ['todos', 'filter', 'todosState', 'activeTodos', 'completedTodos']),
+const store = useTodos();
 
-    filteredTodos() {
-      if (this.filter === FILTER_OPTIONS.ACTIVE) {
-        return this.activeTodos;
-      }
-      if (this.filter === FILTER_OPTIONS.COMPLETED) {
-        return this.completedTodos;
-      }
-      return this.todos;
-    },
+const todos = computed(() => store.todos);
+const filter = computed(() => store.filter);
+const todosState = computed(() => store.todosState);
+const activeTodos = computed(() => store.activeTodos);
+const completedTodos = computed(() => store.completedTodos);
 
-    isLoading() {
-      return this.todosState === TODOS_STATE.LOADING;
-    },
+const filteredTodos = computed(() => {
+  if (filter.value === FILTER_OPTIONS.ACTIVE) {
+    return activeTodos.value;
+  }
+  if (filter.value === FILTER_OPTIONS.COMPLETED) {
+    return completedTodos.value;
+  }
+  return todos.value;
+});
 
-    isIdle() {
-      return this.todosState === TODOS_STATE.IDLE;
-    },
+const isLoading = computed(() => todosState.value === TODOS_STATE.LOADING);
+const isIdle = computed(() => todosState.value === TODOS_STATE.IDLE);
+const isError = computed(() => todosState.value === TODOS_STATE.ERROR);
+const isSuccess = computed(() => todosState.value === TODOS_STATE.SUCCESS);
 
-    isError() {
-      return this.todosState === TODOS_STATE.ERROR;
-    },
+function loadTodos() {
+  store.fetchTodos();
+}
 
-    isSuccess() {
-      return this.todosState === TODOS_STATE.SUCCESS;
-    },
-  },
+onMounted(() => {
+  loadTodos();
+});
 
-  methods: {
-    ...mapActions('todos', ['fetchTodos']),
-    async loadTodos() {
-      await this.fetchTodos({ showToast: this.$toast });
-    },
-  },
-  mounted() {
-    this.loadTodos();
-  },
-};
 </script>
 
 <template>

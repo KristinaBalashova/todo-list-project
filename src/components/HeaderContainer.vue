@@ -1,14 +1,6 @@
-<script>
+<script setup>
 import { TEXT_CONTENT } from '../constants/textContent';
 
-export default {
-  name: 'HeaderContainer',
-  data() {
-    return {
-      TEXT_CONTENT,
-    };
-  },
-};
 </script>
 
 <template>

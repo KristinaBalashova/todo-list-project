@@ -1,14 +1,7 @@
-<script>
+<script setup>
 import { TEXT_CONTENT } from '../constants/textContent';
 
-export default {
-  name: 'NothingFound',
-  data() {
-    return {
-      TEXT_CONTENT,
-    };
-  },
-};
+
 </script>
 
 <template>

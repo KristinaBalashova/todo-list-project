@@ -1,22 +1,12 @@
-<script>
+<script setup>
 import Filters from './Filters.vue';
-import { mapGetters } from 'vuex';
 import { TEXT_CONTENT } from '../constants/textContent';
+import { computed, onMounted} from 'vue';
+import { useTodos } from '../store/todos';
 
-export default {
-  name: 'TodosManager',
-  components: {
-    Filters,
-  },
-  data() {
-    return {
-      TEXT_CONTENT,
-    };
-  },
-  computed: {
-    ...mapGetters('todos', ['activeTodos']),
-  },
-};
+const store = useTodos();
+const activeTodos = computed(() => store.activeTodos);
+
 </script>
 
 <template>

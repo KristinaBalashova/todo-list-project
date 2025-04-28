@@ -1,26 +1,19 @@
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { useTodos } from '../store/todos';
+import { computed, ref } from 'vue';
 import { FILTER_OPTIONS } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 
-export default {
-  name: 'Filters',
+const store = useTodos();
 
-  data() {
-    return {
-      newTask: '',
-      TEXT_CONTENT,
-      FILTER_OPTIONS,
-    };
-  },
+const filter = computed(() => store.filter);
+const completedTodos = computed(() => store.completedTodos);
+const setFilter = (newFilter) => {
+  store.setFilter(newFilter);
+};
 
-  computed: {
-    ...mapGetters('todos', ['filter', 'completedTodos']),
-  },
-
-  methods: {
-    ...mapActions('todos', ['setFilter', 'clearCompleted']),
-  },
+const clearCompleted = () => {
+  store.clearCompleted();
 };
 </script>
 

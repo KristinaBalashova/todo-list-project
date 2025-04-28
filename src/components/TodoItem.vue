@@ -1,45 +1,41 @@
-<script>
-import { mapActions } from 'vuex';
+<script setup>
 import { TEXT_CONTENT } from '../constants/textContent';
+import { useTodos } from '../store/todos';
+import { computed, ref } from 'vue';
+import { useToast } from 'vue-toastification';
 
-export default {
-  name: 'TodoItem',
+const store = useTodos();
 
-  props: {
-    todo: Object,
-  },
+const props = defineProps({
+  todo: Object,
+});
 
-  data() {
-    return {
-      isEditing: false,
-      editedTitle: this.todo.title,
-      TEXT_CONTENT,
-    };
-  },
+const isEditing = ref(false);
+const editedTitle = ref(props.todo.title);
 
-  methods: {
-    ...mapActions('todos', ['editTodo']),
+const editTodo = computed(() => store.editTodo);
 
-    toggleEditMode() {
-      if (!this.todo.completed) {
-        this.isEditing = !this.isEditing;
-      }
-    },
-    saveTodo() {
-      if (!this.editedTitle.trim()) {
-        this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
-        return;
-      }
-      this.editTodo({ id: this.todo.id, updates: { title: this.editedTitle } });
-      this.isEditing = false;
-    },
+// Функция для переключения режима редактирования
+function toggleEditMode() {
+  if (!props.todo.completed) {
+    isEditing.value = !isEditing.value;
+  }
+}
 
-    toggleStatus() {
-      const updatedStatus = !this.todo.completed;
-      this.editTodo({ id: this.todo.id, updates: { completed: updatedStatus } });
-    },
-  },
-};
+function saveTodo() {
+  if (!editedTitle.value.trim()) {
+    //todo - добавить обработку ошибки с новым тостером
+    //store.$toast.error(TEXT_CONTENT.EMPTY_TASK);
+    return;
+  }
+  editTodo.value({ id: props.todo.id, updates: { title: editedTitle.value } });
+  isEditing.value = false;
+}
+
+function toggleStatus() {
+  const updatedStatus = !props.todo.completed;
+  editTodo.value({ id: props.todo.id, updates: { completed: updatedStatus } });
+}
 </script>
 
 <template>

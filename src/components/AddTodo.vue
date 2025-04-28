@@ -1,34 +1,32 @@
-<script>
+<script setup>
+import { ref } from 'vue';
 import { TEXT_CONTENT } from '../constants/textContent';
 
-export default {
-  name: 'AddTodo',
+// Локальное состояние
+const newTask = ref('');
 
-  data() {
-    return {
-      newTask: '',
-      TEXT_CONTENT,
-    };
-  },
-  methods: {
-    addNewTodo() {
-      if (!this.newTask.trim()) {
-        this.$toast.error(TEXT_CONTENT.EMPTY_TASK);
-        return;
-      }
+// Эмиттер событий
+const emit = defineEmits(['addTodo']);
 
-      const newTodo = {
-        completed: false,
-        id: Date.now(),
-        title: this.newTask,
-        userId: 1,
-      };
+// Метод добавления новой задачи
+function addNewTodo() {
+  if (!newTask.value.trim()) {
+    // Замените на правильный способ показа тоста в вашем проекте
+    // Например, можно использовать глобальную функцию через provide/inject или напрямую импортировать
+    console.error(TEXT_CONTENT.EMPTY_TASK); // Временно, пока не подключен $toast
+    return;
+  }
 
-      this.$emit('addTodo', newTodo);
-      this.newTask = '';
-    },
-  },
-};
+  const newTodo = {
+    completed: false,
+    id: Date.now(),
+    title: newTask.value,
+    userId: 1,
+  };
+
+  emit('addTodo', newTodo);
+  newTask.value = '';
+}
 </script>
 
 <template>
@@ -72,3 +70,4 @@ export default {
   background-color: #752d41;
 }
 </style>
+
