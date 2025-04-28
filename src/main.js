@@ -1,15 +1,12 @@
 import Vue from 'vue';
 
-import App from './App.vue';
-import store from './store';
-import Toast from 'vue-toastification';
-import 'vue-toastification/dist/index.css';
+import { createApp } from 'vue'
+import App from './App.vue'
+//import router from './router'
+import { createPinia } from 'pinia'
 
-Vue.config.devtools = true;
+const app = createApp(App)
+//app.use(router)
+app.use(createPinia())
+app.mount('#app')
 
-Vue.use(Toast);
-
-new Vue({
-  store,
-  render: (h) => h(App),
-}).$mount('#app');
