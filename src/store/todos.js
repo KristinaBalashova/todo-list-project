@@ -15,9 +15,10 @@ export const useTodos = defineStore('todos', {
     setTodos(todos) {
       if (Array.isArray(todos)) {
         this.todos = [...todos, ...this.todos];
-      } else {
-        this.todos = [todos, ...this.todos];
       }
+    },
+    addTodo(todo) {
+      this.todos.unshift(todo);
     },
     setFilter(filter) {
       this.filter = filter;
