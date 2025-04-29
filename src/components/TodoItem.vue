@@ -5,6 +5,7 @@ import { computed, ref } from 'vue';
 import { useToast } from 'vue-toastification';
 
 const store = useTodos();
+const toast = useToast();
 
 const props = defineProps({
   todo: Object,
@@ -24,8 +25,7 @@ function toggleEditMode() {
 
 function saveTodo() {
   if (!editedTitle.value.trim()) {
-    //todo - добавить обработку ошибки с новым тостером
-    //store.$toast.error(TEXT_CONTENT.EMPTY_TASK);
+    toast.error(TEXT_CONTENT.EMPTY_TASK);
     return;
   }
   editTodo.value({ id: props.todo.id, updates: { title: editedTitle.value } });

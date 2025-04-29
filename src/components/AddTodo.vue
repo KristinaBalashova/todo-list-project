@@ -1,19 +1,18 @@
 <script setup>
 import { ref } from 'vue';
 import { TEXT_CONTENT } from '../constants/textContent';
+import { useToast } from "vue-toastification";
 
-// Локальное состояние
 const newTask = ref('');
 
-// Эмиттер событий
+const toast = useToast();
+
 const emit = defineEmits(['addTodo']);
 
-// Метод добавления новой задачи
+
 function addNewTodo() {
   if (!newTask.value.trim()) {
-    // Замените на правильный способ показа тоста в вашем проекте
-    // Например, можно использовать глобальную функцию через provide/inject или напрямую импортировать
-    console.error(TEXT_CONTENT.EMPTY_TASK); // Временно, пока не подключен $toast
+    toast.error(TEXT_CONTENT.EMPTY_TASK);
     return;
   }
 

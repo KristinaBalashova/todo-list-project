@@ -3,21 +3,17 @@ import TodoList from './TodoList.vue';
 import AddTodo from './AddTodo.vue';
 import TodosManager from './TodosManager.vue';
 import { useTodos } from '../store/todos';
+import { useToast } from "vue-toastification";
+import { TEXT_CONTENT } from '../constants/textContent';
 
 const store = useTodos();
-
-
-const setTodos = () => {
-  store.setTodos();
-};
+const toast = useToast();
 
 function addTodo(newTodo) {
-  setTodos(newTodo);
-  //todo доделать тостер
-  //this.$toast.success(TEXT_CONTENT.TASK_ADDED);
+  store.addTodo(newTodo);
+  toast.success(TEXT_CONTENT.TASK_ADDED);
 }
   
-
 </script>
 
 <template>
