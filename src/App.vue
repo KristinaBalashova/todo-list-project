@@ -1,12 +1,13 @@
 <script setup>
-import Main from './components/Main.vue';
+import Navigation from './components/Navigation.vue';
 import HeaderContainer from './components/HeaderContainer.vue';
 </script>
 
 <template>
   <div id="app">
     <HeaderContainer />
-    <Main />
+    <Navigation />
+    <router-view />
   </div>
 </template>
 
