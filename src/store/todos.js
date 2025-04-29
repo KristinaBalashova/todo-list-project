@@ -20,7 +20,7 @@ export const useTodos = defineStore('todos', {
       }
     },
     setFilter(filter) {
-      this.filterOptions = filter;
+      this.filter = filter;
     },
     removeCompletedTodos() {
       this.todos = this.todos.filter((todo) => !todo.completed);
