@@ -1,18 +1,19 @@
 <script setup>
 import Filters from './Filters.vue';
 import { TEXT_CONTENT } from '../constants/textContent';
-import { computed, onMounted} from 'vue';
+import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
+import Chip from './ui/Chip.vue';
 
 const store = useTodos();
 const activeTodos = computed(() => store.activeTodos);
-
 </script>
 
 <template>
   <div class="container">
-    <p class="active">{{ TEXT_CONTENT.ACTIVE }} {{ activeTodos.length }}</p>
-
+    <Chip color="info" variant="elevated">
+      {{ TEXT_CONTENT.ACTIVE }}: {{ activeTodos.length }}
+    </Chip>
     <Filters />
   </div>
 </template>
