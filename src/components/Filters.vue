@@ -1,13 +1,15 @@
 <script setup>
 import { useTodos } from '../store/todos';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { FILTER_OPTIONS } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
+import Chip from './ui/Chip.vue';
 
 const store = useTodos();
 
 const filter = computed(() => store.filter);
 const completedTodos = computed(() => store.completedTodos);
+
 const setFilter = (newFilter) => {
   store.setFilter(newFilter);
 };
@@ -19,32 +21,21 @@ const clearCompleted = () => {
 
 <template>
   <div class="filters">
-    <p
-      class="option"
-      :class="{ active: filter === FILTER_OPTIONS.ALL }"
-      @click="setFilter(FILTER_OPTIONS.ALL)"
+    <Chip
+      v-for="option in Object.values(FILTER_OPTIONS)"
+      :key="option"
+      color="primary"
+      :variant="filter === option ? 'elevated' : 'text'"
+      @click="setFilter(option)"
     >
-      {{ TEXT_CONTENT.ALL }}
-    </p>
-    <p
-      class="option"
-      :class="{ active: filter === FILTER_OPTIONS.ACTIVE }"
-      @click="setFilter(FILTER_OPTIONS.ACTIVE)"
-    >
-      {{ TEXT_CONTENT.ACTIVE }}
-    </p>
-    <p
-      class="option"
-      :class="{ active: filter === FILTER_OPTIONS.COMPLETED }"
-      @click="setFilter(FILTER_OPTIONS.COMPLETED)"
-    >
-      {{ TEXT_CONTENT.COMPLETED }}
-    </p>
+      {{ TEXT_CONTENT[option.toUpperCase()] }}
+    </Chip>
+
     <button
       class="buttonDelete"
       type="button"
       @click="clearCompleted"
-      :disabled="completedTodos.legth === 0"
+      :disabled="completedTodos.length === 0"
     >
       {{ TEXT_CONTENT.DELETE_COMPLETED }}
     </button>
@@ -56,23 +47,7 @@ const clearCompleted = () => {
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.option {
-  cursor: pointer;
-  padding: 5px 10px;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-  margin: 0;
-}
-
-.option.active {
-  background-color: #ae76a6;
-}
-
-.option:hover {
-  background-color: #e9ecf5;
+  flex-wrap: wrap;
 }
 
 .buttonDelete {
@@ -81,7 +56,9 @@ const clearCompleted = () => {
   background-color: #ba1b1d;
   color: white;
   border-radius: 4px;
-  border-color: #ba1b1d;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .buttonDelete:hover {

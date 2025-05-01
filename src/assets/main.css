@@ -1,3 +1,35 @@
 body {
-    font-family: 'Inter', sans-serif;
-  }
+  font-family: 'Inter', sans-serif;
+}
+
+:root {
+  /* Primary palette */
+  --color-primary: #993955;
+  --color-primary-dark: #752d41;
+  --color-primary-light: #e7d4ea;
+
+  /* Secondary palette */
+  --color-secondary: #d38abb;
+  --color-secondary-dark: #6a1b49;
+  --color-secondary-light: #f3e0ec;
+
+  /* Success palette */
+  --color-success: #66bb6a;
+  --color-success-dark: #2e7d32;
+  --color-success-light: #d1f0d5;
+
+  /* Error palette */
+  --color-error: #e57373;
+  --color-error-dark: #b71c1c;
+  --color-error-light: #f9d3d3;
+
+  /* Warning palette */
+  --color-warning: #ffb300;
+  --color-warning-dark: #8c6d00;
+  --color-warning-light: #fff4cc;
+
+  /* Info palette */
+  --color-info: #64b5f6;
+  --color-info-dark: #0d47a1;
+  --color-info-light: #d3eaf9;
+}
