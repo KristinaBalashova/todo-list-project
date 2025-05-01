@@ -6,6 +6,7 @@ import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
+import draggable from 'vuedraggable';
 
 const store = useTodos();
 
@@ -37,7 +38,6 @@ function loadTodos() {
 onMounted(() => {
   loadTodos();
 });
-
 </script>
 
 <template>
@@ -55,9 +55,21 @@ onMounted(() => {
     <div v-if="filteredTodos.length === 0 && isSuccess">
       <NothingFound />
     </div>
+    <draggable
+      v-if="isSuccess && filter === FILTER_OPTIONS.ALL"
+      v-model="store.todos"
+      tag="ul"
+      class="list"
+    >
+      <template #item="{ element: todo }">
+        <li><TodoItem :key="todo.id" :todo="todo" /></li>
+      </template>
+    </draggable>
 
-    <ul class="list" v-else-if="isSuccess">
-      <TodoItem v-for="todo in filteredTodos" :key="todo.id" :todo="todo" />
+    <ul v-else-if="isSuccess" class="list">
+      <li v-for="todo in filteredTodos" :key="todo.id">
+        <TodoItem :todo="todo" />
+      </li>
     </ul>
   </div>
 </template>
