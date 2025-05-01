@@ -31,13 +31,12 @@ const isIdle = computed(() => todosState.value === TODOS_STATE.IDLE);
 const isError = computed(() => todosState.value === TODOS_STATE.ERROR);
 const isSuccess = computed(() => todosState.value === TODOS_STATE.SUCCESS);
 
-function loadTodos() {
-  store.fetchTodos();
-}
-
 onMounted(() => {
-  loadTodos();
+  if (store.todos.length === 0 && todosState.value !== TODOS_STATE.LOADING) {
+    store.fetchTodos();
+  }
 });
+
 </script>
 
 <template>
