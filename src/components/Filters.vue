@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import { FILTER_OPTIONS } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 import Chip from './ui/Chip.vue';
+import Button from './ui/Button.vue';
 
 const store = useTodos();
 
@@ -31,14 +32,14 @@ const clearCompleted = () => {
       {{ TEXT_CONTENT[option.toUpperCase()] }}
     </Chip>
 
-    <button
-      class="buttonDelete"
-      type="button"
+    <Button
+      variant="elevated"
+      color="error"
       @click="clearCompleted"
       :disabled="completedTodos.length === 0"
     >
       {{ TEXT_CONTENT.DELETE_COMPLETED }}
-    </button>
+    </Button>
   </div>
 </template>
 
@@ -50,18 +51,6 @@ const clearCompleted = () => {
   flex-wrap: wrap;
 }
 
-.buttonDelete {
-  cursor: pointer;
-  padding: 5px 10px;
-  background-color: #ba1b1d;
-  color: white;
-  border-radius: 4px;
-  border: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
 
-.buttonDelete:hover {
-  background-color: #a0171a;
-}
+
 </style>

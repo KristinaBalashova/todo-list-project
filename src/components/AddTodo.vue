@@ -33,7 +33,7 @@ function addNewTodo() {
 <template>
   <form class="form" @submit.prevent="addNewTodo">
     <Input v-model="newTask" placeholder="Enter a new task" />
-    <Button type="submit">{{ TEXT_CONTENT.ADD }}</Button>
+    <Button type="submit" variant="elevated" color="primary">{{ TEXT_CONTENT.ADD }}</Button>
   </form>
 </template>
 
