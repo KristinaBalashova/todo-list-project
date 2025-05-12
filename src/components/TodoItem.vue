@@ -16,7 +16,7 @@ const editedTitle = ref(props.todo.title);
 
 const editTodo = computed(() => store.editTodo);
 
-// Функция для переключения режима редактирования
+
 function toggleEditMode() {
   if (!props.todo.completed) {
     isEditing.value = !isEditing.value;

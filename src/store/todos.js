@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { TODOS_ENDPOINT } from '../constants/apiUrls';
+
 import { FILTER_OPTIONS, TODOS_STATE } from '../constants/contants';
 import { defineStore } from 'pinia';
+import { fetchTasks } from '../api/tasksApi';
 
 export const useTodos = defineStore('todos', {
   state: () => {
@@ -38,8 +38,9 @@ export const useTodos = defineStore('todos', {
     async fetchTodos() {
       this.setTodosState(TODOS_STATE.LOADING);
       try {
-        const response = await axios(TODOS_ENDPOINT);
-        this.setTodos(response.data);
+        const response = await fetchTasks();
+        console.log('response', response);
+        this.setTodos(response);
         this.setTodosState(TODOS_STATE.SUCCESS);
       } catch (error) {
         this.setTodosState(TODOS_STATE.ERROR);
