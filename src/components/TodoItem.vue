@@ -16,11 +16,14 @@ const editedTitle = ref(props.todo.title);
 
 const editTodo = computed(() => store.editTodo);
 
-
 function toggleEditMode() {
-  if (!props.todo.completed) {
+  if (!props.todo.status !== 'done') {
     isEditing.value = !isEditing.value;
+  } else {
+    //todo 
+    toast.error("You can't edit a completed task.");
   }
+  
 }
 
 function saveTodo() {
@@ -33,30 +36,33 @@ function saveTodo() {
 }
 
 function toggleStatus() {
-  const updatedStatus = !props.todo.completed;
-  editTodo.value({ id: props.todo.id, updates: { completed: updatedStatus } });
+  const statuses = ['todo', 'in_progress', 'done'];
+  const currentIndex = statuses.indexOf(props.todo.status);
+  const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+  editTodo.value({ id: props.todo.id, updates: { status: nextStatus } });
 }
 </script>
 
 <template>
-  <li class="container" :class="{ disabled: todo.completed }">
+  <li class="container" :class="{ disabled: todo.status === 'done' }">
     <div v-if="isEditing" class="item">
-      <input type="text" class="input" v-model="editedTitle" :disabled="todo.completed" />
-      <button class="button" @click="saveTodo" :disabled="todo.completed">
+      <input type="text" class="input" v-model="editedTitle" :disabled="todo.status === 'done'" />
+      <button class="button" @click="saveTodo" :disabled="todo.status === 'done'">
         {{ TEXT_CONTENT.SAVE }}
       </button>
     </div>
     <div v-else class="item">
       <div class="title">
-        <div class="task-status">
-          <span v-if="todo.completed" class="icon" @click="toggleStatus"> ✅ </span>
-          <span v-else class="icon" @click="toggleStatus"> ⭕ </span>
+        <div class="task-status" @click="toggleStatus">
+          <span class="icon" v-if="todo.status === 'done'">✅</span>
+          <span class="icon" v-else-if="todo.status === 'in_progress'">🔄</span>
+          <span class="icon" v-else>⭕</span>
         </div>
-        <p class="title" :style="{ textDecoration: todo.completed ? 'line-through' : 'none' }">
+        <p class="title" :style="{ textDecoration: todo.status === 'done' ? 'line-through' : 'none' }">
           {{ todo.title }}
         </p>
       </div>
-      <button class="button" @click="toggleEditMode" :disabled="todo.completed">
+      <button class="button" @click="toggleEditMode" :disabled="todo.status === 'done'">
         {{ TEXT_CONTENT.EDIT }}
       </button>
     </div>

@@ -24,7 +24,7 @@ export const useTodos = defineStore('todos', {
       this.filter = filter;
     },
     removeCompletedTodos() {
-      this.todos = this.todos.filter((todo) => !todo.completed);
+      this.todos = this.todos.filter((todo) => todo.status !== 'done');
     },
     editTodo({ id, updates }) {
       const index = this.todos.findIndex((todo) => todo.id === id);
@@ -52,8 +52,8 @@ export const useTodos = defineStore('todos', {
     },
   },
   getters: {
-    activeTodos: (state) => state.todos.filter((todo) => !todo.completed),
-    completedTodos: (state) => state.todos.filter((todo) => todo.completed),
+    activeTodos: (state) => state.todos.filter((todo) => todo.status !== 'done'),
+    completedTodos: (state) => state.todos.filter((todo) => todo.status === 'done' ),
   },    
 });
 
