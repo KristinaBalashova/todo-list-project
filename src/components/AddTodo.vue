@@ -18,10 +18,9 @@ function addNewTodo() {
   }
 
   const newTodo = {
-    completed: false,
+    status: 'todo',
     id: Date.now(),
     title: newTask.value,
-    userId: 1,
   };
 
   emit('addTodo', newTodo);
