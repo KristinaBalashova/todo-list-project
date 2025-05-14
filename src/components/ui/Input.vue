@@ -1,26 +1,22 @@
 <script setup>
 defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-  },
   placeholder: {
     type: String,
     default: '',
   },
 });
 
-defineEmits(['update:modelValue']);
+const modelValue = defineModel();
+
 </script>
 
 <template>
   <v-text-field
     v-bind="$attrs"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event)"
+    :model-value="modelValue"
+    @update:model-value="modelValue = $event"
     :placeholder="placeholder"
     class="ui-input"
-
   />
 </template>
 
