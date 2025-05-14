@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Auth from '../views/Auth.vue';         
+import Auth from '../views/Auth.vue';
 import Board from '../views/Board.vue';
-import Project from '../views/ProjectPage.vue'; 
+import Project from '../views/ProjectPage.vue';
 import Task from '../views/Task.vue';
 import Reports from '../views/Reports.vue';
+import WorkInProgress from '../views/WorkInProgress.vue'; // Import the new component
 const routes = [
   {
     path: '/',
@@ -14,7 +15,8 @@ const routes = [
   {
     path: '/auth',
     name: 'Auth',
-    component: Auth,
+    //component: Auth,
+    redirect: '/work-in-progress',
   },
   {
     path: '/board',
@@ -29,12 +31,23 @@ const routes = [
   {
     path: '/task/:id',
     name: 'Task',
-    component: Task,
+    //component: Task,
+    redirect: '/work-in-progress',
   },
   {
     path: '/reports',
     name: 'Reports',
-    component: Reports,
+    //component: Reports,
+    redirect: '/work-in-progress',
+  },
+  {
+    path: '/work-in-progress',
+    name: 'WorkInProgress',
+    component: WorkInProgress,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/wip',
   },
 ];
 
