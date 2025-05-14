@@ -9,7 +9,9 @@ Stay tuned!
 
 ## Deploy
 
-https://todo-list-project-psi.vercel.app/
+- Vue2 + Vuex https://todo-list-project-psi.vercel.app/
+
+- Vue3 _ Pinia https://todo-list-project-vue3.vercel.app/
 
 ## Technology Stack
 
@@ -26,7 +28,7 @@ https://todo-list-project-psi.vercel.app/
 
 ## Features
 
-- **Initial Data Loading**: At the start the application fetches the first 5 tasks from [jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com/users/1/todos).
+- **Initial Data Loading**: At the start the application fetches the first 5 tasks from Supabase.
 - **Adding Tasks**: Users can add new tasks to the list.
 - **Editing**: Tasks can be edited
 - **Sorting**: Tasks can be sorted by status (completed/active/all).
