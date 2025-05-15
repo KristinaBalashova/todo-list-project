@@ -2,6 +2,7 @@
 <script setup>
 import Card from '../components/ui/Card.vue';
 import { useRouter } from 'vue-router';
+import fetchProjects from '../api/projectsApi.ts';
 
 const router = useRouter();
 
@@ -9,38 +10,14 @@ function goToProjectPage(id) {
   router.push(`/project/${id}`);
 }
 
-const cardData = [
-  {
-    title: 'Project 1',
-    subtitle: 'Subtitle 1',
-    text: 'This is the text for the first card.',
-    id: 1,
-  },
-  {
-    title: 'Project 2',
-    subtitle: 'Subtitle 2',
-    text: 'This is the text for the second card.',
-    id: 2,
-  },
-  {
-    title: 'Project 3',
-    subtitle: 'Subtitle 3',
-    text: 'This is the text for the third card.',
-    id: 3,
-  },
-  {
-    title: 'Project 4',
-    subtitle: 'Subtitle 4',
-    text: 'This is the text for the fourth card.',
-    id: 4,
-  }
-];
+const projects = await fetchProjects();
+
 </script>
 
 
 <template>
   <div class="container">
-    <template v-for="(card, index) in cardData" :key="index">
+    <template v-for="(project, index) in projects" :key="index">
       <Card
         :title="card.title"
         :subtitle="card.subtitle"

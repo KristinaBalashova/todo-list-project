@@ -11,7 +11,7 @@ Stay tuned!
 
 - Vue2 + Vuex https://todo-list-project-psi.vercel.app/
 
-- Vue3 _ Pinia https://todo-list-project-vue3.vercel.app/
+- Vue3 + Pinia https://todo-list-project-psx6.vercel.app
 
 ## Technology Stack
 
