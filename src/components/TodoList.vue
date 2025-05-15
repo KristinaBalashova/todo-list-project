@@ -36,7 +36,6 @@ onMounted(() => {
     store.fetchTodos();
   }
 });
-
 </script>
 
 <template>

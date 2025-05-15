@@ -50,7 +50,4 @@ const clearCompleted = () => {
   align-items: center;
   flex-wrap: wrap;
 }
-
-
-
 </style>

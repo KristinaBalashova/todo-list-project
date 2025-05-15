@@ -20,10 +20,9 @@ function toggleEditMode() {
   if (!props.todo.status !== 'done') {
     isEditing.value = !isEditing.value;
   } else {
-    //todo 
+    //todo добавить текст ошибки в виде константы
     toast.error("You can't edit a completed task.");
   }
-  
 }
 
 function saveTodo() {
@@ -58,7 +57,10 @@ function toggleStatus() {
           <span class="icon" v-else-if="todo.status === 'in_progress'">🔄</span>
           <span class="icon" v-else>⭕</span>
         </div>
-        <p class="title" :style="{ textDecoration: todo.status === 'done' ? 'line-through' : 'none' }">
+        <p
+          class="title"
+          :style="{ textDecoration: todo.status === 'done' ? 'line-through' : 'none' }"
+        >
           {{ todo.title }}
         </p>
       </div>

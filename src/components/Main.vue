@@ -3,7 +3,7 @@ import TodoList from './TodoList.vue';
 import AddTodo from './AddTodo.vue';
 import TodosManager from './TodosManager.vue';
 import { useTodos } from '../store/todos';
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 import { TEXT_CONTENT } from '../constants/textContent';
 
 const store = useTodos();
@@ -13,7 +13,6 @@ function addTodo(newTodo) {
   store.addTodo(newTodo);
   toast.success(TEXT_CONTENT.TASK_ADDED);
 }
-  
 </script>
 
 <template>

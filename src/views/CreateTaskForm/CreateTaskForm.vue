@@ -19,7 +19,6 @@ const priorities = ['Низкий', 'Средний', 'Высокий'];
 const assignees = ['Алиса', 'Боб', 'Кристина'];
 const projects = ['CRM', 'Маркетинг', 'Техподдержка'];
 
-
 function toggleModalVisible() {
   dialogVisible.value = !dialogVisible.value;
 }
@@ -32,7 +31,7 @@ function addTag() {
 }
 
 function removeTag(tag) {
-  taskTags.value = taskTags.value.filter(t => t !== tag);
+  taskTags.value = taskTags.value.filter((t) => t !== tag);
 }
 
 function submitTask() {
@@ -122,7 +121,6 @@ function resetForm() {
 
 <style scoped>
 .container {
-  
 }
 .tags-section {
   margin-top: 16px;

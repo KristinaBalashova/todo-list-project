@@ -1,7 +1,5 @@
 <script setup>
 import { TEXT_CONTENT } from '../constants/textContent';
-
-
 </script>
 
 <template>

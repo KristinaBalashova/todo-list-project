@@ -12,11 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <v-chip 
-    :variant="variant" 
-    v-bind="$attrs" 
-    class="chip" 
-    :class="[variant, `chip--${color}`]">
+  <v-chip :variant="variant" v-bind="$attrs" class="chip" :class="[variant, `chip--${color}`]">
     <slot />
   </v-chip>
 </template>
@@ -26,7 +22,9 @@ defineProps({
   font-weight: 500;
   font-size: 14px;
   border-radius: 6px;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 /* Elevated chip background + text color */

@@ -11,14 +11,14 @@ defineProps({
   disabled: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 </script>
 
 <template>
-  <v-btn 
-    v-bind="$attrs" 
-    :variant="variant" 
+  <v-btn
+    v-bind="$attrs"
+    :variant="variant"
     class="btn"
     :class="[`btn--${color}`, variant]"
     :disabled="disabled"

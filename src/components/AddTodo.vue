@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { TEXT_CONTENT } from '../constants/textContent';
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 import Input from './ui/Input.vue';
-import Button from './ui/Button.vue'; 
+import Button from './ui/Button.vue';
 
 const newTask = ref('');
 
@@ -30,11 +30,7 @@ function addNewTodo() {
 
 <template>
   <form class="form" @submit.prevent="addNewTodo">
-    <Input
-      v-model="newTask"
-      placeholder="Enter a new task"
-      class="form-input"
-    />
+    <Input v-model="newTask" placeholder="Enter a new task" class="form-input" />
     <Button type="submit" variant="elevated" color="primary">
       {{ TEXT_CONTENT.ADD }}
     </Button>

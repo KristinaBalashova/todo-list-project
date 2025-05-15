@@ -7,7 +7,6 @@ defineProps({
 });
 
 const modelValue = defineModel();
-
 </script>
 
 <template>
@@ -20,6 +19,4 @@ const modelValue = defineModel();
   />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

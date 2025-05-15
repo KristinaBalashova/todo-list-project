@@ -1,11 +1,7 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <div class="container">
-    Здесь будет страница аутентификации
-  </div>
+  <div class="container">Здесь будет страница аутентификации</div>
 </template>
 
 <style scoped>

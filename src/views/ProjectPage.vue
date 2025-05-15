@@ -17,25 +17,22 @@ onMounted(() => {
 <template>
   <div class="container">
     <div class="project-header">
-       <div>
+      <div>
         <h1>Страница проекта</h1>
-      <p>ID проекта: {{ projectId }}</p>
-       </div>
-      
+        <p>ID проекта: {{ projectId }}</p>
+      </div>
+
       <CreateTaskForm />
     </div>
-    
+
     <div>
       <TodosManager />
       <TodoList />
     </div>
-    
   </div>
 </template>
 
-
 <style scoped>
-
 .project-header {
   display: flex;
   justify-content: space-between;

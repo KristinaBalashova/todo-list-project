@@ -20,8 +20,10 @@ const filteredTasks = computed(() => {
 
   return mockTasks.filter((task) => {
     const closed = dayjs(task.closedAt);
-    return closed.isAfter(dayjs(startDate.value).subtract(1, 'day')) &&
-           closed.isBefore(dayjs(endDate.value).add(1, 'day'));
+    return (
+      closed.isAfter(dayjs(startDate.value).subtract(1, 'day')) &&
+      closed.isBefore(dayjs(endDate.value).add(1, 'day'))
+    );
   });
 });
 
@@ -59,17 +61,9 @@ const dateMenu = ref(false);
     <v-menu v-model="dateMenu" close-on-content-click="false">
       <template #activator="{ props }"></template>
       <v-card>
-        <v-date-picker
-          v-model="startDate"
-          title="Дата начала"
-          show-adjacent-months
-        />
+        <v-date-picker v-model="startDate" title="Дата начала" show-adjacent-months />
         <v-divider />
-        <v-date-picker
-          v-model="endDate"
-          title="Дата окончания"
-          show-adjacent-months
-        />
+        <v-date-picker v-model="endDate" title="Дата окончания" show-adjacent-months />
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="dateMenu = false">Готово</v-btn>
@@ -90,9 +84,7 @@ const dateMenu = ref(false);
     </div>
 
     <div v-else class="mt-6">
-      <v-alert type="info" border="start" text>
-        Нет задач за выбранный период
-      </v-alert>
+      <v-alert type="info" border="start" text> Нет задач за выбранный период </v-alert>
     </div>
   </div>
 </template>

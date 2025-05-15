@@ -1,26 +1,24 @@
 <script setup>
-
 defineProps({
-    loading: {
-        type: Boolean,
-        default: false
-    },
-    title: {
-        type: String,
-    },
-    subtitle: {
-        type: String,
-    },
-})
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  title: {
+    type: String,
+  },
+  subtitle: {
+    type: String,
+  },
+});
 </script>
 
 <template>
   <v-card :loading="loading" :title="title" :subtitle="subtitle" class="ui-card">
     <v-card-actions>
-      <slot name="action-button"/>
+      <slot name="action-button" />
     </v-card-actions>
-    <slot name="content">
-    </slot>
+    <slot name="content"> </slot>
   </v-card>
 </template>
 
