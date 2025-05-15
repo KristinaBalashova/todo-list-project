@@ -1,8 +1,9 @@
-
 import { FILTER_OPTIONS, TODOS_STATE } from '../constants/contants';
 import { defineStore } from 'pinia';
 import { fetchTasks } from '../api/tasksApi';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 export const useTodos = defineStore('todos', {
   state: () => {
     return {
@@ -39,12 +40,11 @@ export const useTodos = defineStore('todos', {
       this.setTodosState(TODOS_STATE.LOADING);
       try {
         const response = await fetchTasks();
-        console.log('response', response);
         this.setTodos(response);
         this.setTodosState(TODOS_STATE.SUCCESS);
       } catch (error) {
         this.setTodosState(TODOS_STATE.ERROR);
-        // todo обновить showToast здесь
+        toast.error('Ошибка при загрузке данных.');
       }
     },
     clearCompleted() {
@@ -53,7 +53,6 @@ export const useTodos = defineStore('todos', {
   },
   getters: {
     activeTodos: (state) => state.todos.filter((todo) => todo.status !== 'done'),
-    completedTodos: (state) => state.todos.filter((todo) => todo.status === 'done' ),
-  },    
+    completedTodos: (state) => state.todos.filter((todo) => todo.status === 'done'),
+  },
 });
-
