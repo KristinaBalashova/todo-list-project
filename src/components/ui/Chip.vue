@@ -27,7 +27,6 @@ defineProps({
     color 0.3s;
 }
 
-/* Elevated chip background + text color */
 .chip.elevated.chip--primary {
   background-color: var(--color-primary-light) !important;
   color: var(--color-primary-dark) !important;
@@ -58,7 +57,6 @@ defineProps({
   color: var(--color-info-dark) !important;
 }
 
-/* Outlined or text style colors */
 .chip--primary {
   color: var(--color-primary);
   border-color: var(--color-primary);
