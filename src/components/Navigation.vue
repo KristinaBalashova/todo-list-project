@@ -4,7 +4,6 @@
     <router-link to="/" class="link">🏠 Home</router-link>
     <router-link to="/auth" class="link">🔐 Авторизация</router-link>
     <router-link to="/board" class="link">📋 Доска</router-link>
-    <router-link to="/project/1" class="link">📁 Проект</router-link>
     <router-link to="/task/1" class="link">✅ Задача</router-link>
     <router-link to="/reports" class="link">Отчет</router-link>
   </nav>
@@ -16,8 +15,6 @@
   flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
-  background-color: #f5f5f5;
-  border-bottom: 2px solid #ddd;
   justify-content: center;
 }
 
