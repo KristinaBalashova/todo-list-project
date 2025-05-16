@@ -3,6 +3,7 @@ import Card from '../components/ui/Card.vue';
 import { useRouter } from 'vue-router';
 import { useProjects } from '../store/projects';
 import { onMounted, computed } from 'vue';
+import Button from '../components/ui/Button.vue';
 
 const store = useProjects();
 const router = useRouter();
@@ -16,7 +17,7 @@ onMounted(() => {
 });
 
 function goToProjectPage(id) {
-  router.push(`/projects/${id}`);
+  router.push(`/project/${id}`);
 }
 </script>
 
@@ -26,13 +27,25 @@ function goToProjectPage(id) {
       <Card
         :title="project.name"
         :subtitle="project.description"
-        :loading="false" 
-        @click="goToProjectPage(project.id)"       
+        :loading="false"
+        @click="goToProjectPage(project.id)"
       >
+        <template #content>
+          
+        </template>
         <template #action-button>
-          <v-btn color="primary">Action</v-btn>
+          <Button color="primary">К проекту</Button>
         </template>
       </Card>
     </template>
   </div>
 </template>
+
+<style scoped>
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+</style>
