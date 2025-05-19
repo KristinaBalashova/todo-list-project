@@ -5,3 +5,14 @@ export async function fetchProjects() {
   if (error) throw error;
   return data;
 }
+
+export async function fetchProjectById(id) {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
