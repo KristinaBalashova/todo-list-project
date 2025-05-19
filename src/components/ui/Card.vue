@@ -7,7 +7,7 @@ defineProps({
   },
   title: {
     type: String,
-    required: true,
+    required: false,
   },
   subtitle: {
     type: String,
