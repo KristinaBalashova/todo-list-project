@@ -24,7 +24,7 @@ const activeTodos = computed(() => store.activeTodos);
   flex-direction: row;
   justify-content: space-between;
   align-items: start;
-  margin: 20px 0;
+  margin: 20px;
 }
 
 .active {
@@ -39,5 +39,14 @@ const activeTodos = computed(() => store.activeTodos);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .container{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    
+  }
 }
 </style>
