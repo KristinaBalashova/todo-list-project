@@ -1,33 +1,32 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import CreateTaskForm from './CreateTaskForm/CreateTaskForm.vue';
 import TodosManager from '../components/TodosManager.vue';
 import TodoList from '../components/TodoList.vue';
+import { useTodos } from '../store/todos';
 
 const route = useRoute();
-const projectId = ref(route.params.id);
+const store = useTodos();
 
-onMounted(() => {
-  //todo
-  // fetchProjectById(projectId.value)
-});
+const projectId = route.params.id;
+const todos = computed(() => store.todosByProject(projectId));
+
 </script>
 
 <template>
   <div class="container">
     <div class="project-header">
-      <div>
+      <div class="project-header-title">
         <h1>Страница проекта</h1>
         <p>ID проекта: {{ projectId }}</p>
       </div>
-
       <CreateTaskForm />
     </div>
 
     <div>
       <TodosManager />
-      <TodoList />
+      <TodoList :todos="todos" />
     </div>
   </div>
 </template>
@@ -37,6 +36,18 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px;
+}
+
+@media (max-width: 768px) {
+  .project-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    
+  }
+  .project-header-title {
+    flex: 1;
+  }
 }
 </style>
