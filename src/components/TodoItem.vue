@@ -62,17 +62,12 @@ function goToTaskPage(id) {
             v-model="editedTitle"
             :disabled="todo.status === 'done'"
           />
-          <button class="button" @click="saveTodo" :disabled="todo.status === 'done'">
+          <button class="button" @click.stop="saveTodo" :disabled="todo.status === 'done'">
             {{ TEXT_CONTENT.SAVE }}
           </button>
         </div>
         <div v-else class="item">
           <div class="title">
-            <div class="task-status" @click="toggleStatus">
-              <span class="icon" v-if="todo.status === 'done'">✅</span>
-              <span class="icon" v-else-if="todo.status === 'in_progress'">🔄</span>
-              <span class="icon" v-else>⭕</span>
-            </div>
             <h4
               class="title"
               :style="{ textDecoration: todo.status === 'done' ? 'line-through' : 'none' }"
@@ -91,7 +86,7 @@ function goToTaskPage(id) {
         </div>
       </template>
       <template #action-button>
-        <Button color="secondary" @click="toggleEditMode" :disabled="todo.status === 'done'">
+        <Button color="secondary" @click.stop="toggleEditMode" :disabled="todo.status === 'done' || isEditing">
           {{ TEXT_CONTENT.EDIT }}
         </Button>
       </template>
