@@ -53,16 +53,11 @@ onMounted(() => {
     <div v-if="filteredTodos.length === 0 && isSuccess">
       <NothingFound />
     </div>
-    <draggable
-      v-if="isSuccess && filter === FILTER_OPTIONS.ALL"
-      v-model="store.todos"
-      tag="ul"
-      class="list"
-    >
-      <template #item="{ element: todo }">
-        <li><TodoItem :key="todo.id" :todo="todo" /></li>
-      </template>
-    </draggable>
+    <ul v-if="isSuccess && filter === FILTER_OPTIONS.ALL" class="list">
+      <li v-for="todo in filteredTodos" :key="todo.id">
+        <TodoItem :todo="todo" />
+      </li>
+    </ul>
 
     <ul v-else-if="isSuccess" class="list">
       <li v-for="todo in filteredTodos" :key="todo.id">
