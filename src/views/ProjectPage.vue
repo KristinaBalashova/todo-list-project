@@ -20,7 +20,6 @@ const todos = computed(() => store.todosByProject(projectId));
         <h1>Страница проекта</h1>
         <p>ID проекта: {{ projectId }}</p>
       </div>
-      <CreateTaskForm />
     </div>
 
     <div>
