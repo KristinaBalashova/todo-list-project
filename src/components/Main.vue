@@ -9,6 +9,7 @@ import { TEXT_CONTENT } from '../constants/textContent';
 const store = useTodos();
 const toast = useToast();
 
+
 function addTodo(newTodo) {
   store.addTodo(newTodo);
   toast.success(TEXT_CONTENT.TASK_ADDED);
@@ -18,7 +19,6 @@ function addTodo(newTodo) {
 <template>
   <div class="container">
     <AddTodo @addTodo="addTodo" />
-    <TodosManager />
     <TodoList />
   </div>
 </template>

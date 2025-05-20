@@ -49,5 +49,6 @@ const clearCompleted = () => {
   gap: 10px;
   align-items: center;
   flex-wrap: wrap;
+  margin: 20px;
 }
 </style>
