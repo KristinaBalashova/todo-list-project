@@ -6,24 +6,30 @@ import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
-import draggable from 'vuedraggable';
+import Filters
+ from './Filters.vue';
+const props = defineProps({
+  todos: {
+    type: Array,
+    required: false,
+    default: null,
+  },
+});
 
 const store = useTodos();
 
-const todos = computed(() => store.todos);
 const filter = computed(() => store.filter);
 const todosState = computed(() => store.todosState);
-const activeTodos = computed(() => store.activeTodos);
-const completedTodos = computed(() => store.completedTodos);
+const baseTodos = computed(() => props.todos ?? store.todos);
 
 const filteredTodos = computed(() => {
   if (filter.value === FILTER_OPTIONS.ACTIVE) {
-    return activeTodos.value;
+    return baseTodos.value.filter((t) => t.status !== 'done');
   }
   if (filter.value === FILTER_OPTIONS.COMPLETED) {
-    return completedTodos.value;
+    return baseTodos.value.filter((t) => t.status === 'done');
   }
-  return todos.value;
+  return baseTodos.value;
 });
 
 const isLoading = computed(() => todosState.value === TODOS_STATE.LOADING);
@@ -32,7 +38,7 @@ const isError = computed(() => todosState.value === TODOS_STATE.ERROR);
 const isSuccess = computed(() => todosState.value === TODOS_STATE.SUCCESS);
 
 onMounted(() => {
-  if (store.todos.length === 0 && todosState.value !== TODOS_STATE.LOADING) {
+  if (!props.todos && store.todos.length === 0 && todosState.value !== TODOS_STATE.LOADING) {
     store.fetchTodos();
   }
 });
@@ -40,10 +46,12 @@ onMounted(() => {
 
 <template>
   <div class="container">
+    <Filters />
+
     <Loader v-if="isLoading" />
 
     <div v-if="isError" class="error">
-      <NothingFound />
+      <p>Произошла ошибка</p>
     </div>
 
     <div v-if="isIdle">
@@ -53,13 +61,7 @@ onMounted(() => {
     <div v-if="filteredTodos.length === 0 && isSuccess">
       <NothingFound />
     </div>
-    <ul v-if="isSuccess && filter === FILTER_OPTIONS.ALL" class="list">
-      <li v-for="todo in filteredTodos" :key="todo.id">
-        <TodoItem :todo="todo" />
-      </li>
-    </ul>
-
-    <ul v-else-if="isSuccess" class="list">
+    <ul v-if="isSuccess" class="list">
       <li v-for="todo in filteredTodos" :key="todo.id">
         <TodoItem :todo="todo" />
       </li>
@@ -77,5 +79,11 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 20px;
+  text-align: center;
 }
 </style>
