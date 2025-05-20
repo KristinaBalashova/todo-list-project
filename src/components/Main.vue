@@ -1,7 +1,6 @@
 <script setup>
 import TodoList from './TodoList.vue';
 import AddTodo from './AddTodo.vue';
-import TodosManager from './TodosManager.vue';
 import { useTodos } from '../store/todos';
 import { useToast } from 'vue-toastification';
 import { TEXT_CONTENT } from '../constants/textContent';
