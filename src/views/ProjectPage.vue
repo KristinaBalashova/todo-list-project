@@ -2,7 +2,6 @@
 import { useRoute } from 'vue-router';
 import { ref, onMounted, computed } from 'vue';
 import CreateTaskForm from './CreateTaskForm/CreateTaskForm.vue';
-import TodosManager from '../components/TodosManager.vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../store/todos';
 
@@ -25,7 +24,6 @@ const todos = computed(() => store.todosByProject(projectId));
     </div>
 
     <div>
-      <TodosManager />
       <TodoList :todos="todos" />
     </div>
   </div>
