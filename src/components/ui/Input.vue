@@ -4,6 +4,10 @@ defineProps({
     type: String,
     default: '',
   },
+  variant: {
+    type: String,
+    default: 'solo-filled', // default outlined undelined solo-filled solo-iverted
+  },
 });
 
 const modelValue = defineModel();
@@ -16,6 +20,8 @@ const modelValue = defineModel();
     @update:model-value="modelValue = $event"
     :placeholder="placeholder"
     class="custom-input"
+    :variant="variant"
+    clearable
   />
 </template>
 
