@@ -1,23 +1,17 @@
 <script setup>
 import TodoList from './TodoList.vue';
-import AddTodo from './AddTodo.vue';
-import { useTodos } from '../store/todos';
-import { useToast } from 'vue-toastification';
-import { TEXT_CONTENT } from '../constants/textContent';
-
-const store = useTodos();
-const toast = useToast();
-
-
-function addTodo(newTodo) {
-  store.addTodo(newTodo);
-  toast.success(TEXT_CONTENT.TASK_ADDED);
-}
+import AddTodoDialog from './AddTodoDialog.vue';
+import Filters from './Filters.vue';
 </script>
 
 <template>
   <div class="container">
-    <AddTodo @addTodo="addTodo" />
+    <div class="container-top">
+      <Filters />
+      <AddTodoDialog />
+    </div>
+    
+
     <TodoList />
   </div>
 </template>
@@ -25,5 +19,11 @@ function addTodo(newTodo) {
 <style scoped>
 .container {
   width: 100%;
+}
+.container-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 </style>

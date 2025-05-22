@@ -6,8 +6,7 @@ import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
-import Filters
- from './Filters.vue';
+
 const props = defineProps({
   todos: {
     type: Array,
@@ -46,8 +45,6 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <Filters />
-
     <Loader v-if="isLoading" />
 
     <div v-if="isError" class="error">
