@@ -19,10 +19,16 @@ const modelValue = defineModel();
     :model-value="modelValue"
     @update:model-value="modelValue = $event"
     :placeholder="placeholder"
-    class="custom-input"
+    class="input"
     :variant="variant"
     clearable
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.input {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>

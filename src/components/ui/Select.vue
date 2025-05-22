@@ -21,5 +21,14 @@ const modelValue = defineModel();
     :items="options"
     v-bind="$attrs"
     variant="underlined"
+    class="select"
   />
 </template>
+
+<style scoped>  
+.select {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
