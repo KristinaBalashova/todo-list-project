@@ -39,13 +39,6 @@ function saveTodo() {
   isEditing.value = false;
 }
 
-function toggleStatus() {
-  const statuses = ['todo', 'in_progress', 'done'];
-  const currentIndex = statuses.indexOf(props.todo.status);
-  const nextStatus = statuses[(currentIndex + 1) % statuses.length];
-  editTodo.value({ id: props.todo.id, updates: { status: nextStatus } });
-}
-
 function goToTaskPage(id) {
   router.push(`/task/${id}`);
 }
