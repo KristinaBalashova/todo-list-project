@@ -18,7 +18,16 @@ const setFilter = (newFilter) => {
 const clearCompleted = () => {
   store.clearCompleted();
 };
+
+const countActiveTodos = computed(() => {
+  return store.activeTodos.length;
+});
+
+const countCompletedTodos = computed(() => {
+  return store.completedTodos.length;
+});
 </script>
+
 
 <template>
   <div class="filters">
@@ -30,6 +39,8 @@ const clearCompleted = () => {
       @click="setFilter(option)"
     >
       {{ TEXT_CONTENT[option.toUpperCase()] }}
+      {{  option === FILTER_OPTIONS.ACTIVE ? countActiveTodos : '' }}
+      {{  option === FILTER_OPTIONS.COMPLETED ? countCompletedTodos : '' }}
     </Chip>
 
     <Button

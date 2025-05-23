@@ -10,8 +10,6 @@ import Filters from './Filters.vue';
       <Filters />
       <AddTodoDialog />
     </div>
-    
-
     <TodoList />
   </div>
 </template>
