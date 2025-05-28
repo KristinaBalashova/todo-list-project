@@ -3,6 +3,7 @@ import Drawer from '../components/ui/Drawer.vue';
 import { computed } from 'vue';
 import TodoForm from '../components/TodoForm.vue';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
+import TodoView from '../components/TodoView.vue';
 
 const props = defineProps({
   modelValue: {
@@ -33,5 +34,6 @@ const title = computed(() => {
 <template>
   <Drawer v-model="isDrawerVisible" :title="title">
     <TodoForm v-if="drawerMode === 'create'" />
+    <TodoView v-else-if="drawerMode === 'view'" :taskId="props.taskId" />
   </Drawer>
 </template>
