@@ -3,14 +3,33 @@ import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import Board from '../views/Board.vue';
 import Project from '../views/ProjectPage.vue';
-import Task from '../views/Task.vue';
+import TaskPage from '../views/TaskPage.vue';
 import Reports from '../views/Reports.vue';
-import WorkInProgress from '../views/WorkInProgress.vue'; // Import the new component
+import WorkInProgress from '../views/WorkInProgress.vue';
+
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home,
+    children: [
+      {
+        path: 'task/:id?',
+        name: 'task-view',
+        component: Home,
+        meta: {
+          drawer: true,
+        },
+      },
+      {
+        path: 'task/new',
+        name: 'task-create',
+        component: Home,
+        meta: {
+          drawer: true,
+        },
+      },
+    ],
   },
   {
     path: '/auth',
@@ -27,12 +46,6 @@ const routes = [
     path: '/project/:id',
     name: 'Project',
     component: Project,
-  },
-  {
-    path: '/task/:id',
-    name: 'Task',
-    //component: Task,
-    redirect: '/work-in-progress',
   },
   {
     path: '/reports',
