@@ -4,7 +4,6 @@
     <router-link to="/" class="link">🏠 Home</router-link>
     <router-link to="/auth" class="link">🔐 Авторизация</router-link>
     <router-link to="/board" class="link">📋 Доска</router-link>
-    <router-link to="/task/1" class="link">✅ Задача</router-link>
     <router-link to="/reports" class="link">Отчет</router-link>
   </nav>
 </template>
