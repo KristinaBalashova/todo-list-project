@@ -1,3 +1,4 @@
+
 <script setup>
 import { useDrawerRoute } from '../../composables/useDrawerRoute';
 
@@ -25,20 +26,34 @@ const { isDrawerVisible, closeDrawer } = useDrawerRoute();
 <style scoped>
 .ui-drawer {
   width: 600px !important;
-  background-color: #f5f5f5;
+  background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-left: 1px solid #e0e0e0;
 }
 
 .drawer-header {
+  background-color: var(--color-info);
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 16px 20px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 .drawer-title {
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
   margin: 0;
 }
+
+.close-btn {
+  color: #fff;
+}
+
+.drawer-content {
+  padding: 20px;
+}
+
 </style>
