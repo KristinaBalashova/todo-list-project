@@ -39,14 +39,14 @@ function saveTodo() {
   isEditing.value = false;
 }
 
-function goToTaskPage(id) {
-  router.push(`/task/${id}`);
+function goToTaskDrawer(id) {
+  router.push({ name: 'task-view', params: { id: id }, query: { drawerMode: 'view' } });
 }
 </script>
 
 <template>
   <li class="container" :class="{ disabled: todo.status === 'done' }">
-    <Card :loading="false" @click="goToTaskPage(todo.id)">
+    <Card :loading="false" @click="goToTaskDrawer(todo.id)">
       <template #content>
         <div v-if="isEditing" class="item">
           <input
