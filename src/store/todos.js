@@ -16,6 +16,7 @@ export const useTodos = defineStore('todos', {
     activeTodos: (state) => state.todos.filter((t) => t.status !== 'done'),
     completedTodos: (state) => state.todos.filter((t) => t.status === 'done'),
     todosByProject: (state) => (projectId) => state.todos.filter((t) => t.project_id === projectId),
+    todoById: (state) => (todoId) => state.todos.find((t) => t.id === todoId),
   },
 
   actions: {
