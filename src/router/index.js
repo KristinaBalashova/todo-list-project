@@ -3,7 +3,6 @@ import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import Board from '../views/Board.vue';
 import Project from '../views/ProjectPage.vue';
-import TaskPage from '../views/TaskPage.vue';
 import Reports from '../views/Reports.vue';
 import WorkInProgress from '../views/WorkInProgress.vue';
 
