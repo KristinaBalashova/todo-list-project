@@ -14,12 +14,18 @@ const { isDrawerVisible, closeDrawer } = useDrawerRoute();
 
 <template>
   <v-navigation-drawer v-model="isDrawerVisible" temporary class="ui-drawer">
-    <div class="drawer-header">
-      <h3 class="drawer-title">{{ title }}</h3>
-      <v-btn icon @click="closeDrawer"> X </v-btn>
-    </div>
-    <v-divider></v-divider>
-    <slot />
+    <template #default>
+      <div class="drawer-header">
+        <h3 class="drawer-title">{{ title }}</h3>
+        <v-btn icon @click="closeDrawer">
+          <span>X</span>
+        </v-btn>
+      </div>
+      <v-divider></v-divider>
+      <div class="drawer-content">
+        <slot />
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 

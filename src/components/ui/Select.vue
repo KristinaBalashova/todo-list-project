@@ -19,6 +19,8 @@ const modelValue = defineModel();
     clearable
     :label="label"
     :items="options"
+    item-title="label"
+    item-value="value"
     v-bind="$attrs"
     variant="underlined"
     class="select"
