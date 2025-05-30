@@ -1,14 +1,19 @@
 <script setup>
-import { reactive, watch } from 'vue';
+import { reactive, watch, computed } from 'vue';
 import Input from './ui/Input.vue';
 import Select from './ui/Select.vue';
 import Button from './ui/Button.vue';
 import { TEXT_CONTENT } from '../constants/textContent';
 import { useToast } from 'vue-toastification';
 import { useTodos } from '../store/todos';
+import { useProjects } from '../store/projects';
+import { onMounted } from 'vue';
+import { createNewTodo } from '../api/tasksApi';
 
 const toast = useToast();
 const store = useTodos();
+
+const storeProjects = useProjects();
 
 const props = defineProps({
   task: {
@@ -18,9 +23,17 @@ const props = defineProps({
       title: '',
       status: '',
       priority: '',
+      projectId: null,
     }),
   },
 });
+
+const projectsOptions = computed(() =>
+  storeProjects.projects.map((project) => ({
+    label: project.name,
+    value: project.id,
+  })),
+);
 
 const localTask = reactive({ ...props.task });
 
@@ -34,15 +47,27 @@ function submitTodo() {
 
   const todo = {
     status: localTask.status || 'todo',
-    id: Date.now(),
     title: localTask.title,
     priority: localTask.priority || 'low',
+    project_id: localTask.projectId || null,
   };
 
-  store.addTodo(todo);
-  toast.success(TEXT_CONTENT.TASK_ADDED);
-  emit('close-dialog');
+  createNewTodo(todo)
+    .then(() => {
+      store.addTodo(todo);
+      toast.success(TEXT_CONTENT.TASK_ADDED);
+    })
+    .catch((error) => {
+      toast.error('Error creating todo:', error.message);
+      return;
+    }); 
+  
+  emit('closeDialog');
 }
+
+onMounted(() => {
+  storeProjects.fetchProjects();
+});
 </script>
 
 <template>
@@ -60,6 +85,7 @@ function submitTodo() {
       label="Status"
       class="select"
     />
+    <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" />
     <Button type="submit" variant="elevated" color="primary">
       {{ TEXT_CONTENT.ADD }}
     </Button>
