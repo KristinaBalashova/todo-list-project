@@ -81,7 +81,7 @@ onMounted(() => {
     />
     <Select
       v-model="localTask.status"
-      :options="['todo', 'in-progress', 'done']"
+      :options="['todo', 'in_progress', 'done']"
       label="Status"
       class="select"
     />
