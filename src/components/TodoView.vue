@@ -1,10 +1,9 @@
 <script setup>
 import Chip from '../components/ui/Chip.vue';
 import Button from './ui/Button.vue';
-import { useRouter } from 'vue-router';
 import { useTodos } from '../store/todos';
+import { useDrawerRoute } from '../composables/useDrawerRoute';
 
-const router = useRouter();
 const store = useTodos();
 
 const props = defineProps({
@@ -15,10 +14,12 @@ const props = defineProps({
 });
 
 const todo = store.todoById(props.taskId);
+const { isDrawerVisible, closeDrawer } = useDrawerRoute();
 
-function goToTaskDrawer(id) {
-  router.push({ name: 'task-edit', params: { id: taskId }, query: { drawerMode: 'edit' } });
-}
+const deleteTodo = async (id) => {
+  await store.deleteTodo(id);
+  closeDrawer();
+};
 </script>
 
 <template>
@@ -40,14 +41,14 @@ function goToTaskDrawer(id) {
       <p class="description">{{ todo.description || '—' }}</p>
     </div>
 
-    <!--
+    
     <Button
-      color="secondary"
-      @click="goToTaskDrawer(todo.id)"
+      color="danger"
+      @click="deleteTodo(todo.id)"
     >
-      Редактировать
+      Удалить
     </Button>
-    -->
+    
   </div>
 </template>
 

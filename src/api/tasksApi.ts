@@ -14,26 +14,22 @@ export async function fetchTasks() {
 }
 
 export async function fetchTasksByProjectId(id: string) {
-  const { data, error } = await supabase
-    .from('tasks')
-    .select('*')
-    .eq('id', id)
-    .single();
+  const { data, error } = await supabase.from('tasks').select('*').eq('id', id).single();
 
   if (error) throw error;
   return data;
 }
 
 export async function createNewTodo(newTodo: TodoType) {
-
-  const { data, error } = await supabase
-  .from('tasks')
-  .insert([
-    newTodo,
-  ])
-  .select()
+  const { data, error } = await supabase.from('tasks').insert([newTodo]).select();
 
   if (error) throw error;
   return data;
 }
 
+export async function deleteTodo(id: string) {
+  const { error } = await supabase.from('tasks').delete().eq('id', id);
+
+  if (error) throw error;
+  return;
+}

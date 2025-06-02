@@ -1,6 +1,6 @@
 import { FILTER_OPTIONS, TODOS_STATE } from '../constants/contants';
 import { defineStore } from 'pinia';
-import { fetchTasks } from '../api/tasksApi';
+import { fetchTasks, deleteTodo } from '../api/tasksApi';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
@@ -28,6 +28,18 @@ export const useTodos = defineStore('todos', {
 
     addTodo(todo) {
       this.todos.unshift(todo);
+    },
+    async deleteTodo(id) {
+      
+      this.setTodosState(TODOS_STATE.LOADING);
+      try {
+        const response = await deleteTodo(id);
+        this.todos = this.todos.filter((todo) => todo.id !== id);
+        this.setTodosState(TODOS_STATE.SUCCESS);
+      } catch (error) {
+        this.setTodosState(TODOS_STATE.ERROR);
+        toast.error('Ошибка при удалении.');
+      }
     },
 
     editTodo({ id, updates }) {
