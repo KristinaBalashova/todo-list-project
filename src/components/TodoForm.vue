@@ -9,11 +9,13 @@ import { useTodos } from '../store/todos';
 import { useProjects } from '../store/projects';
 import { onMounted } from 'vue';
 import { createNewTodo } from '../api/tasksApi';
+import { useDrawerRoute } from '../composables/useDrawerRoute';
 
 const toast = useToast();
 const store = useTodos();
 
 const storeProjects = useProjects();
+const { isDrawerVisible, closeDrawer } = useDrawerRoute();
 
 const props = defineProps({
   task: {
@@ -62,7 +64,7 @@ function submitTodo() {
       return;
     }); 
   
-  emit('closeDialog');
+  closeDrawer();
 }
 
 onMounted(() => {
