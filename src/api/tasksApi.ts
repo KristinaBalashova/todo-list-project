@@ -1,5 +1,6 @@
 import { supabase } from '../supabaseClient';
 interface TodoType {
+  id?: string;
   title: string;
   description: string;
   status: boolean;
@@ -22,6 +23,19 @@ export async function fetchTasksByProjectId(id: string) {
 
 export async function createNewTodo(newTodo: TodoType) {
   const { data, error } = await supabase.from('tasks').insert([newTodo]).select();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function updateTodo(todo: TodoType) {
+  const { id, ...rest } = todo;
+
+  const { data, error } = await supabase
+    .from('tasks')
+    .update(rest)
+    .eq('id', id)
+    .select();
 
   if (error) throw error;
   return data;
