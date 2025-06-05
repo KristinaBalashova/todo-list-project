@@ -3,7 +3,10 @@ import Chip from '../components/ui/Chip.vue';
 import Button from './ui/Button.vue';
 import { useTodos } from '../store/todos';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
+import { TEXT_CONTENT } from '../constants/textContent';
+import {useRouter} from 'vue-router';
 
+const router = useRouter();
 const store = useTodos();
 
 const props = defineProps({
@@ -14,6 +17,11 @@ const props = defineProps({
 });
 
 const todo = store.todoById(props.taskId);
+
+function toggleEditMode(id) {
+  router.push({ name: 'task-edit', params: { id: id } });
+}
+
 const { isDrawerVisible, closeDrawer } = useDrawerRoute();
 
 const deleteTodo = async (id) => {
@@ -41,7 +49,9 @@ const deleteTodo = async (id) => {
       <p class="description">{{ todo.description || '—' }}</p>
     </div>
 
-    
+    <Button color="secondary" @click.stop="toggleEditMode(todo.id)" :disabled="todo.status === 'done'">
+      {{ TEXT_CONTENT.EDIT }}
+    </Button>
     <Button
       color="danger"
       @click="deleteTodo(todo.id)"
