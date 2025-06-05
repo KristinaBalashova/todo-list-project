@@ -30,7 +30,6 @@ export const useTodos = defineStore('todos', {
       this.todos.unshift(todo);
     },
     async deleteTodo(id) {
-      
       this.setTodosState(TODOS_STATE.LOADING);
       try {
         const response = await deleteTodo(id);
@@ -64,7 +63,12 @@ export const useTodos = defineStore('todos', {
     setTodosState(newState) {
       this.todosState = newState;
     },
-
+    updateTodoInStore(updatedTodo) {
+      const index = this.todos.findIndex((todo) => todo.id === updatedTodo.id);
+      if (index !== -1) {
+        this.todos[index] = { ...this.todos[index], ...updatedTodo };
+      }
+    },
     async fetchTodos() {
       this.setTodosState(TODOS_STATE.LOADING);
       try {
