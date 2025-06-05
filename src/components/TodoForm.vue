@@ -8,14 +8,16 @@ import { useToast } from 'vue-toastification';
 import { useTodos } from '../store/todos';
 import { useProjects } from '../store/projects';
 import { onMounted } from 'vue';
-import { createNewTodo } from '../api/tasksApi';
+import { createNewTodo, updateTodo } from '../api/tasksApi';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
+import { useStash } from '../store/stash';
 
 const toast = useToast();
 const store = useTodos();
+const stash = useStash();
 
 const storeProjects = useProjects();
-const { isDrawerVisible, closeDrawer } = useDrawerRoute();
+const { isDrawerVisible, closeDrawer, drawerMode } = useDrawerRoute();
 
 const props = defineProps({
   task: {
@@ -41,7 +43,7 @@ const localTask = reactive({ ...props.task });
 
 const emit = defineEmits('closeDialog');
 
-function submitTodo() {
+async function submitTodo() {
   if (!localTask.title.trim()) {
     toast.error(TEXT_CONTENT.EMPTY_TASK);
     return;
@@ -54,16 +56,28 @@ function submitTodo() {
     project_id: localTask.projectId || null,
   };
 
-  createNewTodo(todo)
-    .then(() => {
-      store.addTodo(todo);
+  try {
+    if (drawerMode.value === 'edit') {
+      const updatedTodo = { id: localTask.id, ...todo };
+      await updateTodo(updatedTodo);
+      store.updateTodoInStore(updatedTodo);
+      toast.success('Задача обновлена');
+      closeDrawer();
+    }
+
+    if (drawerMode.value === 'create') {
+      const createdTodo = await createNewTodo(todo);
+      store.addTodo(createdTodo);
       toast.success(TEXT_CONTENT.TASK_ADDED);
-    })
-    .catch((error) => {
-      toast.error('Error creating todo:', error.message);
-      return;
-    }); 
-  
+      closeDrawer();
+    }
+  } catch (error) {
+    toast.error('Ошибка: ' + error.message);
+  }
+}
+
+function saveForLater() {
+  stash.setStash(localTask);
   closeDrawer();
 }
 
@@ -88,9 +102,14 @@ onMounted(() => {
       class="select"
     />
     <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" />
-    <Button type="submit" variant="elevated" color="primary">
-      {{ TEXT_CONTENT.ADD }}
-    </Button>
+    <div class="form-actions">
+      <Button type="submit" variant="elevated" color="primary">
+        {{ drawerMode.value === 'edit' ? 'Сохранить изменения' : TEXT_CONTENT.ADD }}
+      </Button>
+      <Button type="button" variant="text" @click="saveForLater">
+        Сохранить задачу в черновик
+      </Button>
+    </div>
   </form>
 </template>
 
