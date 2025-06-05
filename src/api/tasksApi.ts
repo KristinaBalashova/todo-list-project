@@ -25,7 +25,8 @@ export async function createNewTodo(newTodo: TodoType) {
   const { data, error } = await supabase.from('tasks').insert([newTodo]).select();
 
   if (error) throw error;
-  return data;
+
+  return data[0];
 }
 
 export async function updateTodo(todo: TodoType) {
