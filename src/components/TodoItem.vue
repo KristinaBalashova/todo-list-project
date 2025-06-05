@@ -1,11 +1,9 @@
 <script setup>
 import { TEXT_CONTENT } from '../constants/textContent';
 import { useTodos } from '../store/todos';
-import { computed, ref } from 'vue';
 import { useToast } from 'vue-toastification';
 import Chip from '../components/ui/Chip.vue';
 import Card from './ui/Card.vue';
-import Button from './ui/Button.vue';
 import {useRouter} from 'vue-router';
 
 const store = useTodos();
@@ -16,19 +14,6 @@ const props = defineProps({
   todo: Object,
 });
 
-const isEditing = ref(false);
-const editedTitle = ref(props.todo.title);
-
-const editTodo = computed(() => store.editTodo);
-
-function toggleEditMode() {
-  if (!props.todo.status !== 'done') {
-    isEditing.value = !isEditing.value;
-  } else {
-    //todo добавить текст ошибки в виде константы
-    toast.error("You can't edit a completed task.");
-  }
-}
 
 function saveTodo() {
   if (!editedTitle.value.trim()) {
@@ -40,7 +25,7 @@ function saveTodo() {
 }
 
 function goToTaskDrawer(id) {
-  router.push({ name: 'task-view', params: { id: id }, query: { drawerMode: 'view' } });
+  router.push({ name: 'task-view', params: { id: id } });
 }
 </script>
 
@@ -48,18 +33,7 @@ function goToTaskDrawer(id) {
   <li class="container" :class="{ disabled: todo.status === 'done' }">
     <Card :loading="false" @click="goToTaskDrawer(todo.id)">
       <template #content>
-        <div v-if="isEditing" class="item">
-          <input
-            type="text"
-            class="input"
-            v-model="editedTitle"
-            :disabled="todo.status === 'done'"
-          />
-          <button class="button" @click.stop="saveTodo" :disabled="todo.status === 'done'">
-            {{ TEXT_CONTENT.SAVE }}
-          </button>
-        </div>
-        <div v-else class="item">
+        <div class="item">
           <div class="title">
             <h4
               class="title"
@@ -77,11 +51,6 @@ function goToTaskDrawer(id) {
             </div>
           </div>
         </div>
-      </template>
-      <template #action-button>
-        <Button color="secondary" @click.stop="toggleEditMode" :disabled="todo.status === 'done' || isEditing">
-          {{ TEXT_CONTENT.EDIT }}
-        </Button>
       </template>
     </Card>
   </li>
