@@ -28,6 +28,15 @@ const routes = [
           drawer: true,
         },
       },
+      {
+        path: 'task/edit/:id',
+        name: 'task-edit',
+        component: Home,
+        meta: {
+          drawer: true,
+        },
+      },
+
     ],
   },
   {
