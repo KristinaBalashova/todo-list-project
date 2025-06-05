@@ -15,21 +15,19 @@ const {
 } = useDrawerRoute();
 
 function openTaskDrawer() {
-  router.push({ name: 'task-create'} );
+  router.push({ name: 'task-create' });
 }
 </script>
 
 <template>
  <div class="container">
     <div class="container-top">
+      
       <Filters />
       <Button color="primary" @click="openTaskDrawer">Добавить задачу</Button>
     </div>
     <TodoList />
-    <TaskDrawer 
-      v-if="isDrawerVisible"
-      :task-id="route.params.id"
-      />
+    <TaskDrawer v-if="$route.meta.drawer && isDrawerVisible" :task-id="route.params.id" />
     
   </div>
 </template>
