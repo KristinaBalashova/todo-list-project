@@ -3,8 +3,8 @@ import Home from '../views/Home.vue';
 import Auth from '../views/Auth.vue';
 import Board from '../views/Board.vue';
 import Project from '../views/ProjectPage.vue';
-import Reports from '../views/Reports.vue';
 import WorkInProgress from '../views/WorkInProgress.vue';
+import AdminPage from '../views/AdminPage.vue';
 
 const routes = [
   {
@@ -36,14 +36,18 @@ const routes = [
           drawer: true,
         },
       },
-
     ],
   },
   {
     path: '/auth',
     name: 'Auth',
-    //component: Auth,
-    redirect: '/work-in-progress',
+    component: Auth,
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminPage,
+    //meta: { requiresAuth: true },
   },
   {
     path: '/board',
@@ -68,7 +72,7 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/wip',
+    redirect: '/work-in-progress',
   },
 ];
 
