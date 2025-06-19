@@ -5,6 +5,7 @@
     <router-link to="/auth" class="link">🔐 Авторизация</router-link>
     <router-link to="/board" class="link">📋 Доска</router-link>
     <router-link to="/reports" class="link">Отчет</router-link>
+    <router-link to="/admin" class="link">Панель администратора</router-link>
   </nav>
 </template>
 
