@@ -1,7 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { ref, onMounted, computed } from 'vue';
-import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../store/todos';
 
 const route = useRoute();
@@ -19,10 +18,6 @@ const todos = computed(() => store.todosByProject(projectId));
         <h1>Страница проекта</h1>
         <p>ID проекта: {{ projectId }}</p>
       </div>
-    </div>
-
-    <div>
-      <TodoList :todos="todos" />
     </div>
   </div>
 </template>
