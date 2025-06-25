@@ -58,10 +58,9 @@ function goToTaskDrawer(id) {
 
 <style scoped>
 .container {
+  list-style-type: none;
   color: black;
-  background-color: #e9ecf5;
   border-radius: 4px;
-  padding: 20px;
 }
 
 .item {
@@ -70,6 +69,7 @@ function goToTaskDrawer(id) {
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
+  
 }
 
 .input {
