@@ -40,31 +40,78 @@ const activeComponent = computed(() => {
 </script>
 
 <template>
-  <div class="p-6">
-    <h1 class="text-2xl font-semibold mb-4">Админ-панель</h1>
-    
-    <div class="flex space-x-4 border-b mb-6">
+  <div class="admin-container">
+    <h1 class="admin-title">Админ-панель</h1>
+
+    <div class="tabs">
       <button
         v-for="tab in tabs"
         :key="tab.key"
-        :class="[
-          'px-4 py-2 transition',
-          activeTab === tab.key ? 'border-b-2 border-blue-600 font-semibold' : 'text-gray-500'
-        ]"
+        :class="['tab-button', { active: activeTab === tab.key }]"
         @click="activeTab = tab.key"
       >
         {{ tab.label }}
       </button>
     </div>
 
-    <div>
+    <div class="tab-content">
       <component :is="activeComponent" />
     </div>
   </div>
 </template>
 
+
 <style scoped>
-button {
-  outline: none;
+.admin-container {
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+  color: #007bff;
+}
+
+.tab-button.active {
+  color: #007bff;
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+.tab-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
 }
 </style>
