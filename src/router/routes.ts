@@ -54,12 +54,6 @@ const routes = [
     component: Project,
   },
   {
-    path: '/reports',
-    name: 'Reports',
-    //component: Reports,
-    redirect: '/work-in-progress',
-  },
-  {
     path: '/work-in-progress',
     name: 'WorkInProgress',
     component: WorkInProgress,
