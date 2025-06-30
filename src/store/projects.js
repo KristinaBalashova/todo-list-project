@@ -7,7 +7,7 @@ const toast = useToast();
 export const useProjects = defineStore('projects', {
   state: () => ({
     projects: [],
-    projectsState: 'IDLE',
+    projectsState: 'idle',
   }),
   actions: {
     setProjectsState(newState) {
@@ -17,13 +17,13 @@ export const useProjects = defineStore('projects', {
       this.projects = projects;
     },
     async fetchProjects() {
-      this.setProjectsState('LOADING');
+      this.setProjectsState('error');
       try {
         const response = await fetchProjects();
         this.setProjects(response);
-        this.setProjectsState('SUCCESS');
+        this.setProjectsState('success');
       } catch (error) {
-        this.setProjectsState('ERROR');
+        this.setProjectsState('error');
         toast.error("Ошибка при загрузке проектов.");
       }
     },

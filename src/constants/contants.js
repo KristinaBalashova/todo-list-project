@@ -4,7 +4,7 @@ export const FILTER_OPTIONS = Object.freeze({
   COMPLETED: 'completed',
 });
 
-export const TODOS_STATE = Object.freeze({
+export const STATE = Object.freeze({
   IDLE: 'idle',
   LOADING: 'loading',
   ERROR: 'error',

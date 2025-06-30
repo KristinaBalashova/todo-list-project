@@ -2,7 +2,7 @@
 import TodoItem from './TodoItem.vue';
 import NothingFound from './NothingFound.vue';
 import Loader from './Loader.vue';
-import { FILTER_OPTIONS, TODOS_STATE } from './../constants/contants';
+import { FILTER_OPTIONS, STATE } from './../constants/contants';
 import { TEXT_CONTENT } from '../constants/textContent';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
@@ -22,13 +22,13 @@ const activeTodos = computed(() => store.activeTodos);
 const completedTodos = computed(() => store.completedTodos);
 const inProgressTodos = computed(() => store.todosInProgress);
 
-const isLoading = computed(() => todosState.value === TODOS_STATE.LOADING);
-const isIdle = computed(() => todosState.value === TODOS_STATE.IDLE);
-const isError = computed(() => todosState.value === TODOS_STATE.ERROR);
-const isSuccess = computed(() => todosState.value === TODOS_STATE.SUCCESS);
+const isLoading = computed(() => todosState.value === STATE.LOADING);
+const isIdle = computed(() => todosState.value === STATE.IDLE);
+const isError = computed(() => todosState.value === STATE.ERROR);
+const isSuccess = computed(() => todosState.value === STATE.SUCCESS);
 
 onMounted(() => {
-  if (!props.todos && store.todos.length === 0 && todosState.value !== TODOS_STATE.LOADING) {
+  if (!props.todos && store.todos.length === 0 && todosState.value !== STATE.LOADING) {
     store.fetchTodos();
   }
 });

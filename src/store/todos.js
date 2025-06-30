@@ -1,4 +1,4 @@
-import { FILTER_OPTIONS, TODOS_STATE } from '../constants/contants';
+import { FILTER_OPTIONS, STATE } from '../constants/contants';
 import { defineStore } from 'pinia';
 import { fetchTasks, deleteTodo } from '../api/tasksApi';
 import { useToast } from 'vue-toastification';
@@ -9,7 +9,7 @@ export const useTodos = defineStore('todos', {
   state: () => ({
     todos: [],
     filter: FILTER_OPTIONS.ALL,
-    todosState: TODOS_STATE.IDLE,
+    todosState: STATE.IDLE,
   }),
 
   getters: {
@@ -31,13 +31,13 @@ export const useTodos = defineStore('todos', {
       this.todos.unshift(todo);
     },
     async deleteTodo(id) {
-      this.setTodosState(TODOS_STATE.LOADING);
+      this.setTodosState(STATE.LOADING);
       try {
         const response = await deleteTodo(id);
         this.todos = this.todos.filter((todo) => todo.id !== id);
-        this.setTodosState(TODOS_STATE.SUCCESS);
+        this.setTodosState(STATE.SUCCESS);
       } catch (error) {
-        this.setTodosState(TODOS_STATE.ERROR);
+        this.setTodosState(STATE.ERROR);
         toast.error('Ошибка при удалении.');
       }
     },
@@ -71,13 +71,13 @@ export const useTodos = defineStore('todos', {
       }
     },
     async fetchTodos() {
-      this.setTodosState(TODOS_STATE.LOADING);
+      this.setTodosState(STATE.LOADING);
       try {
         const response = await fetchTasks();
         this.setTodos(response);
-        this.setTodosState(TODOS_STATE.SUCCESS);
+        this.setTodosState(STATE.SUCCESS);
       } catch (error) {
-        this.setTodosState(TODOS_STATE.ERROR);
+        this.setTodosState(STATE.ERROR);
         toast.error('Ошибка при загрузке данных.');
       }
     },
@@ -85,13 +85,13 @@ export const useTodos = defineStore('todos', {
     /*
 
     async fetchTodosByProjectId(projectId) {
-      this.setTodosState(TODOS_STATE.LOADING);
+      this.setTodosState(STATE.LOADING);
       try {
         const response = await fetchTasksByProjectId(projectId);
         this.setTodos(response);
-        this.setTodosState(TODOS_STATE.SUCCESS);
+        this.setTodosState(STATE.SUCCESS);
       } catch (error) {
-        this.setTodosState(TODOS_STATE.ERROR);
+        this.setTodosState(STATE.ERROR);
         toast.error('Ошибка при загрузке задач проекта.');
       }
     },
