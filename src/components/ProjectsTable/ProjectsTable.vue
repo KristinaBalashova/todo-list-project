@@ -1,12 +1,11 @@
 <script setup>
 import Table from '../ui/Table/Table.vue';
-import { generateTableRows, generateTableColumns } from '../ui/Table/utils.js';
 import projectFormConfig from './config.js';
 import NothingFound from '../NothingFound.vue';
 import Loader from '../Loader.vue';
 import { STATE } from '../../constants/contants';
 import { TEXT_CONTENT } from '../../constants/textContent';
-import { ref, watchEffect, computed, onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useProjects } from '../../store';
 
 const store = useProjects();
@@ -33,12 +32,6 @@ onMounted(() => {
   }
 });
 
-const columns = ref(generateTableColumns(projectFormConfig));
-const rows = ref([]);
-
-watchEffect(() => {
-  rows.value = generateTableRows(projects.value || [], projectFormConfig);
-});
 </script>
 
 <template>
@@ -57,7 +50,7 @@ watchEffect(() => {
       <NothingFound />
     </div>
 
-    <Table :columns="columns" :rows="rows" />
+    <Table :data="projects" :config="projectFormConfig" />
   </div>
 </template>
 

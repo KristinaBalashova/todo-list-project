@@ -1,13 +1,23 @@
 <script setup>
+import { ref, watchEffect } from 'vue';
+import { generateTableColumns, generateTableRows } from './utils';
+
 const props = defineProps({
-  rows: {
+  data: {
     type: Array,
-    required: false,
+    default: [],
   },
-  columns: {
-    type: Array,
-    required: false,
+  config: {
+    type: Object,
+    required: true,
   },
+});
+
+const columns = ref(generateTableColumns(props.config));
+const rows = ref([]);
+
+watchEffect(() => {
+  rows.value = generateTableRows(props.data || [], props.config);
 });
 </script>
 
