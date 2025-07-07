@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import Projects from "../components/Projects.vue";
+import ProjectsTable from '../components/ProjectsTable/ProjectsTable.vue';
 
 const tabs = [
   { key: 'projects', label: 'Проекты' },
@@ -26,7 +26,7 @@ const SettingsTab = {
 const activeComponent = computed(() => {
   switch (activeTab.value) {
     case 'projects':
-      return Projects;
+      return ProjectsTable;
     case 'users':
       return UsersTab;
     case 'stats':
@@ -34,7 +34,7 @@ const activeComponent = computed(() => {
     case 'settings':
       return SettingsTab;
     default:
-      return Projects;
+      return ProjectsTable;
   }
 });
 </script>
@@ -55,7 +55,7 @@ const activeComponent = computed(() => {
     </div>
 
     <div class="tab-content">
-      <component :is="activeComponent" />
+      <component :is="activeComponent"/>
     </div>
   </div>
 </template>
