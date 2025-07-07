@@ -42,9 +42,6 @@ function goToTaskDrawer(id) {
               {{ todo.title }}
             </h4>
             <div class="task-info">
-              <Chip color="primary" variant="elevated">
-                {{ todo.status }}
-              </Chip>
               <Chip :color="todo.priority === 'high' ? 'warning' : 'info'" variant="elevated">
                 {{ todo.priority }}
               </Chip>
