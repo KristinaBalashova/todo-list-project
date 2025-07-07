@@ -22,8 +22,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="table-wrapper">
-    <table class="projects-table">
+  <div class="container">
+    <table class="table">
       <thead>
         <tr>
           <th v-for="column in columns" :key="column.key">
@@ -43,31 +43,31 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-.table-wrapper {
+.container {
   border: 1px solid #ddd;
   border-radius: 6px;
   overflow: hidden;
 }
 
-.projects-table {
+.table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
 
-.projects-table th,
-.projects-table td {
+.table th,
+.table td {
   padding: 12px 16px;
   border-bottom: 1px solid #eee;
   text-align: left;
 }
 
-.projects-table thead {
+.table thead {
   background-color: #f3f6f9;
   font-weight: bold;
 }
 
-.projects-table tbody tr:hover {
+.table tbody tr:hover {
   background-color: #f9f9f9;
 }
 </style>
