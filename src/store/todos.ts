@@ -1,16 +1,15 @@
-import { FILTER_OPTIONS} from '../constants/contants';
 import { defineStore } from 'pinia';
 import { fetchTasks, deleteTodo } from '../api/tasksApi';
 import { useToast } from 'vue-toastification';
 import { Todo, Todos } from '../types/todos';
-import { LoadingState, STATE} from '../types/common';
+import { LoadingState, STATE, FilterType} from '../types/common';
 
 const toast = useToast();
 
 export const useTodos = defineStore('todos', {
   state: () => ({
     todos: [] as Todos,
-    filter: FILTER_OPTIONS.ALL,
+    filter: FilterType.ALL,
     todosState: STATE.IDLE as LoadingState,
   }),
 
