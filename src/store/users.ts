@@ -1,30 +1,34 @@
-import { STATE } from '../constants/contants';
+import { STATE, LoadingState } from '../types/common';
 import { defineStore } from 'pinia';
 import { useToast } from 'vue-toastification';
 import { fetchUsers } from '../api/usersApi';
+import { User, Users } from '../types/users';
 
 const toast = useToast();
 
 export const useUsers = defineStore('users', {
   state: () => ({
-    users: [],
-    usersState: STATE.IDLE,
+    users: [] as Users,
+    usersState: STATE.IDLE as LoadingState,
   }),
+
   getters: {
-    userById: (state) => (userId) => state.users.find((u) => u.id === userId),
+    userById: (state) => (userId: string) => state.users.find((u: User) => u.id === userId),
   },
 
   actions: {
-    setUsers(users) {
+    setUsers(users: Users) {
       this.users = users;
     },
-    editUser({ id, updates }) {
+
+    editUser({ id, updates }: { id: string; updates: Partial<User> }) {
       const index = this.users.findIndex((user) => user.id === id);
       if (index !== -1) {
         Object.assign(this.users[index], updates);
       }
     },
-    setUsersState(newState) {
+
+    setUsersState(newState: LoadingState) {
       this.usersState = newState;
     },
 
@@ -39,6 +43,5 @@ export const useUsers = defineStore('users', {
         toast.error('Ошибка при загрузке данных.');
       }
     },
-
   },
 });
