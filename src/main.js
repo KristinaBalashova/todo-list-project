@@ -5,7 +5,7 @@ import 'vue-toastification/dist/index.css';
 import { createPinia } from 'pinia';
 import router from './router';
 import './assets/main.css';
-
+import { i18n } from './plugins/i18n';
 import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
@@ -33,5 +33,5 @@ app.use(createPinia());
 app.use(Toast, options);
 app.use(router);
 app.use(vuetify);
-
+app.use(i18n);
 app.mount('#app');
