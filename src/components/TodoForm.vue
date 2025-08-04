@@ -7,6 +7,7 @@ import { TEXT_CONTENT } from '../constants/textContent';
 import { useToast } from 'vue-toastification';
 import { useTodos } from '../store/todos';
 import { useProjects } from '../store/projects';
+import { useUsers } from '../store/users';
 import { onMounted } from 'vue';
 import { createNewTodo, updateTodo } from '../api/tasksApi';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
@@ -17,6 +18,7 @@ const store = useTodos();
 const stash = useStash();
 
 const storeProjects = useProjects();
+const usersStore = useUsers();
 const { isDrawerVisible, closeDrawer, drawerMode } = useDrawerRoute();
 
 const props = defineProps({
@@ -28,6 +30,7 @@ const props = defineProps({
       status: '',
       priority: '',
       projectId: null,
+      executorId: null,
     }),
   },
 });
@@ -37,6 +40,13 @@ const projectsOptions = computed(() =>
     label: project.name,
     value: project.id,
   })),
+);
+
+const executorsOptions = computed(() =>
+  usersStore.users.map((user) => ({
+    label: user.name,
+    value: user.id,
+  }))
 );
 
 const localTask = reactive({ ...props.task });
@@ -54,6 +64,7 @@ async function submitTodo() {
     title: localTask.title,
     priority: localTask.priority || 'low',
     project_id: localTask.projectId || null,
+    executor: localTask.executorId || null,
   };
 
   try {
@@ -83,6 +94,7 @@ function saveForLater() {
 
 onMounted(() => {
   storeProjects.fetchProjects();
+  usersStore.fetchUsers();
 });
 </script>
 
@@ -102,7 +114,8 @@ onMounted(() => {
       class="select"
     />
     <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" />
-    <div class="form-actions">
+    <Select v-model="localTask.executorId" :options="executorsOptions" label="Выберите исполнителя" />
+    <div class="form-buttons">
       <Button type="submit" variant="elevated" color="primary">
         {{ drawerMode.value === 'edit' ? 'Сохранить изменения' : TEXT_CONTENT.ADD }}
       </Button>
@@ -120,5 +133,11 @@ onMounted(() => {
   gap: 10px;
   margin: 20px;
   align-items: center;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 </style>
