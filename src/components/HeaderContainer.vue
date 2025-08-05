@@ -1,8 +1,9 @@
 <script setup>
-import { TEXT_CONTENT } from '../constants/textContent';
 import { useRouter } from 'vue-router';
 import Navigation from './Navigation.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 
 function goHome() {
@@ -13,7 +14,7 @@ function goHome() {
 <template>
   <div class="container">
     <div class="logo" @click="goHome">
-      <span class="logo-text">{{ TEXT_CONTENT.TITLE }}</span>
+      <span class="logo-text">{{ t('title') }}</span>
     </div>
     <Navigation /> 
   </div>

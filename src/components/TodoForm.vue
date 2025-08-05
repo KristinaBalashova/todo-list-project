@@ -3,7 +3,6 @@ import { reactive, watch, computed } from 'vue';
 import Input from './ui/Input.vue';
 import Select from './ui/Select.vue';
 import Button from './ui/Button.vue';
-import { TEXT_CONTENT } from '../constants/textContent';
 import { useToast } from 'vue-toastification';
 import { useTodos } from '../store/todos';
 import { useProjects } from '../store/projects';
@@ -11,11 +10,12 @@ import { useUsers } from '../store/users';
 import { onMounted } from 'vue';
 import { createNewTodo, updateTodo } from '../api/tasksApi';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
-import { useStash } from '../store/stash';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const toast = useToast();
 const store = useTodos();
-const stash = useStash();
 
 const storeProjects = useProjects();
 const usersStore = useUsers();
@@ -55,7 +55,7 @@ const emit = defineEmits('closeDialog');
 
 async function submitTodo() {
   if (!localTask.title.trim()) {
-    toast.error(TEXT_CONTENT.EMPTY_TASK);
+    toast.error(t('emptyTask'));
     return;
   }
 
@@ -72,18 +72,18 @@ async function submitTodo() {
       const updatedTodo = { id: localTask.id, ...todo };
       await updateTodo(updatedTodo);
       store.updateTodoInStore(updatedTodo);
-      toast.success('Задача обновлена');
+      toast.success(t('taskUpdated'));
       closeDrawer();
     }
 
     if (drawerMode.value === 'create') {
       const createdTodo = await createNewTodo(todo);
       store.addTodo(createdTodo);
-      toast.success(TEXT_CONTENT.TASK_ADDED);
+      toast.success(t('taskAdded'));
       closeDrawer();
     }
   } catch (error) {
-    toast.error('Ошибка: ' + error.message);
+    toast.error(t('errorOccurred') + ': ' + error.message);
   }
 }
 
@@ -117,10 +117,10 @@ onMounted(() => {
     <Select v-model="localTask.executorId" :options="executorsOptions" label="Выберите исполнителя" />
     <div class="form-buttons">
       <Button type="submit" variant="elevated" color="primary">
-        {{ drawerMode.value === 'edit' ? 'Сохранить изменения' : TEXT_CONTENT.ADD }}
+        {{ drawerMode.value === 'edit' ? $t('saveChanges') : $t('add') }}
       </Button>
       <Button type="button" variant="text" @click="saveForLater">
-        Сохранить задачу в черновик
+        {{ $t('saveToStash') }}
       </Button>
     </div>
   </form>

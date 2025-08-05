@@ -1,10 +1,12 @@
 <script setup>
-import { TEXT_CONTENT } from '../constants/textContent';
 import { useTodos } from '../store/todos';
 import { useToast } from 'vue-toastification';
 import Chip from '../components/ui/Chip.vue';
 import Card from './ui/Card.vue';
 import {useRouter} from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const store = useTodos();
 const toast = useToast();
@@ -17,7 +19,7 @@ const props = defineProps({
 
 function saveTodo() {
   if (!editedTitle.value.trim()) {
-    toast.error(TEXT_CONTENT.EMPTY_TASK);
+    toast.error(t('emptyTask'));
     return;
   }
   editTodo.value({ id: props.todo.id, updates: { title: editedTitle.value } });

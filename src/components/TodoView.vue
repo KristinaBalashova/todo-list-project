@@ -3,9 +3,10 @@ import Chip from '../components/ui/Chip.vue';
 import Button from './ui/Button.vue';
 import { useTodos } from '../store/todos';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
-import { TEXT_CONTENT } from '../constants/textContent';
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 const store = useTodos();
 
@@ -45,20 +46,20 @@ const deleteTodo = async (id) => {
     <v-divider class="my-4" />
 
     <div class="section">
-      <span class="label">Описание:</span>
+      <span class="label">{{ $t('description') }}</span>
       <p class="description">{{ todo.description || '—' }}</p>
     </div>
 
-    <Button color="secondary" @click.stop="toggleEditMode(todo.id)" :disabled="todo.status === 'done'">
-      {{ TEXT_CONTENT.EDIT }}
-    </Button>
     <Button
-      color="danger"
-      @click="deleteTodo(todo.id)"
+      color="secondary"
+      @click.stop="toggleEditMode(todo.id)"
+      :disabled="todo.status === 'done'"
     >
-      Удалить
+      {{ $t('edit') }}
     </Button>
-    
+    <Button color="danger" @click="deleteTodo(todo.id)">
+      {{ $t('delete') }}
+    </Button>
   </div>
 </template>
 

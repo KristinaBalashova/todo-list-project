@@ -2,10 +2,11 @@
 import { useTodos } from '../store/todos';
 import { computed } from 'vue';
 import { FILTER_OPTIONS } from './../constants/contants';
-import { TEXT_CONTENT } from '../constants/textContent';
 import Chip from './ui/Chip.vue';
 import Button from './ui/Button.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const store = useTodos();
 
 const filter = computed(() => store.filter);
@@ -38,7 +39,7 @@ const countCompletedTodos = computed(() => {
       :variant="filter === option ? 'elevated' : 'text'"
       @click="setFilter(option)"
     >
-      {{ TEXT_CONTENT[option.toUpperCase()] }}
+      {{ t(option.toUpperCase()) }}
       {{  option === FILTER_OPTIONS.ACTIVE ? countActiveTodos : '' }}
       {{  option === FILTER_OPTIONS.COMPLETED ? countCompletedTodos : '' }}
     </Chip>
@@ -49,7 +50,7 @@ const countCompletedTodos = computed(() => {
       @click="clearCompleted"
       :disabled="completedTodos.length === 0"
     >
-      {{ TEXT_CONTENT.DELETE_COMPLETED }}
+      {{ t('deleteCompleted') }}
     </Button>
   </div>
 </template>

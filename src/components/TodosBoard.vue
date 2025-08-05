@@ -2,10 +2,12 @@
 import TodoItem from './TodoItem.vue';
 import NothingFound from './NothingFound.vue';
 import Loader from './Loader.vue';
-import { FILTER_OPTIONS, STATE } from './../constants/contants';
-import { TEXT_CONTENT } from '../constants/textContent';
+import { STATE } from './../constants/contants';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   todos: {
@@ -39,11 +41,11 @@ onMounted(() => {
     <Loader v-if="isLoading" />
 
     <div v-if="isError" class="error">
-      <p>Произошла ошибка</p>
+      <p>{{ $t('errorOccurred') }}</p>
     </div>
 
     <div v-if="isIdle">
-      <p>{{ TEXT_CONTENT.IDL }}</p>
+      <p>{{ $t('idle') }}</p>
     </div>
 
     <div v-if="store.todos.length === 0 && isSuccess">
@@ -52,21 +54,21 @@ onMounted(() => {
 
     <div class="todosBoard" v-if="isSuccess">
       <div>
-        <h3>Активные задачи</h3>
+        <h3>{{ $t('activeTasks') }}</h3>
         <ul class="list">
           <TodoItem v-for="todo in activeTodos" :key="todo.id" :todo="todo" />
         </ul>
       </div>
 
       <div>
-        <h3>Задачи в процессе</h3>
-        <ul class="list"> 
+        <h3>{{ $t('inProgressTasks') }}</h3>
+        <ul class="list">
           <TodoItem v-for="todo in inProgressTodos" :key="todo.id" :todo="todo" />
         </ul>
       </div>
 
       <div>
-        <h3>Завершённые задачи</h3>
+        <h3>{{ $t('completedTasks') }}</h3>
         <ul  class="list">
           <TodoItem v-for="todo in completedTodos" :key="todo.id" :todo="todo" />
         </ul>

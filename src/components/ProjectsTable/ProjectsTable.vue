@@ -4,10 +4,11 @@ import projectFormConfig from './config.js';
 import NothingFound from '../NothingFound.vue';
 import Loader from '../Loader.vue';
 import { STATE } from '../../constants/contants';
-import { TEXT_CONTENT } from '../../constants/textContent';
 import { computed, onMounted } from 'vue';
 import { useProjects } from '../../store';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const store = useProjects();
 
 const projectsState = computed(() => store.projectsState);
@@ -39,11 +40,11 @@ onMounted(() => {
     <Loader v-if="isLoading" />
 
     <div v-if="isError" class="error-message">
-      <p>Произошла ошибка</p>
+      <p>{{ t('errorOccurred') }}</p>
     </div>
 
     <div v-if="isIdle" class="idle-message">
-      <p>{{ TEXT_CONTENT.IDL }}</p>
+      <p>{{ t('idle') }}</p>
     </div>
 
     <div v-if="projects.length === 0 && isSuccess">

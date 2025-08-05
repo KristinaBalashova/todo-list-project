@@ -1,10 +1,13 @@
 <script setup>
-import { TEXT_CONTENT } from '../constants/textContent';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 </script>
 
 <template>
   <div class="container">
-    <p>{{ TEXT_CONTENT.NOTHING_FOUND }}</p>
+    <p>{{ t('nothingFound') }}</p>
   </div>
 </template>
 
