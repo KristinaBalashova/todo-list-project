@@ -47,6 +47,11 @@ const executorsOptions = computed(() =>
   })),
 );
 
+const isAdmin = computed(() => usersStore.currentUser?.isAdmin === true);
+const isEdit = computed(() => drawerMode.value === 'edit');
+
+const shouldDisableRoleFields = computed(() => isEdit.value && !isAdmin.value);
+
 const localTask = reactive({
   title: '',
   status: '',
@@ -126,11 +131,12 @@ onMounted(() => {
       label="Status"
       class="select"
     />
-    <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" />
+    <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" :disabled="shouldDisableRoleFields" />
     <Select
       v-model="localTask.executorId"
       :options="executorsOptions"
       label="Выберите исполнителя"
+      :disabled="shouldDisableRoleFields"
     />
 
     <div class="form-buttons">

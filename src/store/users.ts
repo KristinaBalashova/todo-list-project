@@ -9,6 +9,7 @@ const toast = useToast();
 export const useUsers = defineStore('users', {
   state: () => ({
     users: [] as Users,
+    currentUser: null as User | null,
     usersState: STATE.IDLE as LoadingState,
   }),
 
@@ -20,7 +21,10 @@ export const useUsers = defineStore('users', {
     setUsers(users: Users) {
       this.users = users;
     },
-
+    isAdmin(userId: string): boolean {
+      const user = this.users.find((u) => u.id === userId); 
+      return user ? user.isAdmin : false;
+    },
     editUser({ id, updates }: { id: string; updates: Partial<User> }) {
       const index = this.users.findIndex((user) => user.id === id);
       if (index !== -1) {
