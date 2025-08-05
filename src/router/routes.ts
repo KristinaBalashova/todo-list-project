@@ -50,8 +50,9 @@ const routes = [
   },
   {
     path: '/project/:id',
-    name: 'Project',
-    component: Project,
+    redirect: '/work-in-progress',
+    //name: 'Project',
+    //component: Project,
   },
   {
     path: '/work-in-progress',
