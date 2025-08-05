@@ -2,18 +2,18 @@
 <template>
   <nav class="nav">
     <router-link to="/" class="link">🏠 Home</router-link>
-    <router-link to="/auth" class="link">🔐 Авторизация</router-link>
+    <router-link to="/login" class="link">🔐 Авторизация</router-link>
     <router-link to="/admin" class="link">Панель администратора</router-link>
   </nav>
 </template>
 
 <style scoped>
+
 .nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; 
 }
-
 .link {
   text-decoration: none;
   color: #333;
