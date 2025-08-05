@@ -119,9 +119,12 @@ onMounted(() => {
       <Button type="submit" variant="elevated" color="primary">
         {{ drawerMode.value === 'edit' ? $t('saveChanges') : $t('add') }}
       </Button>
-      <Button type="button" variant="text" @click="saveForLater">
+      <!--
+            <Button type="button" variant="text" @click="saveForLater">
         {{ $t('saveToStash') }}
       </Button>
+      -->
+
     </div>
   </form>
 </template>
