@@ -1,27 +1,20 @@
 import { supabase } from '../supabaseClient';
-interface TodoType {
-  id?: string;
-  title: string;
-  description: string;
-  status: boolean;
-  priority: string;
-  project_id: string;
-}
+import { Todo, Todos } from '../types/todos';
 
-export async function fetchTasks() {
+export async function fetchTasks(): Promise<Todos> {
   const { data, error } = await supabase.from('tasks').select('*');
   if (error) throw error;
   return data;
 }
 
-export async function fetchTasksByProjectId(id: string) {
+export async function fetchTasksByProjectId(id: string): Promise<Todos> {
   const { data, error } = await supabase.from('tasks').select('*').eq('id', id).single();
 
   if (error) throw error;
   return data;
 }
 
-export async function createNewTodo(newTodo: TodoType) {
+export async function createNewTodo(newTodo: Todo) {
   const { data, error } = await supabase.from('tasks').insert([newTodo]).select();
 
   if (error) throw error;
@@ -29,7 +22,7 @@ export async function createNewTodo(newTodo: TodoType) {
   return data[0];
 }
 
-export async function updateTodo(todo: TodoType) {
+export async function updateTodo(todo: Todo) {
   const { id, ...rest } = todo;
 
   const { data, error } = await supabase

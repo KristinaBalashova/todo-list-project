@@ -1,12 +1,13 @@
 import { supabase } from '../supabaseClient';
+import { Project, Projects } from '../types/projects';
 
-export async function fetchProjects() {
+export async function fetchProjects(): Promise<Projects> {
   const { data, error } = await supabase.from('projects').select('*');
   if (error) throw error;
   return data;
 }
 
-export async function fetchProjectById(id) {
+export async function fetchProjectById(id: string): Promise<Project> {
   const { data, error } = await supabase
     .from('projects')
     .select('*')

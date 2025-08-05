@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch, computed } from 'vue';
+import { reactive, watch, computed, onMounted } from 'vue';
 import Input from './ui/Input.vue';
 import Select from './ui/Select.vue';
 import Button from './ui/Button.vue';
@@ -7,19 +7,17 @@ import { useToast } from 'vue-toastification';
 import { useTodos } from '../store/todos';
 import { useProjects } from '../store/projects';
 import { useUsers } from '../store/users';
-import { onMounted } from 'vue';
 import { createNewTodo, updateTodo } from '../api/tasksApi';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
-
 const toast = useToast();
 const store = useTodos();
 
 const storeProjects = useProjects();
 const usersStore = useUsers();
-const { isDrawerVisible, closeDrawer, drawerMode } = useDrawerRoute();
+const { closeDrawer, drawerMode } = useDrawerRoute();
 
 const props = defineProps({
   task: {
@@ -38,20 +36,39 @@ const props = defineProps({
 const projectsOptions = computed(() =>
   storeProjects.projects.map((project) => ({
     label: project.name,
-    value: project.id,
+    value: String(project.id),
   })),
 );
 
 const executorsOptions = computed(() =>
   usersStore.users.map((user) => ({
     label: user.name,
-    value: user.id,
-  }))
+    value: String(user.id),
+  })),
 );
 
-const localTask = reactive({ ...props.task });
+const localTask = reactive({
+  title: '',
+  status: '',
+  priority: '',
+  projectId: null,
+  executorId: null,
+});
 
-const emit = defineEmits('closeDialog');
+watch(
+  () => props.task,
+  (newTask) => {
+    Object.assign(localTask, {
+      title: newTask.title ?? '',
+      status: newTask.status ?? '',
+      priority: newTask.priority ?? '',
+      projectId: newTask.projectId ?? null,
+      executorId: newTask.executorId ?? null,
+      id: newTask.id ?? undefined,
+    });
+  },
+  { immediate: true },
+);
 
 async function submitTodo() {
   if (!localTask.title.trim()) {
@@ -87,11 +104,6 @@ async function submitTodo() {
   }
 }
 
-function saveForLater() {
-  stash.setStash(localTask);
-  closeDrawer();
-}
-
 onMounted(() => {
   storeProjects.fetchProjects();
   usersStore.fetchUsers();
@@ -101,6 +113,7 @@ onMounted(() => {
 <template>
   <form class="form" @submit.prevent="submitTodo">
     <Input v-model="localTask.title" placeholder="Enter a new task" class="form-input" />
+
     <Select
       v-model="localTask.priority"
       :options="['low', 'medium', 'high']"
@@ -114,17 +127,16 @@ onMounted(() => {
       class="select"
     />
     <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" />
-    <Select v-model="localTask.executorId" :options="executorsOptions" label="Выберите исполнителя" />
+    <Select
+      v-model="localTask.executorId"
+      :options="executorsOptions"
+      label="Выберите исполнителя"
+    />
+
     <div class="form-buttons">
       <Button type="submit" variant="elevated" color="primary">
         {{ drawerMode.value === 'edit' ? $t('saveChanges') : $t('add') }}
       </Button>
-      <!--
-            <Button type="button" variant="text" @click="saveForLater">
-        {{ $t('saveToStash') }}
-      </Button>
-      -->
-
     </div>
   </form>
 </template>
