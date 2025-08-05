@@ -78,23 +78,28 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.container {
+.todosBoard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
 }
 
-.list h3 {
+.todosBoard > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.todosBoard h3 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 12px;
   color: #2e3a59;
   border-bottom: 1px solid #e0e4ee;
   padding-bottom: 4px;
-}
-
-.todosBoard {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 20px;
 }
 
 .list {
@@ -104,6 +109,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
+  overflow-y: auto;
+  border-radius: 4px;
 }
 
 .error {
