@@ -17,7 +17,7 @@ export const useTodos = defineStore('todos', {
     activeTodos: (state) => state.todos.filter((t: Todo) => t.status === 'todo'),
     completedTodos: (state) => state.todos.filter((t: Todo) => t.status === 'done'),
     todosInProgress: (state) => state.todos.filter((t: Todo) => t.status === 'in_progress'),
-    todosByProject: (state) => (projectId: string) => state.todos.filter((t: Todo) => t.projectId === projectId),
+    todosByProject: (state) => (projectId: string) => state.todos.filter((t: Todo) => t.project_id === projectId),
     todoById: (state) => (todoId: string) => state.todos.find((t: Todo) => t.id === todoId),
   },
 
@@ -28,7 +28,7 @@ export const useTodos = defineStore('todos', {
       }
     },
 
-    addTodo(todo) {
+    addTodo(todo: Todo) {
       this.todos.unshift(todo);
     },
     async deleteTodo(id: string) {

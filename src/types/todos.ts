@@ -4,7 +4,7 @@ interface Todo {
   description: string;
   status: 'todo' | 'in_progress' | 'done'; 
   priority: 'low' | 'medium' | 'high';  
-  projectId: string;
+  project_id: string;
   createdAt: string;
   updatedAt: string;  
   executor: string | null;  
