@@ -14,65 +14,67 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const toast = useToast();
 const store = useTodos();
-
 const storeProjects = useProjects();
 const usersStore = useUsers();
 const { closeDrawer, drawerMode } = useDrawerRoute();
 
 const props = defineProps({
-  task: {
-    type: Object,
-    required: false,
-    default: () => ({
-      title: '',
-      status: '',
-      priority: '',
-      projectId: null,
-      executorId: null,
-    }),
+  taskId: {
+    type: String,
+    required: true,
   },
 });
+
+const todoForEdit = store.todoById(props.taskId);
 
 const projectsOptions = computed(() =>
   storeProjects.projects.map((project) => ({
     label: project.name,
     value: String(project.id),
-  })),
+  }))
 );
 
 const executorsOptions = computed(() =>
   usersStore.users.map((user) => ({
     label: user.name,
     value: String(user.id),
-  })),
+  }))
 );
 
 const isAdmin = computed(() => usersStore.currentUser?.isAdmin === true);
 const isEdit = computed(() => drawerMode.value === 'edit');
-
 const shouldDisableRoleFields = computed(() => isEdit.value && !isAdmin.value);
 
 const localTask = reactive({
+  id: '',
   title: '',
-  status: '',
-  priority: '',
-  projectId: null,
-  executorId: null,
+  description: '',
+  status: 'todo',
+  priority: 'low',
+  project_id: '',
+  createdAt: '',
+  updatedAt: '',
+  executor: null,
 });
 
 watch(
-  () => props.task,
+  () => todoForEdit,
   (newTask) => {
+    if (!newTask) return;
+
     Object.assign(localTask, {
+      id: newTask.id ?? '',
       title: newTask.title ?? '',
-      status: newTask.status ?? '',
-      priority: newTask.priority ?? '',
-      projectId: newTask.projectId ?? null,
-      executorId: newTask.executorId ?? null,
-      id: newTask.id ?? undefined,
+      description: newTask.description ?? '',
+      status: newTask.status ?? 'todo',
+      priority: newTask.priority ?? 'low',
+      project_id: newTask.project_id ?? '',
+      createdAt: newTask.createdAt ?? '',
+      updatedAt: newTask.updatedAt ?? '',
+      executor: newTask.executor ?? null,
     });
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 async function submitTodo() {
@@ -82,23 +84,22 @@ async function submitTodo() {
   }
 
   const todo = {
-    status: localTask.status || 'todo',
     title: localTask.title,
-    priority: localTask.priority || 'low',
-    project_id: localTask.projectId || null,
-    executor: localTask.executorId || null,
+    description: localTask.description,
+    status: localTask.status,
+    priority: localTask.priority,
+    project_id: localTask.project_id,
+    executor: localTask.executor,
   };
 
   try {
-    if (drawerMode.value === 'edit') {
+    if (isEdit.value) {
       const updatedTodo = { id: localTask.id, ...todo };
       await updateTodo(updatedTodo);
       store.updateTodoInStore(updatedTodo);
       toast.success(t('taskUpdated'));
       closeDrawer();
-    }
-
-    if (drawerMode.value === 'create') {
+    } else {
       const createdTodo = await createNewTodo(todo);
       store.addTodo(createdTodo);
       toast.success(t('taskAdded'));
@@ -117,31 +118,47 @@ onMounted(() => {
 
 <template>
   <form class="form" @submit.prevent="submitTodo">
-    <Input v-model="localTask.title" placeholder="Enter a new task" class="form-input" />
+    <Input v-model="localTask.title" :placeholder="t('taskTitle')" class="form-input" />
+
+    <Input v-model="localTask.description" :placeholder="t('taskDescription')" class="form-input" />
 
     <Select
       v-model="localTask.priority"
-      :options="['low', 'medium', 'high']"
-      label="Priority"
+      :options="[
+        { label: t('low'), value: 'low' },
+        { label: t('medium'), value: 'medium' },
+        { label: t('high'), value: 'high' },
+      ]"
+      :label="t('priority')"
       class="select"
     />
+
     <Select
       v-model="localTask.status"
-      :options="['todo', 'in_progress', 'done']"
-      label="Status"
+      :options="[
+        { label: t('todo'), value: 'todo' },
+        { label: t('inProgress'), value: 'in_progress' },
+        { label: t('done'), value: 'done' },
+      ]"
+      :label="t('status')"
       class="select"
     />
-    <Select v-model="localTask.projectId" :options="projectsOptions" label="Выберите проект" :disabled="shouldDisableRoleFields" />
+
     <Select
-      v-model="localTask.executorId"
+      v-model="localTask.project_id"
+      :options="projectsOptions"
+      :label="t('selectProject')"
+    />
+
+    <Select
+      v-model="localTask.executor"
       :options="executorsOptions"
-      label="Выберите исполнителя"
-      :disabled="shouldDisableRoleFields"
+      :label="t('selectExecutor')"
     />
 
     <div class="form-buttons">
       <Button type="submit" variant="elevated" color="primary">
-        {{ drawerMode.value === 'edit' ? $t('saveChanges') : $t('add') }}
+        {{ isEdit.value ? $t('saveChanges') : $t('add') }}
       </Button>
     </div>
   </form>
