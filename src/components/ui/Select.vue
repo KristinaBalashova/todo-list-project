@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   options: {
     type: Array,
     default: () => [],
@@ -11,6 +11,7 @@ defineProps({
 });
 
 const modelValue = defineModel();
+
 </script>
 
 <template>
