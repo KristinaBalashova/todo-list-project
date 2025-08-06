@@ -1,5 +1,7 @@
 import { createI18n } from 'vue-i18n';
-import ru from '../locales/ru.json';
+
+const response = await fetch('/locales/ru.json');
+const ru = await response.json();
 
 export const i18n = createI18n({
   legacy: false,
@@ -10,3 +12,4 @@ export const i18n = createI18n({
     ru
   }
 });
+
