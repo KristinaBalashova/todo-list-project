@@ -1,4 +1,4 @@
-{
+export default {
   "title": "Тудушки",
   "add": "Добавить",
   "all": "Все",
