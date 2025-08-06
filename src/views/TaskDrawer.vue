@@ -4,15 +4,6 @@ import { computed } from 'vue';
 import TodoForm from '../components/TodoForm.vue';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
 import TodoView from '../components/TodoView.vue';
-import SaveForLaterBubble from '../components/SaveForLaterBubble.vue';
-import { useRoute } from 'vue-router';
-import { useTodos } from '../store';
-
-const route = useRoute();
-const store = useTodos();
-
-const taskId = route.params.id
-const tasktoEdit = store.todoById(taskId);
 
 const props = defineProps({
   modelValue: {
@@ -38,12 +29,13 @@ const title = computed(() => {
   return 'Задача';
 });
 
+
 </script>
 
 <template>
   <Drawer v-model="isDrawerVisible" :title="title">
     <TodoForm v-if="drawerMode === 'create'" />
-    <TodoForm v-else-if="drawerMode === 'edit'" :task="tasktoEdit" />
+    <TodoForm v-else-if="drawerMode === 'edit'" :taskId="props.taskId" />
     <TodoView v-else-if="drawerMode === 'view'" :taskId="props.taskId" />
   </Drawer>
 </template>
