@@ -5,6 +5,7 @@ export const i18n = createI18n({
   legacy: false,
   locale: 'ru',
   fallbackLocale: 'ru',
+  flatJson: false,
   messages: {
     ru
   }
