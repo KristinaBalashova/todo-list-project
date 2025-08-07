@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
-import Register from '../views/Register.vue';
+import SignIn from '../views/SignIn.vue';
 import WorkInProgress from '../views/WorkInProgress.vue';
 import AdminPage from '../views/AdminPage.vue';
+import SignUp from '../views/SignUp.vue';
 
 const routes = [
   {
@@ -39,13 +39,13 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login,
+    name: 'SignIn',
+    component: SignIn,
   },
   {
     path: '/register',
-    name: 'Register',
-    component: Register,
+    name: 'SignUp',
+    component: SignUp,
   },
   {
     path: '/admin',

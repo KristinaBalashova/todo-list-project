@@ -1,14 +1,10 @@
 import router from './routes';
-import { useAuthStore } from '../store/auth';
+import { useAuth } from '../store/auth';
 
 router.beforeEach(async (to, from, next) => {
-  const auth = useAuthStore();
-
-  if (to.meta.requiresAuth && !auth.user) {
-    await auth.getUser();
-    if (!auth.user) return next('/login');
-  }
-
+  const authStore = useAuth();
+  
+  console.log('AuthStore User:', authStore.currentUser);
   next();
 });
 
