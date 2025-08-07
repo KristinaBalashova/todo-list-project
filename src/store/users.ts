@@ -25,6 +25,7 @@ export const useUsers = defineStore('users', {
       this.currentUser = user;
     },
     async getUserById(userId: string) {
+
       this.setUsersState(STATE.LOADING);
       try {
         const response = await fetchUserById(userId);
@@ -41,7 +42,7 @@ export const useUsers = defineStore('users', {
       return user ? user.isAdmin : false;
     },
     editUser({ id, updates }: { id: string; updates: Partial<User> }) {
-      const index = this.users.findIndex((user: User) => user.id === id);
+      const index = this.users.findIndex((user) => user.id === id);
       if (index !== -1) {
         Object.assign(this.users[index], updates);
       }
