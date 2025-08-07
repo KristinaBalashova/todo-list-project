@@ -5,5 +5,6 @@ import Dialog from "./Dialog.vue";
 import Drawer from "./Drawer.vue";
 import Input from "./Input.vue";
 import Select from "./Select.vue";
+import Menu from "./Menu.vue";
 
-export { Button, Card, Chip, Dialog, Drawer, Input, Select };
+export { Button, Card, Chip, Dialog, Drawer, Input, Select, Menu };
