@@ -10,22 +10,6 @@ import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 
-const toastOptions = {
-  position: 'top-right',
-  timeout: 3000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  pauseOnFocusLoss: true,
-  maxToasts: 5,
-  newestOnTop: true,
-};
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
-
 async function bootstrap() {
   const res = await fetch('/locales/ru.json');
   if (!res.ok) {
@@ -48,9 +32,27 @@ async function bootstrap() {
 
   const app = createApp(App);
 
-  app.use(createPinia());
-  app.use(Toast, toastOptions);
+  const pinia = createPinia();
+  app.use(pinia);
+
+  const { useAuth } = await import('./store');
+  const auth = useAuth(); // теперь это безопасно, после app.use(pinia)
+  await auth.tryAutoLogin(); // обязательно await, если внутри есть асинхронные операции
+
+  app.use(Toast, {
+    position: 'top-right',
+    timeout: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    pauseOnFocusLoss: true,
+    maxToasts: 5,
+    newestOnTop: true,
+  });
+
   app.use(router);
+
+  const vuetify = createVuetify({ components, directives });
   app.use(vuetify);
   app.use(i18n);
 
