@@ -32,12 +32,16 @@
   "status": "Статус",
   "selectExecutor": "Выберите исполнителя",
   "selectProject": "Выберите проект",
+  "logout": "Выйти",
+  "hideMenu": "Скрыть меню",
+
 
   "login.welcome": "Добро пожаловать!",
   "login.password": "Пароль",
   "login.submit": "Войти",
   "login.error": "Ошибка авторизации",
   "login.createAccount": "Создать аккаунт",
+  "login.alreadyLoggedIn": "Вы уже вошли в систему.",
 
   "register.username": "Имя пользователя",
   "register.email": "Электронная почта",
