@@ -32,7 +32,6 @@
   "status": "Статус",
   "selectExecutor": "Выберите исполнителя",
   "selectProject": "Выберите проект",
-  "logout": "Выйти",
   "hideMenu": "Скрыть меню",
 
 
@@ -42,6 +41,7 @@
   "login.error": "Ошибка авторизации",
   "login.createAccount": "Создать аккаунт",
   "login.alreadyLoggedIn": "Вы уже вошли в систему.",
+  "login.logout": "Выйти",
 
   "register.username": "Имя пользователя",
   "register.email": "Электронная почта",
