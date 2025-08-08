@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { fetchTasks, deleteTodo } from '../api/tasksApi';
+import { fetchTasks, deleteTodo, createTodo, updateTodo } from '../api/tasksApi';
 import { useToast } from 'vue-toastification';
 import { Todo, Todos } from '../types/todos';
-import { LoadingState, STATE, FilterType} from '../types/common';
-
+import { LoadingState, STATE, FilterType } from '../types/common';
+import { supabase } from '../supabaseClient';
 const toast = useToast();
 
 export const useTodos = defineStore('todos', {
@@ -17,7 +17,8 @@ export const useTodos = defineStore('todos', {
     activeTodos: (state) => state.todos.filter((t: Todo) => t.status === 'todo'),
     completedTodos: (state) => state.todos.filter((t: Todo) => t.status === 'done'),
     todosInProgress: (state) => state.todos.filter((t: Todo) => t.status === 'in_progress'),
-    todosByProject: (state) => (projectId: string) => state.todos.filter((t: Todo) => t.project_id === projectId),
+    todosByProject: (state) => (projectId: string) =>
+      state.todos.filter((t: Todo) => t.project_id === projectId),
     todoById: (state) => (todoId: string) => state.todos.find((t: Todo) => t.id === todoId),
   },
 
@@ -27,19 +28,27 @@ export const useTodos = defineStore('todos', {
         this.todos = todos;
       }
     },
-
-    addTodo(todo: Todo) {
-      this.todos.unshift(todo);
+    setActiveTodos(list: Todos) {
+      this.updateTodosStatus(list, 'todo');
     },
-    async deleteTodo(id: string) {
-      this.setTodosState(STATE.LOADING);
-      try {
-        const response = await deleteTodo(id);
-        this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
-        this.setTodosState(STATE.SUCCESS);
-      } catch (error) {
-        this.setTodosState(STATE.ERROR);
-        toast.error('Ошибка при удалении.');
+
+    setInProgressTodos(list: Todos) {
+      this.updateTodosStatus(list, 'in_progress');
+    },
+
+    setCompletedTodos(list: Todos) {
+      this.updateTodosStatus(list, 'done');
+    },
+
+    async updateTodosStatus(newList: Todos, newStatus: string) {
+      if (!Array.isArray(newList)) return;
+
+      const remaining = this.todos.filter((t: Todo) => t.status !== newStatus);
+
+      this.todos = [...remaining, ...newList.map((t: Todo) => ({ ...t, status: newStatus }))];
+
+      for (const t of newList) {
+        await updateTodo(t, { status: newStatus });
       }
     },
 
@@ -51,7 +60,7 @@ export const useTodos = defineStore('todos', {
     },
 
     removeCompletedTodos() {
-      this.todos = this.todos.filter((todo) => todo.status !== 'done');
+      this.todos = this.todos.filter((todo: Todo) => todo.status !== 'done');
     },
 
     clearCompleted() {
@@ -65,10 +74,30 @@ export const useTodos = defineStore('todos', {
     setTodosState(newState: LoadingState) {
       this.todosState = newState;
     },
-    updateTodoInStore(updatedTodo: Todo) {
+
+    async updateTodo(updatedTodo: Todo) {
+      await updateTodo(updatedTodo);
       const index = this.todos.findIndex((todo: Todo) => todo.id === updatedTodo.id);
       if (index !== -1) {
         this.todos[index] = { ...this.todos[index], ...updatedTodo };
+      }
+      this.setTodosState(STATE.SUCCESS);
+    },
+    async createNewTodo(newTodo: Todo) {
+      await createTodo(newTodo);
+      this.todos.unshift(newTodo);
+      this.setTodosState(STATE.SUCCESS);
+    },
+
+    async deleteTodo(id: string) {
+      this.setTodosState(STATE.LOADING);
+      try {
+        await deleteTodo(id);
+        this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
+        this.setTodosState(STATE.SUCCESS);
+      } catch (error) {
+        this.setTodosState(STATE.ERROR);
+        toast.error('Ошибка при удалении.');
       }
     },
     async fetchTodos() {

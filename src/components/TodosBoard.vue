@@ -6,6 +6,7 @@ import { STATE } from './../constants/contants';
 import { computed, onMounted } from 'vue';
 import { useTodos } from '../store/todos';
 import { useI18n } from 'vue-i18n';
+import draggable from 'vuedraggable';
 
 const { t } = useI18n();
 
@@ -20,9 +21,21 @@ const props = defineProps({
 const store = useTodos();
 
 const todosState = computed(() => store.todosState);
-const activeTodos = computed(() => store.activeTodos);
-const completedTodos = computed(() => store.completedTodos);
-const inProgressTodos = computed(() => store.todosInProgress);
+
+const activeTodos = computed({
+  get: () => store.activeTodos,
+  set: (val) => store.setActiveTodos(val),
+});
+
+const inProgressTodos = computed({
+  get: () => store.todosInProgress,
+  set: (val) => store.setInProgressTodos(val),
+});
+
+const completedTodos = computed({
+  get: () => store.completedTodos,
+  set: (val) => store.setCompletedTodos(val),
+});
 
 const isLoading = computed(() => todosState.value === STATE.LOADING);
 const isIdle = computed(() => todosState.value === STATE.IDLE);
@@ -51,34 +64,76 @@ onMounted(() => {
     <div v-if="store.todos.length === 0 && isSuccess">
       <NothingFound />
     </div>
+    <div class="todosBoard">
+      <h3>{{ $t('activeTasks') }}</h3>
+      <draggable
+        v-model="activeTodos"
+        :group="{ name: 'tasks' }"
+        item-key="id"
+        class="list"
+        :sort="false"
+      >
+        <template #item="{ element }">
+          <TodoItem :key="element.id" :todo="element" />
+        </template>
+        <template #footer>
+          <NothingFound
+            v-if="activeTodos.length === 0"
+            class="empty-state"
+            :text="$t('noActiveTasks')"
+          />
+        </template>
+      </draggable>
+    </div>
 
-    <div class="todosBoard" v-if="isSuccess">
-      <div>
-        <h3>{{ $t('activeTasks') }}</h3>
-        <ul class="list">
-          <TodoItem v-for="todo in activeTodos" :key="todo.id" :todo="todo" />
-        </ul>
-      </div>
+    <div class="todosBoard">
+      <h3>{{ $t('inProgressTasks') }}</h3>
+      <draggable
+        v-model="inProgressTodos"
+        :group="{ name: 'tasks' }"
+        item-key="id"
+        class="list"
+        :sort="false"
+      >
+        <template #item="{ element }">
+          <TodoItem :key="element.id" :todo="element" />
+        </template>
+        <template #footer>
+          <NothingFound
+            v-if="inProgressTodos.length === 0"
+            class="empty-state"
+            :text="$t('noActiveTasks')"
+          />
+        </template>
+      </draggable>
+    </div>
 
-      <div>
-        <h3>{{ $t('inProgressTasks') }}</h3>
-        <ul class="list">
-          <TodoItem v-for="todo in inProgressTodos" :key="todo.id" :todo="todo" />
-        </ul>
-      </div>
-
-      <div>
-        <h3>{{ $t('completedTasks') }}</h3>
-        <ul  class="list">
-          <TodoItem v-for="todo in completedTodos" :key="todo.id" :todo="todo" />
-        </ul>
-      </div>
+    <div class="todosBoard">
+      <h3>{{ $t('completedTasks') }}</h3>
+      <draggable
+        v-model="completedTodos"
+        :group="{ name: 'tasks' }"
+        item-key="id"
+        class="list"
+        :sort="false"
+      >
+        <template #item="{ element }">
+          <TodoItem :key="element.id" :todo="element" />
+        </template>
+        <template #footer>
+          <NothingFound
+            v-if="completedTodos.length === 0"
+            class="empty-state"
+            :text="$t('noActiveTasks')"
+          />
+        </template>
+      </draggable>
     </div>
   </div>
 </template>
 
 <style scoped>
-.todosBoard {
+.container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -86,6 +141,11 @@ onMounted(() => {
   width: 100%;
 }
 
+.todosBoard {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 .todosBoard > div {
   flex: 1;
   min-width: 0;
