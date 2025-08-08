@@ -23,7 +23,6 @@ const userRole = computed(() => {
   return currentUser.value ? currentUser.value.role : 'Guest';
 });
 
-console.log('Current User:', currentUser.value);
 onMounted(async () => {
   if (userId.value) {
     try {
