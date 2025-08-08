@@ -4,10 +4,7 @@ import Input from './ui/Input.vue';
 import Select from './ui/Select.vue';
 import Button from './ui/Button.vue';
 import { useToast } from 'vue-toastification';
-import { useTodos } from '../store/todos';
-import { useProjects } from '../store/projects';
-import { useUsers } from '../store/users';
-import { createNewTodo, updateTodo } from '../api/tasksApi';
+import { useTodos, useProjects, useUsers } from '../store';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
 import { useI18n } from 'vue-i18n';
 
@@ -31,19 +28,17 @@ const projectsOptions = computed(() =>
   storeProjects.projects.map((project) => ({
     label: project.name,
     value: String(project.id),
-  }))
+  })),
 );
 
 const executorsOptions = computed(() =>
   usersStore.users.map((user) => ({
     label: user.name,
     value: String(user.id),
-  }))
+  })),
 );
 
-const isAdmin = computed(() => usersStore.currentUser?.isAdmin === true);
 const isEdit = computed(() => drawerMode.value === 'edit');
-const shouldDisableRoleFields = computed(() => isEdit.value && !isAdmin.value);
 
 const localTask = reactive({
   id: '',
@@ -74,7 +69,7 @@ watch(
       executor: newTask.executor ?? null,
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 async function submitTodo() {
@@ -95,16 +90,11 @@ async function submitTodo() {
   try {
     if (isEdit.value) {
       const updatedTodo = { id: localTask.id, ...todo };
-      await updateTodo(updatedTodo);
-      store.updateTodoInStore(updatedTodo);
-      toast.success(t('taskUpdated'));
-      closeDrawer();
+      store.updateTodo(updatedTodo);
     } else {
-      const createdTodo = await createNewTodo(todo);
-      store.addTodo(createdTodo);
-      toast.success(t('taskAdded'));
-      closeDrawer();
+      store.createNewTodo(todo);
     }
+    closeDrawer();
   } catch (error) {
     toast.error(t('errorOccurred') + ': ' + error.message);
   }
@@ -144,17 +134,9 @@ onMounted(() => {
       class="select"
     />
 
-    <Select
-      v-model="localTask.project_id"
-      :options="projectsOptions"
-      :label="t('selectProject')"
-    />
+    <Select v-model="localTask.project_id" :options="projectsOptions" :label="t('selectProject')" />
 
-    <Select
-      v-model="localTask.executor"
-      :options="executorsOptions"
-      :label="t('selectExecutor')"
-    />
+    <Select v-model="localTask.executor" :options="executorsOptions" :label="t('selectExecutor')" />
 
     <div class="form-buttons">
       <Button type="submit" variant="elevated" color="primary">
