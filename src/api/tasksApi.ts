@@ -14,7 +14,7 @@ export async function fetchTasksByProjectId(id: string): Promise<Todos> {
   return data;
 }
 
-export async function createNewTodo(newTodo: Todo) {
+export async function createTodo(newTodo: Todo) {
   const { data, error } = await supabase.from('tasks').insert([newTodo]).select();
 
   if (error) throw error;
@@ -22,12 +22,17 @@ export async function createNewTodo(newTodo: Todo) {
   return data[0];
 }
 
-export async function updateTodo(todo: Todo) {
-  const { id, ...rest } = todo;
+export async function updateTodo(
+  todo: Todo,
+  fieldToUpdate?: { [key: string]: any }
+) {
+  const { id } = todo;
+
+  const updateData = fieldToUpdate ?? { ...todo };
 
   const { data, error } = await supabase
     .from('tasks')
-    .update(rest)
+    .update(updateData)
     .eq('id', id)
     .select();
 
