@@ -43,9 +43,29 @@ const switchToRegister = () => {
       @switchMode="switchToRegister"
     />
 
-    <div v-else>
+    <div v-else class="logout-container">
       {{ t('login.alreadyLoggedIn') }}
-      <v-btn variant="outlined" @click="signOut">{{ t('login.logout') }}</v-btn>
+      <v-btn variant="outlined" @click="signOut" class="logout-btn">{{ t('login.logout') }}</v-btn>
     </div>
   </div>
 </template>
+
+<style scoped>
+.logout-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background-color: #f0f4f8;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  color: #334155;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.logout-btn {
+  padding: 6px 14px;
+  font-weight: 600;
+}
+</style>
