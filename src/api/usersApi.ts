@@ -7,6 +7,12 @@ export async function fetchUsers(): Promise<Users> {
   return data;
 }
 
+export async function createUser(newUser: { id: string | null; email: string; name: string; role: string }) {
+  const { data, error } = await supabase.from('users').insert([newUser]).select();
+
+  if (error) throw error;
+}
+
 export async function fetchUserById(userId: string): Promise<User | null> {
   const { data, error } = await supabase
     .from('users')
