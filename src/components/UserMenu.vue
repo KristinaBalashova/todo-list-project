@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useAuth, useUsers } from '../store';
 import { useI18n } from 'vue-i18n';
 
@@ -41,6 +41,20 @@ const signOut = async () => {
     console.error('Sign out error:', error);
   }
 };
+
+watch(
+  () => authStore.currentUser?.id,
+  async (id) => {
+    if (id) {
+      try {
+        await userStore.getUserById(id);
+      } catch (e) {
+        console.error('Ошибка загрузки данных пользователя:', e);
+      }
+    }
+  },
+  { immediate: true },
+);
 </script>
 <template>
   <div class="text-center">
@@ -59,6 +73,8 @@ const signOut = async () => {
           <v-list-item prepend-avatar="/cat-avatar.png" :subtitle="userRole" :title="userName">
           </v-list-item>
         </v-list>
+        <!--
+
         <v-list>
           <v-list-item>
             <v-switch
@@ -70,6 +86,8 @@ const signOut = async () => {
             ></v-switch>
           </v-list-item>
         </v-list>
+        -->
+        
 
         <v-card-actions>
           <v-spacer></v-spacer>
