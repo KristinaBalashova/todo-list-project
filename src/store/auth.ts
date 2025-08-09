@@ -2,6 +2,10 @@ import { defineStore } from 'pinia';
 import { supabase } from '../supabaseClient';
 import { User } from '../types/users';
 import { useUsers } from './users';
+import { createUser } from '../api/usersApi';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 export const useAuth = defineStore('auth', {
   state: () => ({
@@ -20,8 +24,12 @@ export const useAuth = defineStore('auth', {
       localStorage.setItem('userId', data.user?.id || '');
     },
 
-    async signUp(email: string, password: string) {
+    async signUp(email: string, password: string, name: string) {
+      console.log('Signing up with:', { email, password, name });
       const { data, error } = await supabase.auth.signUp({ email, password });
+      if (data) {
+        await createUser({ id: data.user?.id || null, email, name: name, role: 'guest' });
+      }
       if (error) throw error;
 
       this.token = data.session?.access_token || null;

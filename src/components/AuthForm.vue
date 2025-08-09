@@ -1,7 +1,7 @@
 <script setup>
 import Input from './ui/Input.vue';
 import Button from './ui/Button.vue';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -16,6 +16,7 @@ const props = defineProps({
 const emit = defineEmits(['submit', 'switchMode']);
 
 const form = ref({
+  name: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -23,14 +24,17 @@ const form = ref({
 
 const handleSubmit = () => {
   emit('submit', { ...form.value });
+  resetForm();
 };
 
-watch(
-  () => props.mode,
-  () => {
-    form.value = { email: '', password: '', confirmPassword: '' };
-  },
-);
+const resetForm = () => {
+  form.value.email = '';
+  form.value.password = '';
+  form.value.confirmPassword = '';
+  if (props.mode === 'register') {
+    form.value.name = '';
+  }
+};
 
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text);
@@ -44,6 +48,7 @@ function copyToClipboard(text) {
         {{ mode === 'login' ? t('login.welcome') : t('register.title') }}
       </h2>
 
+      <Input v-if="mode === 'register'" v-model="form.name" placeholder="Name" />
       <Input v-model="form.email" placeholder="Email" />
       <Input
         v-model="form.password"
@@ -71,9 +76,7 @@ function copyToClipboard(text) {
           <p @click="copyToClipboard('admainemail1222@gmail.com')" class="copyable">
             Email: admainemail1222@gmail.com 📋
           </p>
-          <p @click="copyToClipboard('12345678')" class="copyable">
-            Password: 12345678 📋
-          </p>
+          <p @click="copyToClipboard('12345678')" class="copyable">Password: 12345678 📋</p>
         </div>
       </div>
     </form>

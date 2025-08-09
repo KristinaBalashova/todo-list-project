@@ -10,16 +10,16 @@ const router = useRouter();
 const authStore = useAuth();
 const toast = useToast();
 
-const handleRegister = async ({ email, password, confirmPassword }) => {
+const handleRegister = async ({ email, password, confirmPassword, name }) => {
   if (password !== confirmPassword) {
     toast.error(t('register.passwordMismatch'));
     return;
   }
 
   try {
-    await authStore.register(email, password);
+    await authStore.signUp(email, password, name);
     toast.success(t('register.success'));
-    await router.push('/dashboard');
+    await router.push('/');
   } catch (error) {
     toast.error(t('register.error') + ': ' + error.message);
   }
