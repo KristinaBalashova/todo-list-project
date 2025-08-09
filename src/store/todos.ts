@@ -3,7 +3,7 @@ import { fetchTasks, deleteTodo, createTodo, updateTodo } from '../api/tasksApi'
 import { useToast } from 'vue-toastification';
 import { Todo, Todos } from '../types/todos';
 import { LoadingState, STATE, FilterType } from '../types/common';
-import { supabase } from '../supabaseClient';
+
 const toast = useToast();
 
 export const useTodos = defineStore('todos', {
