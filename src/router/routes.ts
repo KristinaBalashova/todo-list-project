@@ -50,7 +50,8 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    component: AdminPage,
+    redirect: '/work-in-progress',
+    //component: AdminPage,
     //meta: { requiresAuth: true },
   },
   {
