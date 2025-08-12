@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "type-coverage": "type-coverage --show-relative-path"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
@@ -26,6 +27,7 @@
     "prettier": "3.3.3",
     "sass": "^1.87.0",
     "sass-loader": "^12.6.0",
+    "type-coverage": "^2.29.7",
     "vite": "^4.3.9"
   }
 }
