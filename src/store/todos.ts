@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { fetchTasks, deleteTodo, createTodo, updateTodo } from '../api/tasksApi';
 import { useToast } from 'vue-toastification';
 import { Todo, Todos } from '../types/todos';
-import { LoadingState, STATE, FilterType } from '../types/common';
+import { LoadingState, STATE, FilterType, TodoStatus } from '../types/common';
 
 const toast = useToast();
 
@@ -14,9 +14,9 @@ export const useTodos = defineStore('todos', {
   }),
 
   getters: {
-    activeTodos: (state) => state.todos.filter((t: Todo) => t.status === 'todo'),
-    completedTodos: (state) => state.todos.filter((t: Todo) => t.status === 'done'),
-    todosInProgress: (state) => state.todos.filter((t: Todo) => t.status === 'in_progress'),
+    activeTodos: (state) => state.todos.filter((t: Todo) => t.status === TodoStatus.TODO),
+    completedTodos: (state) => state.todos.filter((t: Todo) => t.status === TodoStatus.DONE),
+    todosInProgress: (state) => state.todos.filter((t: Todo) => t.status === TodoStatus.IN_PROGRESS),
     todosByProject: (state) => (projectId: string) =>
       state.todos.filter((t: Todo) => t.project_id === projectId),
     todoById: (state) => (todoId: string) => state.todos.find((t: Todo) => t.id === todoId),
@@ -28,19 +28,20 @@ export const useTodos = defineStore('todos', {
         this.todos = todos;
       }
     },
+
     setActiveTodos(list: Todos) {
-      this.updateTodosStatus(list, 'todo');
+      this.updateTodosStatus(list, TodoStatus.TODO);
     },
 
     setInProgressTodos(list: Todos) {
-      this.updateTodosStatus(list, 'in_progress');
+      this.updateTodosStatus(list, TodoStatus.IN_PROGRESS);
     },
 
     setCompletedTodos(list: Todos) {
-      this.updateTodosStatus(list, 'done');
+      this.updateTodosStatus(list, TodoStatus.DONE);
     },
 
-    async updateTodosStatus(newList: Todos, newStatus: string) {
+    async updateTodosStatus(newList: Todos, newStatus: TodoStatus) {
       if (!Array.isArray(newList)) return;
 
       const remaining = this.todos.filter((t: Todo) => t.status !== newStatus);
@@ -60,14 +61,14 @@ export const useTodos = defineStore('todos', {
     },
 
     removeCompletedTodos() {
-      this.todos = this.todos.filter((todo: Todo) => todo.status !== 'done');
+      this.todos = this.todos.filter((todo: Todo) => todo.status !== TodoStatus.DONE);
     },
 
     clearCompleted() {
       this.removeCompletedTodos();
     },
 
-    setFilter(filter: string) {
+    setFilter(filter: FilterType) {
       this.filter = filter;
     },
 
@@ -83,6 +84,7 @@ export const useTodos = defineStore('todos', {
       }
       this.setTodosState(STATE.SUCCESS);
     },
+
     async createNewTodo(newTodo: Todo) {
       await createTodo(newTodo);
       this.todos.unshift(newTodo);
@@ -95,20 +97,29 @@ export const useTodos = defineStore('todos', {
         await deleteTodo(id);
         this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
         this.setTodosState(STATE.SUCCESS);
-      } catch (error) {
+      } catch (error: unknown) {
         this.setTodosState(STATE.ERROR);
-        toast.error('Ошибка при удалении.');
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error('Ошибка при удалении.');
+        }
       }
     },
+
     async fetchTodos() {
       this.setTodosState(STATE.LOADING);
       try {
         const response = await fetchTasks();
         this.setTodos(response);
         this.setTodosState(STATE.SUCCESS);
-      } catch (error) {
+      } catch (error: unknown) {
         this.setTodosState(STATE.ERROR);
-        toast.error('Ошибка при загрузке данных.');
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error('Ошибка при загрузке данных.');
+        }
       }
     },
   },
