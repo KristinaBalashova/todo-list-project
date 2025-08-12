@@ -24,17 +24,17 @@ export const useUsers = defineStore('users', {
     setCurrentUser(user: User) {
       this.currentUser = user;
     },
-    async getUserById(userId: string) {
-
+    async getUserById(userId: string): Promise<User | null> {
       this.setUsersState(STATE.LOADING);
       try {
         const response = await fetchUserById(userId);
         this.setCurrentUser(response);
         this.setUsersState(STATE.SUCCESS);
-        return this.currentUser;
+        return response;
       } catch (error) {
         this.setUsersState(STATE.ERROR);
         toast.error('Ошибка при загрузке данных.');
+        return null;
       }
     },
     isAdmin(userId: string): boolean {
@@ -42,7 +42,7 @@ export const useUsers = defineStore('users', {
       return user ? user.isAdmin : false;
     },
     editUser({ id, updates }: { id: string; updates: Partial<User> }) {
-      const index = this.users.findIndex((user) => user.id === id);
+      const index = this.users.findIndex((user: User) => user.id === id);
       if (index !== -1) {
         Object.assign(this.users[index], updates);
       }

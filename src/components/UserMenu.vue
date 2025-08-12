@@ -25,10 +25,9 @@ const userRole = computed(() => {
 
 onMounted(async () => {
   if (userId.value) {
-    try {
-      await userStore.getUserById(userId.value);
-    } catch (e) {
-      console.error('Ошибка загрузки данных пользователя:', e);
+    const user = await userStore.getUserById(userId.value);
+    if (!user) {
+      console.error('Ошибка загрузки данных пользователя или пользователь не найден');
     }
   }
 });
@@ -46,15 +45,15 @@ watch(
   () => authStore.currentUser?.id,
   async (id) => {
     if (id) {
-      try {
-        await userStore.getUserById(id);
-      } catch (e) {
-        console.error('Ошибка загрузки данных пользователя:', e);
+      const user = await userStore.getUserById(id);
+      if (!user) {
+        console.error('Ошибка загрузки данных пользователя или пользователь не найден');
       }
     }
   },
   { immediate: true },
 );
+
 </script>
 <template>
   <div class="text-center">
