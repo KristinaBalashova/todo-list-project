@@ -1,7 +1,8 @@
 <script setup>
+import { computed, onMounted} from 'vue';
 import Chip from '../components/ui/Chip.vue';
 import Button from './ui/Button.vue';
-import { useTodos } from '../store/todos';
+import { useTodos, useProjects, useUsers } from '../store';
 import { useDrawerRoute } from '../composables/useDrawerRoute';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -9,6 +10,8 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const router = useRouter();
 const store = useTodos();
+const projectStore = useProjects();
+const usersStore = useUsers();
 
 const props = defineProps({
   taskId: {
@@ -17,7 +20,17 @@ const props = defineProps({
   },
 });
 
-const todo = store.todoById(props.taskId);
+const todo = computed(() => store.todoById(props.taskId));
+
+const projectName = computed(() => {
+  const projectId = todo.value?.project_id;
+  return projectId ? projectStore.projectById(projectId)?.name : null;
+});
+
+const executorName = computed(() => {
+  const executorId = todo.value?.executor;
+  return executorId ? usersStore.userById(executorId)?.name : null;
+});
 
 function toggleEditMode(id) {
   router.push({ name: 'task-edit', params: { id: id } });
@@ -29,6 +42,11 @@ const deleteTodo = async (id) => {
   await store.deleteTodo(id);
   closeDrawer();
 };
+
+onMounted(() => {
+  usersStore.fetchUsers();
+});
+
 </script>
 
 <template>
@@ -48,6 +66,16 @@ const deleteTodo = async (id) => {
     <div class="section">
       <span class="label">{{ $t('description') }}</span>
       <p class="description">{{ todo.description || '—' }}</p>
+    </div>
+
+    <div class="section">
+      <span class="label">{{ $t('project') }}</span>
+      <p class="description">{{ projectName || '—' }}</p>
+    </div>
+
+    <div class="section">
+      <span class="label">{{ $t('executor') }}</span>
+      <p class="description">{{ executorName || '—' }}</p>
     </div>
 
     <Button
@@ -113,3 +141,4 @@ const deleteTodo = async (id) => {
   font-size: 15px;
 }
 </style>
+

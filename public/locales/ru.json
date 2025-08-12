@@ -33,6 +33,8 @@
   "selectExecutor": "Выберите исполнителя",
   "selectProject": "Выберите проект",
   "hideMenu": "Скрыть меню",
+  "project": "Проект",
+  "executor": "Исполнитель",
 
 
   "login.welcome": "Добро пожаловать!",

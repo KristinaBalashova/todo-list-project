@@ -104,6 +104,7 @@ onMounted(() => {
   storeProjects.fetchProjects();
   usersStore.fetchUsers();
 });
+
 </script>
 
 <template>
