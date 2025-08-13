@@ -1,8 +1,9 @@
 <script setup>
 import Input from './ui/Input.vue';
 import Button from './ui/Button.vue';
-import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useForm, useField } from 'vee-validate';
+import * as yup from 'yup';
 
 const { t } = useI18n();
 
@@ -15,26 +16,35 @@ const props = defineProps({
 
 const emit = defineEmits(['submit', 'switchMode']);
 
-const form = ref({
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
+const schema = yup.object({
+  name: yup
+    .string()
+    .when('$mode', {
+      is: 'register',
+      then: (schema) => schema.required('Имя обязательно'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  email: yup.string().email('Введите корректный email').required('Email обязателен'),
+  password: yup
+    .string()
+    .min(6, 'Пароль должен быть минимум 6 символов')
+    .required('Пароль обязателен'),
 });
 
-const handleSubmit = () => {
-  emit('submit', { ...form.value });
-  resetForm();
-};
+const { handleSubmit, errors, isSubmitting, resetForm } = useForm({
+  validationSchema: schema,
+  context: { mode: props.mode },
+});
 
-const resetForm = () => {
-  form.value.email = '';
-  form.value.password = '';
-  form.value.confirmPassword = '';
-  if (props.mode === 'register') {
-    form.value.name = '';
-  }
-};
+const { value: email } = useField('email');
+const { value: password } = useField('password');
+const { value: name } = useField('name');
+
+const onSubmit = handleSubmit((values) => {
+  const { email, password, name } = values;
+  emit('submit', { email, password, name });
+  resetForm();
+});
 
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text);
@@ -43,24 +53,21 @@ function copyToClipboard(text) {
 
 <template>
   <div class="auth-wrapper">
-    <form @submit.prevent="handleSubmit" class="auth-form">
+    <form @submit.prevent="onSubmit" class="auth-form">
       <h2 class="form-title">
         {{ mode === 'login' ? t('login.welcome') : t('register.title') }}
       </h2>
 
-      <Input v-if="mode === 'register'" v-model="form.name" placeholder="Name" />
-      <Input v-model="form.email" placeholder="Email" />
+      <Input v-if="mode === 'register'" v-model="name" placeholder="Name" />
+      <span v-if="errors.name" style="color: red">{{ errors.name }}</span>
+      <Input v-model="email" placeholder="Email" />
+      <span v-if="errors.email" style="color: red">{{ errors.email }}</span>
       <Input
-        v-model="form.password"
+        v-model="password"
         type="password"
         :placeholder="mode === 'login' ? t('login.password') : t('register.password')"
       />
-      <Input
-        v-if="mode === 'register'"
-        v-model="form.confirmPassword"
-        type="password"
-        :placeholder="t('register.confirmPassword')"
-      />
+      <span v-if="errors.password" style="color: red">{{ errors.password }}</span>
 
       <Button type="submit" class="primary-button">
         {{ mode === 'login' ? t('login.submit') : t('register.submit') }}

@@ -24,7 +24,6 @@ const handleLogin = async ({ email, password }) => {
 const signOut = async () => {
   try {
     await authStore.signOut();
-    menu.value = false;
   } catch (error) {
     console.error('Sign out error:', error);
   }
